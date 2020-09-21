@@ -74,6 +74,7 @@ const createPlace = async (req, res, next) => {
 
   let coordinates;
   try {
+    // Get coordinations to show in map 
     coordinates = await getCoordsForAddress(address);
   } catch (error) {
     return next(error);
