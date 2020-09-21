@@ -13,6 +13,15 @@ async function getCoordsForAddress(address) {
   const data = response.data;
   const coordinates = data.features[0].geometry.coordinates;
 
+
+
+
+
+
+
+
+  
+  // Throw error if no data from API
   if (!data || data.status === "ZERO_RESULTS") {
     const error = new HttpError(
       "Could not find location for the specified address.",
