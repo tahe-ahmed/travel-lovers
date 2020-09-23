@@ -18,6 +18,7 @@ import LoadingSpinner from './shared/components/UIElements/LoadingSpinner';
 
 const Users = React.lazy(() => import('./user/pages/Users'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
+const AllPlaces = React.lazy(() => import('./places/pages/AllPlaces'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
 const UpdatePlace = React.lazy(() => import('./places/pages/UpdatePlace'));
 const Auth = React.lazy(() => import('./user/pages/Auth'));
@@ -32,6 +33,9 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           <Users />
+        </Route>
+        <Route path='/places' exact>
+          <AllPlaces />
         </Route>
         <Route path='/:userId/places' exact>
           <UserPlaces />
@@ -50,6 +54,9 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           <Users />
+        </Route>
+        <Route path='/places' exact>
+          <AllPlaces />
         </Route>
         <Route path='/:userId/places' exact>
           <UserPlaces />
