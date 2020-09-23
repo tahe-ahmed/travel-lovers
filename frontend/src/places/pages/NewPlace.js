@@ -18,7 +18,6 @@ import "./PlaceForm.css";
 
 const NewPlace = () => {
   const auth = useContext(AuthContext);
-  const [searchTouch, setSearchTouch] = useState(false)
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -64,11 +63,29 @@ const NewPlace = () => {
     } catch (err) {}
   };
 
+  // Blur effect and input value control of searchbox
   useEffect(() => {
     const searchbox = document.querySelector(".mapboxgl-ctrl-geocoder--input");
     searchbox.addEventListener("change", (e) => {
-      inputHandler("address", e.target.value, true);
+      if (e.target.value.length > 2) {
+        inputHandler("address", e.target.value, true);
+      } else {
+        inputHandler("address", e.target.value, false);
+      }
     });
+    searchbox.addEventListener("blur", (e) => {
+      if (e.target.value.length < 2) {
+        e.target.classList.add("touch");
+        e.target.placeholder = "Please enter a valid address.";
+      } else {
+        e.target.classList.remove("touch");
+      }
+    });
+    document
+      .querySelector(".mapboxgl-ctrl-geocoder--button")
+      .addEventListener("click", (e) => {
+        inputHandler("address", e.target.value, false);
+      });
   }, [inputHandler]);
 
   return (

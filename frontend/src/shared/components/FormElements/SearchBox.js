@@ -20,7 +20,7 @@ function SearchBox(props) {
       
   return (
     <>
-      <label> Address</label>
+      <label className='address-label'>Address</label>
       <div id={props.id} ref={boxRef}></div>
     </>
   );
