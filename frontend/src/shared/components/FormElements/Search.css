@@ -1,0 +1,9 @@
+.search-bar-container{
+    width: 100%;
+    text-align: center;
+}
+.search-bar{
+    width: 400px;
+    height: 50px;
+}
+
