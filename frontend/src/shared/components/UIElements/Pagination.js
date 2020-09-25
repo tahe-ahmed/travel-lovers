@@ -13,16 +13,13 @@ const Pagination = (props) => {
     <nav className="pagination-nav">
       <ul className="pagination">
         {pageNumbers.map((number) => (
-          <li
-            key={number}
-            className={`page-item ${
-              number === props.currentPage ? "active" : "nonactive"
-            }`}
-          >
+          <li key={number} className="pagination-item">
             <a
               onClick={() => props.paginate(number)}
               href={`#${number}`}
-              className="page-link"
+              className={`page-link ${
+                number === props.currentPage ? "active" : "nonactive"
+              }`}
             >
               {number}
             </a>
