@@ -44,19 +44,18 @@ const Users = () => {
     }
   };
 
-  // function accepts obj and return sorted obj of the obj it receives 
+  // function accepts obj of places and sort it alphabetically
   const getSortByName = (obj) => {
     obj.sort((first, second) => {
       if (first.title.toLowerCase() < second.title.toLowerCase()) return -1;
       if (first.title.toLowerCase() > second.title.toLowerCase()) return 1;
       return 0;
     });
-    return obj;
   };
-  // sort the the loaded 
-  useEffect(()=>{
-    if(loadedPlaces) getSortByName(loadedPlaces);
-  },[loadedPlaces])
+  // sort the the loaded
+  useEffect(() => {
+    if (loadedPlaces) getSortByName(loadedPlaces);
+  }, [loadedPlaces]);
 
   // Get current places
   const indexOfLastPlace = currentPage * placesPerPage;

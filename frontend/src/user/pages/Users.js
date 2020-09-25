@@ -43,6 +43,19 @@ const Users = () => {
     setFilteredUsers(filterUsers);
   };
 
+  // function accepts obj of users and sort it based on the users' count of places
+  const getSortByPlacesNumber = (obj) => {
+    obj.sort((first, second) => {
+      if (first.places.length < second.places.length) return 1;
+      if (first.places.length > second.places.length) return -1;
+      return 0;
+    });
+  };
+  // sort the the loaded
+  useEffect(() => {
+    if (loadedUsers) getSortByPlacesNumber(loadedUsers);
+  }, [loadedUsers]);
+
   // Get current users
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
