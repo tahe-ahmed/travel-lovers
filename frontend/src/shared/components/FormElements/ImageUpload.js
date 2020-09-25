@@ -11,6 +11,10 @@ const ImageUpload = props => {
   const filePickerRef = useRef();
 
   useEffect(() => {
+
+    setPreviewUrl(props.initialValue);
+    setIsValid(true);
+
     if (!file) {
       return;
     }
@@ -55,8 +59,8 @@ const ImageUpload = props => {
           {previewUrl && <img src={previewUrl} alt="Preview" />}
           {!previewUrl && <p>Please pick an image.</p>}
         </div>
-        <Button type="button" onClick={pickImageHandler}>
-          PICK IMAGE
+        <Button type="button" inverse onClick={pickImageHandler}>
+          {props.text ? props.text : 'PICK IMAGE'}
         </Button>
       </div>
       {!isValid && <p>{props.errorText}</p>}

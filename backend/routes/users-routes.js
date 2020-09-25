@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get('/', usersController.getUsers);
 
+router.get('/:uid', usersController.getUserById);
+
 router.post(
   '/signup',
   fileUpload.single('image'),
@@ -22,6 +24,23 @@ router.post(
   ],
   usersController.signup
 );
+
+router.patch(
+  '/:uid',
+  [
+    check('name')
+      .not()
+      .isEmpty()
+  ],
+  usersController.updateUser
+);
+
+router.patch(
+  '/account/:uid',
+  usersController.updateUserAccount
+);
+
+
 
 router.post('/login', usersController.login);
 

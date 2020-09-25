@@ -17,21 +17,28 @@ import { useAuth } from './shared/hooks/auth-hook';
 import LoadingSpinner from './shared/components/UIElements/LoadingSpinner';
 
 const Users = React.lazy(() => import('./user/pages/Users'));
+const UpdateUser = React.lazy(()=>import('./user/pages/UpdateUser'));
+const UserAccount = React.lazy(()=>import('./user/pages/UserAccount'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
 const UpdatePlace = React.lazy(() => import('./places/pages/UpdatePlace'));
 const Auth = React.lazy(() => import('./user/pages/Auth'));
 
 const App = () => {
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId,userImage } = useAuth();
 
   let routes;
-
   if (token) {
     routes = (
       <Switch>
         <Route path='/' exact>
           <Users />
+        </Route>
+        <Route path='/user/:userId' exact>
+          <UpdateUser />
+        </Route>
+        <Route path='/account/:userId' exact>
+          <UserAccount/>
         </Route>
         <Route path='/:userId/places' exact>
           <UserPlaces />
@@ -68,6 +75,7 @@ const App = () => {
         isLoggedIn: !!token,
         token: token,
         userId: userId,
+        userImage:userImage,
         login: login,
         logout: logout,
       }}
