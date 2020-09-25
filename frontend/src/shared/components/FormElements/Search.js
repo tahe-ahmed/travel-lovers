@@ -11,7 +11,7 @@ const Search = (props) => {
         type="text"
         className="search-bar"
         onChange={props.onChangehandler}
-        autofocus
+        autoFocus
       />
     </div>
   );

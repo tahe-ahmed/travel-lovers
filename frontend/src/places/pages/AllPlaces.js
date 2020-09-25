@@ -73,7 +73,7 @@ const Users = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <Search
-        placeHolder="search for places"
+        placeHolder="Search for places"
         value={searchInputValue}
         onChangehandler={handleOnChange}
       />

@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import './SearchBox.css'
+import './AddressSearchBox.css'
 
-function SearchBox(props) {
+function AddressSearchBox(props) {
     const boxRef = useRef();
     useEffect(() => {
         mapboxgl.accessToken =
@@ -26,4 +26,4 @@ function SearchBox(props) {
   );
 }
 
-export default SearchBox;
+export default AddressSearchBox;
