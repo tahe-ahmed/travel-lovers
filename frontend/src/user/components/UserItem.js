@@ -6,7 +6,7 @@ import "./UserItem.css";
 
 const UserItem = (props) => {
   const [imageURL, setImageURL] = useState(props.image);
-
+  // check image url props if its data come from google/facebook API or uploads/images
   useEffect(() => {
     if (imageURL.startsWith("https://") || imageURL.startsWith("http://")) {
       setImageURL(imageURL);

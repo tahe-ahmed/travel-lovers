@@ -16,12 +16,12 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 import GoogleLogin from "react-google-login";
-
+import FacebookLogin from "react-facebook-login";   // Facebook login
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const [isAutoLoad, setIsAutoLoad] = useState(false);      // for facebook login
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -82,7 +82,7 @@ const Auth = () => {
           }
         );
         auth.login(responseData.userId, responseData.token);
-      } catch (err) {}
+      } catch (err) { }
     } else {
       try {
         const formData = new FormData();
@@ -97,7 +97,7 @@ const Auth = () => {
         );
 
         auth.login(responseData.userId, responseData.token);
-      } catch (err) {}
+      } catch (err) { }
     }
   };
 
@@ -118,15 +118,36 @@ const Auth = () => {
         }
       );
       auth.login(responseData.userId, responseData.token);
-    } catch (err) {}
+    } catch (err) { }
   };
 
+  // facebook login handler
+
+  const responseFacebookHandler = async response => {
+    setIsAutoLoad(true);
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/facebooklogin`,
+        'POST',
+        JSON.stringify({
+          password: `${response.id}${response.email}`,  // we cant get user's facebook account password so we create a new simple password for user
+          accessToken: response.accessToken,
+          userID: response.userID
+        }),
+        {
+          'Content-Type': 'application/json'
+        }
+      );
+      auth.login(responseData.userId, responseData.token);
+    } catch (err) { }
+
+  };
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        <h2>{isLoginMode ? 'Login' : 'Signup'} Required</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (
@@ -173,6 +194,8 @@ const Auth = () => {
         <Button inverse onClick={switchModeHandler}>
           SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
         </Button>
+        <br />
+        <br />
         {isLoginMode && (
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_LOGIN}
@@ -180,10 +203,23 @@ const Auth = () => {
             onSuccess={responseGoogleHandler}
             cookiePolicy={"single_host_origin"}
             icon={true}
-            isSignedIn={true}
             theme="white"
           />
         )}
+        <br />
+        {isLoginMode && (
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_LOGIN}
+            autoLoad={isAutoLoad}
+            fields="name,email,picture"
+            callback={responseFacebookHandler}
+            icon='fa-facebook'
+            textButton=' Log in with Facebook'
+            size="small"
+          />
+        )}
+        <br />
+        <br />
       </Card>
     </React.Fragment>
   );

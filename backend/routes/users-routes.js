@@ -22,5 +22,5 @@ router.post(
 router.post("/login", usersController.login);
 
 router.post("/googlelogin", usersController.googleLogin);
-
+router.post('/facebooklogin', usersController.facebooklogin);     //facebook login
 module.exports = router;
