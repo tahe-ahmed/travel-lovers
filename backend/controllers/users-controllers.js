@@ -40,9 +40,9 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  if (existingUser) {
+  if (existingUser && existingUser.signType !== "normal") { // for bug
     const error = new HttpError(
-      "User exists already, please login instead.",
+      `User exists already, please login with your ${existingUser.signType} account instead.`,
       422
     );
     return next(error);
@@ -64,6 +64,7 @@ const signup = async (req, res, next) => {
     email,
     image: req.file.path,
     password: hashedPassword,
+    signType: "normal", // for bug
     places: [],
   });
 
@@ -98,7 +99,7 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, signType } = req.body;
 
   let existingUser;
 
@@ -111,6 +112,13 @@ const login = async (req, res, next) => {
     );
     return next(error);
   }
+  if (existingUser && existingUser.signType !== signType) { // for bug
+    const error = new HttpError(
+      `User exists already, please login with your ${existingUser.signType} account instead.`,
+      422
+    );
+    return next(error);
+  }
 
   if (!existingUser) {
     const error = new HttpError(
@@ -119,6 +127,7 @@ const login = async (req, res, next) => {
     );
     return next(error);
   }
+
 
   let isValidPassword = false;
   try {
@@ -163,7 +172,7 @@ const login = async (req, res, next) => {
 
 const googleLogin = async (req, res, next) => {
   const client = new OAuth2Client(process.env.GOOGLE_LOGIN_KEY);
-  const { email, password, tokenId } = req.body;
+  const { email, password, tokenId, signType } = req.body;
 
   let googleData;
   try {
@@ -179,7 +188,6 @@ const googleLogin = async (req, res, next) => {
       )
     );
   }
-  console.log(googleData);
 
   let existingUser;
   try {
@@ -194,6 +202,14 @@ const googleLogin = async (req, res, next) => {
 
   if (existingUser) {
     // if login
+    if (existingUser.signType !== signType) {    //for bug
+      const error = new HttpError(
+        `User exists already, please login with your ${existingUser.signType} account instead.`,
+        422
+      );
+      return next(error);
+    }
+
     let isValidPassword = false; // 175 login user with hashed password
     try {
       isValidPassword = await bcrypt.compare(password, existingUser.password); // check new inputted password string to hashed password which is in db
@@ -256,6 +272,7 @@ const googleLogin = async (req, res, next) => {
       email: googleData.payload.email,
       image: googleData.payload.picture, // 166 connecting users to image
       password: hashedPassword,
+      signType: "google", //for bug
       places: [],
     });
 
@@ -291,13 +308,14 @@ const googleLogin = async (req, res, next) => {
 
 
 const facebooklogin = async (req, res, next) => {                 // facebook login controller
-  const { password, userID, accessToken } = req.body;
+  const { password, userID, accessToken, signType } = req.body;
 
   const URL = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
 
   let facebookData;
   try {
-    facebookData = await fetch(URL).json();                       // fetch data from facebook API asynchronously
+    const response = await fetch(URL);
+    facebookData = await response.json();                       // fetch data from facebook API asynchronously
   } catch (err) {
     return next(new HttpError(`ERROR: ${err.message}, Could not get your Facebook data.`, 500));
   }
@@ -311,6 +329,14 @@ const facebooklogin = async (req, res, next) => {                 // facebook lo
   }
 
   if (existingUser) {                                           // after we sign up the user automatically we let user login with user's facebook account
+
+    if (existingUser.signType !== signType) {    //for bug
+      const error = new HttpError(
+        `User exists already, please login with your ${existingUser.signType} account instead.`,
+        422
+      );
+      return next(error);
+    }
     let isValidPassword = false;
     try {
       isValidPassword = await bcrypt.compare(password, existingUser.password);  // login user with hashed password
@@ -348,6 +374,7 @@ const facebooklogin = async (req, res, next) => {                 // facebook lo
       email,
       image: picture.data.url,          // connecting users to image url. this part different from usual
       password: hashedPassword,
+      signType: "facebook",//for bug
       places: []
     });
 

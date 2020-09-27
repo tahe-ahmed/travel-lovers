@@ -76,6 +76,7 @@ const Auth = () => {
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
+            signType: "normal"
           }),
           {
             "Content-Type": "application/json",
@@ -90,6 +91,7 @@ const Auth = () => {
         formData.append("name", formState.inputs.name.value);
         formData.append("password", formState.inputs.password.value);
         formData.append("image", formState.inputs.image.value);
+        //formData.append("signType", "normal");// for bug
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
@@ -112,6 +114,7 @@ const Auth = () => {
           email: response.profileObj.email,
           password: `${response.googleId}${response.profileObj.email}`,
           tokenId: response.tokenId,
+          signType: "google"      // for bug
         }),
         {
           "Content-Type": "application/json",
@@ -125,6 +128,7 @@ const Auth = () => {
 
   const responseFacebookHandler = async response => {
     setIsAutoLoad(true);
+
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/facebooklogin`,
@@ -132,7 +136,8 @@ const Auth = () => {
         JSON.stringify({
           password: `${response.id}${response.email}`,  // we cant get user's facebook account password so we create a new simple password for user
           accessToken: response.accessToken,
-          userID: response.userID
+          userID: response.userID,
+          signType: "facebook"      // for bug
         }),
         {
           'Content-Type': 'application/json'

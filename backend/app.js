@@ -48,19 +48,19 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@hyf.463mg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-})
-.then(()=>{
+  .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@hyf.463mg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => {
     console.log('Database is connected!')
     app.listen(process.env.PORT || 5000, () => {
       console.log('Server is running!')
     });
-}
-)
-.catch(err=>{
+  }
+  )
+  .catch(err => {
     console.log(err);
-}
-);
+  }
+  );
