@@ -27,6 +27,7 @@ router.post(
 
 router.patch(
   '/:uid',
+  fileUpload.single('image'),
   [
     check('name')
       .not()

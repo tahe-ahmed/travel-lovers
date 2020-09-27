@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams ,useHistory } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 import Input from '../../shared/components/FormElements/Input';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
@@ -13,6 +13,7 @@ import './UpdateUser.css';
 
 const UpdateUser = () => {
   const auth = useContext(AuthContext);
+  const history = useHistory();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
   const userId = useParams().userId;
@@ -54,12 +55,11 @@ const UpdateUser = () => {
   );
 
   useEffect(() => {
-    const fetchPlace = async () => {
+    const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
-        console.log(responseData.user.biography);
         setLoadedUser(responseData.user);
         setFormData(
           {
@@ -86,33 +86,40 @@ const UpdateUser = () => {
           },
           true
         );
-        console.log(responseData.user.gender);
         setGenderOption(responseData.user.gender);
+
       } catch (err) {}
     };
-    fetchPlace();
-  }, [sendRequest, userId, setFormData]);
+    fetchUser();
+  }, [sendRequest, userId, setLoadedUser,setFormData]);
+
 
   const userUpdateSubmitHandler = async (event) => {
     event.preventDefault();
+
     try {
-      await sendRequest(
+      const formData = new FormData();
+      formData.append('name', formState.inputs.name.value);
+      formData.append('gender', genderOption);
+      formData.append('age', formState.inputs.age.value);
+      formData.append('image', formState.inputs.image.value);
+      formData.append('biography', formState.inputs.biography.value);
+      formData.append('interests', formState.inputs.interests.value);
+  
+      const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
         'PATCH',
-        JSON.stringify({
-          name: formState.inputs.name.value,
-          gender: genderOption,
-          age: formState.inputs.age.value,
-          image: formState.inputs.image.value,
-          biography: formState.inputs.biography.value,
-          interests: formState.inputs.interests.value,
-        }),
+        formData,
         {
-          'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.token,
         }
       );
+
       setSuccessModal(true);
+
+      auth.userImage=responseData.user.image;
+      history.push('/user');
+      
     } catch (err) {}
   };
 

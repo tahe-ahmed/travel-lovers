@@ -55,6 +55,9 @@ const updateUser = async (req, res, next) => {
   user.gender = gender;
   user.interests = interests;
   user.biography = biography;
+  if (req.file) {
+    user.image = req.file.path;
+  }
 
   try {
     await user.save();
@@ -235,7 +238,6 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-
   const createdUser = new User({
     name,
     email,
