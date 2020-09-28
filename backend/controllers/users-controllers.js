@@ -99,6 +99,7 @@ const updateUserAccount = async (req, res, next) => {
   let isValidPassword = false;
   try {
     isValidPassword = await bcrypt.compare(password, user.password);
+    console.log('isValidPassword',isValidPassword);
   } catch (err) {
     const error = new HttpError(
       'Could not log you in, please check your credentials and try again.',
@@ -140,7 +141,7 @@ const updateUserAccount = async (req, res, next) => {
 
     let hashedPassword;
     try {
-      hashedPassword = await bcrypt.hash(password, 12);
+      hashedPassword = await bcrypt.hash(newPassword, 12);
     } catch (err) {
       const error = new HttpError(
         'Could not update password, please try again.',
@@ -148,7 +149,6 @@ const updateUserAccount = async (req, res, next) => {
       );
       return next(error);
     }
-
     user.password = hashedPassword;
   }
 
