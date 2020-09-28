@@ -20,6 +20,7 @@ const Users = React.lazy(() => import('./user/pages/Users'));
 const UpdateUser = React.lazy(()=>import('./user/pages/UpdateUser'));
 const UserAccount = React.lazy(()=>import('./user/pages/UserAccount'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
+const AllPlaces = React.lazy(() => import('./places/pages/AllPlaces'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
 const UpdatePlace = React.lazy(() => import('./places/pages/UpdatePlace'));
 const Auth = React.lazy(() => import('./user/pages/Auth'));
@@ -39,6 +40,9 @@ const App = () => {
         </Route>
         <Route path='/account/:userId' exact>
           <UserAccount/>
+          </Route>
+        <Route path='/places' exact>
+          <AllPlaces />
         </Route>
         <Route path='/:userId/places' exact>
           <UserPlaces />
@@ -57,6 +61,9 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           <Users />
+        </Route>
+        <Route path='/places' exact>
+          <AllPlaces />
         </Route>
         <Route path='/:userId/places' exact>
           <UserPlaces />
