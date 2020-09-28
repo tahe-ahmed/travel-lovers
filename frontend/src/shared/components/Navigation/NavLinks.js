@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
 import './NavLinks.css';
+import UserProfile from '../Navigation/UserProfile';
 
 const NavLinks = props => {
   const auth = useContext(AuthContext);
@@ -12,6 +13,11 @@ const NavLinks = props => {
       <li>
         <NavLink to="/" exact>
           ALL USERS
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/places" exact>
+          ALL PLACES
         </NavLink>
       </li>
       {auth.isLoggedIn && (
@@ -30,8 +36,8 @@ const NavLinks = props => {
         </li>
       )}
       {auth.isLoggedIn && (
-        <li>
-          <button onClick={auth.logout}>LOGOUT</button>
+        <li >
+          <UserProfile/>
         </li>
       )}
     </ul>

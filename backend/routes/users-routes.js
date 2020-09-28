@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get("/", usersController.getUsers);
 
+router.get("/:uid", usersController.getUserById);
+
 router.post(
   "/signup",
   fileUpload.single("image"),
@@ -21,6 +23,15 @@ router.post(
 
 router.post("/login", usersController.login);
 
+router.patch(
+  "/:uid",
+  fileUpload.single("image"),
+  [check("name").not().isEmpty()],
+  usersController.updateUser
+);
+
+router.patch("/account/:uid", usersController.updateUserAccount);
+
 router.post("/googlelogin", usersController.googleLogin);
-router.post('/facebooklogin', usersController.facebooklogin);     //facebook login
+router.post("/facebooklogin", usersController.facebooklogin); //facebook login
 module.exports = router;

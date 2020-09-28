@@ -16,12 +16,12 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";   // Facebook login
+import FacebookLogin from "react-facebook-login"; // Facebook login
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [isAutoLoad, setIsAutoLoad] = useState(false);      // for facebook login
+  const [isAutoLoad, setIsAutoLoad] = useState(false); // for facebook login
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -76,14 +76,14 @@ const Auth = () => {
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-            signType: "normal"
+            signType: "normal",
           }),
           {
             "Content-Type": "application/json",
           }
         );
-        auth.login(responseData.userId, responseData.token);
-      } catch (err) { }
+        auth.login(responseData.userId, responseData.token, responseData.image);
+      } catch (err) {}
     } else {
       try {
         const formData = new FormData();
@@ -98,8 +98,8 @@ const Auth = () => {
           formData
         );
 
-        auth.login(responseData.userId, responseData.token);
-      } catch (err) { }
+        auth.login(responseData.userId, responseData.token, responseData.image);
+      } catch (err) {}
     }
   };
 
@@ -114,45 +114,44 @@ const Auth = () => {
           email: response.profileObj.email,
           password: `${response.googleId}${response.profileObj.email}`,
           tokenId: response.tokenId,
-          signType: "google"      // for bug
+          signType: "google", // for bug
         }),
         {
           "Content-Type": "application/json",
         }
       );
       auth.login(responseData.userId, responseData.token);
-    } catch (err) { }
+    } catch (err) {}
   };
 
   // facebook login handler
 
-  const responseFacebookHandler = async response => {
+  const responseFacebookHandler = async (response) => {
     setIsAutoLoad(true);
 
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/facebooklogin`,
-        'POST',
+        "POST",
         JSON.stringify({
-          password: `${response.id}${response.email}`,  // we cant get user's facebook account password so we create a new simple password for user
+          password: `${response.id}${response.email}`, // we cant get user's facebook account password so we create a new simple password for user
           accessToken: response.accessToken,
           userID: response.userID,
-          signType: "facebook"      // for bug
+          signType: "facebook", // for bug
         }),
         {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         }
       );
       auth.login(responseData.userId, responseData.token);
-    } catch (err) { }
-
+    } catch (err) {}
   };
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>{isLoginMode ? 'Login' : 'Signup'} Required</h2>
+        <h2>{isLoginMode ? "Login" : "Signup"} Required</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (
@@ -218,8 +217,8 @@ const Auth = () => {
             autoLoad={isAutoLoad}
             fields="name,email,picture"
             callback={responseFacebookHandler}
-            icon='fa-facebook'
-            textButton=' Log in with Facebook'
+            icon="fa-facebook"
+            textButton=" Log in with Facebook"
             size="small"
           />
         )}

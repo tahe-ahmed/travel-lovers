@@ -1,10 +1,190 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const fetch = require('node-fetch');    // for fetching data from facebook API
+
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
-const { OAuth2Client } = require('google-auth-library');  //for google login
+
+const getUserById = async (req, res, next) => {
+  const userId = req.params.uid;
+  let user;
+  try {
+    user = await User.findById(userId, "-password");
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a user.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError(
+      "Could not find user for the provided id.",
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ user: user.toObject({ getters: true }) });
+};
+
+const updateUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  }
+  const { name, age, gender, interests, biography } = req.body;
+
+  const userId = req.params.uid;
+  let user;
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update user.",
+      500
+    );
+    return next(error);
+  }
+
+  user.name = name;
+  user.age = Number(age);
+  user.gender = gender;
+  user.interests = interests;
+  user.biography = biography;
+  if (req.file) {
+    user.image = req.file.path;
+  }
+
+  try {
+    await user.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update user.",
+      500
+    );
+    return next(error);
+  }
+  res.status(200).json({ user: user.toObject({ getters: true }) });
+};
+
+/*This function updates email  and password .
+  The password is updated if the current password is entered correctly.
+  The email is updated if the current password is entered correctly.
+  */
+const updateUserAccount = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  }
+  const { newEmail, password, newPassword } = req.body;
+  const userId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update user.",
+      500
+    );
+    return next(error);
+  }
+
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, user.password);
+    console.log("isValidPassword", isValidPassword);
+  } catch (err) {
+    const error = new HttpError(
+      "Could not log you in, please check your credentials and try again.",
+      500
+    );
+    return next(error);
+  }
+  if (!isValidPassword) {
+    const error = new HttpError(
+      "Invalid password, please check your password and try again.",
+      403
+    );
+    return next(error);
+  }
+
+  if (user && newEmail && isValidPassword) {
+    if (user.email === newEmail) {
+      const error = new HttpError(
+        "Your new email cannot be the same as your current email",
+        403
+      );
+      return next(error);
+    }
+    user.email = newEmail;
+  }
+  if (user && newPassword && isValidPassword) {
+    const isSamePasswordPrevious = await bcrypt.compare(
+      newPassword,
+      user.password
+    );
+
+    if (isSamePasswordPrevious) {
+      const error = new HttpError(
+        "Your password cannot be the same as your current password",
+        403
+      );
+      return next(error);
+    }
+
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(newPassword, 12);
+    } catch (err) {
+      const error = new HttpError(
+        "Could not update password, please try again.",
+        500
+      );
+      return next(error);
+    }
+    user.password = hashedPassword;
+  }
+
+  try {
+    await user.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update user.",
+      500
+    );
+    return next(error);
+  }
+
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_KEY,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError(
+      "Signing up failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+
+  res.json({
+    userId: user.id,
+    email: user.email,
+    image: user.image,
+    token: token,
+  });
+};
+
 const getUsers = async (req, res, next) => {
   let users;
   try {
@@ -40,7 +220,8 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  if (existingUser && existingUser.signType !== "normal") { // for bug
+  if (existingUser && existingUser.signType !== "normal") {
+    // for bug
     const error = new HttpError(
       `User exists already, please login with your ${existingUser.signType} account instead.`,
       422
@@ -58,13 +239,11 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-
   const createdUser = new User({
     name,
     email,
     image: req.file.path,
     password: hashedPassword,
-    signType: "normal", // for bug
     places: [],
   });
 
@@ -93,9 +272,12 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res
-    .status(201)
-    .json({ userId: createdUser.id, email: createdUser.email, token: token });
+  res.status(201).json({
+    userId: createdUser.id,
+    email: createdUser.email,
+    token: token,
+    image: createdUser.image,
+  });
 };
 
 const login = async (req, res, next) => {
@@ -112,7 +294,8 @@ const login = async (req, res, next) => {
     );
     return next(error);
   }
-  if (existingUser && existingUser.signType !== signType) { // for bug
+  if (existingUser && existingUser.signType !== signType) {
+    // for bug
     const error = new HttpError(
       `User exists already, please login with your ${existingUser.signType} account instead.`,
       422
@@ -127,7 +310,6 @@ const login = async (req, res, next) => {
     );
     return next(error);
   }
-
 
   let isValidPassword = false;
   try {
@@ -166,19 +348,23 @@ const login = async (req, res, next) => {
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
+    image: existingUser.image,
     token: token,
   });
 };
 
 const googleLogin = async (req, res, next) => {
-  const client = new OAuth2Client(process.env.GOOGLE_LOGIN_KEY);
-  const { email, password, tokenId, signType } = req.body;
+  const client = new OAuth2Client(
+    "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com"
+  );
+  const { email, password, tokenId } = req.body;
 
   let googleData;
   try {
     googleData = await client.verifyIdToken({
       idToken: tokenId,
-      audience: process.env.GOOGLE_LOGIN_KEY,
+      audience:
+        "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com",
     });
   } catch (err) {
     return next(
@@ -188,6 +374,7 @@ const googleLogin = async (req, res, next) => {
       )
     );
   }
+  console.log(googleData);
 
   let existingUser;
   try {
@@ -198,18 +385,10 @@ const googleLogin = async (req, res, next) => {
     );
   }
 
-
+  // console.log(existingUser);
 
   if (existingUser) {
     // if login
-    if (existingUser.signType !== signType) {    //for bug
-      const error = new HttpError(
-        `User exists already, please login with your ${existingUser.signType} account instead.`,
-        422
-      );
-      return next(error);
-    }
-
     let isValidPassword = false; // 175 login user with hashed password
     try {
       isValidPassword = await bcrypt.compare(password, existingUser.password); // check new inputted password string to hashed password which is in db
@@ -272,7 +451,6 @@ const googleLogin = async (req, res, next) => {
       email: googleData.payload.email,
       image: googleData.payload.picture, // 166 connecting users to image
       password: hashedPassword,
-      signType: "google", //for bug
       places: [],
     });
 
@@ -306,99 +484,134 @@ const googleLogin = async (req, res, next) => {
   }
 };
 
-
-const facebooklogin = async (req, res, next) => {                 // facebook login controller
-  const { password, userID, accessToken, signType } = req.body;
+const facebooklogin = async (req, res, next) => {
+  // facebook login controller
+  const { password, userID, accessToken } = req.body;
 
   const URL = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
 
   let facebookData;
   try {
-    const response = await fetch(URL);
-    facebookData = await response.json();                       // fetch data from facebook API asynchronously
+    facebookData = await fetch(URL).json(); // fetch data from facebook API asynchronously
   } catch (err) {
-    return next(new HttpError(`ERROR: ${err.message}, Could not get your Facebook data.`, 500));
+    return next(
+      new HttpError(
+        `ERROR: ${err.message}, Could not get your Facebook data.`,
+        500
+      )
+    );
   }
   let { name, email, picture } = facebookData;
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });          //check asynchronously if user has already stored the db 
+    existingUser = await User.findOne({ email: email }); //check asynchronously if user has already stored the db
   } catch (err) {
-    return next(new HttpError('Facebook Logging in failed, please try again later.', 500));
+    return next(
+      new HttpError("Facebook Logging in failed, please try again later.", 500)
+    );
   }
 
-  if (existingUser) {                                           // after we sign up the user automatically we let user login with user's facebook account
-
-    if (existingUser.signType !== signType) {    //for bug
-      const error = new HttpError(
-        `User exists already, please login with your ${existingUser.signType} account instead.`,
-        422
-      );
-      return next(error);
-    }
+  if (existingUser) {
+    // after we sign up the user automatically we let user login with user's facebook account
     let isValidPassword = false;
     try {
-      isValidPassword = await bcrypt.compare(password, existingUser.password);  // login user with hashed password
+      isValidPassword = await bcrypt.compare(password, existingUser.password); // login user with hashed password
     } catch (err) {
-      return next(new HttpError('Could not log your Facebook account in, please check your credentials and try again.', 500));
+      return next(
+        new HttpError(
+          "Could not log your Facebook account in, please check your credentials and try again.",
+          500
+        )
+      );
     }
 
-    if (!isValidPassword) {                                       // basic validator so not need express-validator 
-      return next(new HttpError('Could not identify Facebook user, credentials seem to be wrong.', 403));
+    if (!isValidPassword) {
+      // basic validator so not need express-validator
+      return next(
+        new HttpError(
+          "Could not identify Facebook user, credentials seem to be wrong.",
+          403
+        )
+      );
     }
 
     let token;
     try {
-      token = jwt.sign({
-        userId: existingUser.id,
-        email: existingUser.email
-      },
+      token = jwt.sign(
+        {
+          userId: existingUser.id,
+          email: existingUser.email,
+        },
         process.env.JWT_KEY,
-        { expiresIn: "7d" });
+        { expiresIn: "7d" }
+      );
     } catch (err) {
-      return next(new HttpError('Facebook Log in failed, please try again.', 500));
+      return next(
+        new HttpError("Facebook Log in failed, please try again.", 500)
+      );
     }
 
-    res.json({ userId: existingUser.id, email: existingUser.email, token: token });
-  } else {                                            // we sign up the user automatically with user's facebook data
+    res.json({
+      userId: existingUser.id,
+      email: existingUser.email,
+      token: token,
+    });
+  } else {
+    // we sign up the user automatically with user's facebook data
     let hashedPassword;
     try {
-      hashedPassword = await bcrypt.hash(password, 12);         // hashing the user password
+      hashedPassword = await bcrypt.hash(password, 12); // hashing the user password
     } catch (err) {
-      return next(new HttpError('Could not creat a user with your Facebook account, please try again.', 500));
+      return next(
+        new HttpError(
+          "Could not creat a user with your Facebook account, please try again.",
+          500
+        )
+      );
     }
 
-    const createdUser = new User({                    // creating a new user with facebook data
+    const createdUser = new User({
+      // creating a new user with facebook data
       name,
       email,
-      image: picture.data.url,          // connecting users to image url. this part different from usual
+      image: picture.data.url, // connecting users to image url. this part different from usual
       password: hashedPassword,
-      signType: "facebook",//for bug
-      places: []
+      places: [],
     });
 
     try {
-      await createdUser.save();                       // save db created user
+      await createdUser.save(); // save db created user
     } catch (err) {
-      return next(new HttpError('Facebook Signing up failed, please try again.', 500));
+      return next(
+        new HttpError("Facebook Signing up failed, please try again.", 500)
+      );
     }
 
-    let token;                                        //generating token for browser
+    let token; //generating token for browser
     try {
-      token = jwt.sign({
-        userId: createdUser.id,
-        email: createdUser.email
-      },
+      token = jwt.sign(
+        {
+          userId: createdUser.id,
+          email: createdUser.email,
+        },
         process.env.JWT_KEY,
-        { expiresIn: "7d" });                         // expires in as long as possible
+        { expiresIn: "7d" }
+      ); // expires in as long as possible
     } catch (error) {
-      return next(new HttpError('Facebook Signing up failed, please try again.', 500));
+      return next(
+        new HttpError("Facebook Signing up failed, please try again.", 500)
+      );
     }
-    res.status(201).json({ userId: createdUser.id, email: createdUser.email, token: token });      //send data from backend to frontend
+    res
+      .status(201)
+      .json({ userId: createdUser.id, email: createdUser.email, token: token }); //send data from backend to frontend
   }
-
 };
+
+exports.updateUserAccount = updateUserAccount;
+exports.updateUser = updateUser;
+exports.getUserById = getUserById;
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
