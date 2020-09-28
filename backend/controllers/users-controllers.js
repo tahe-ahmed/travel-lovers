@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const fetch = require("node-fetch");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
@@ -354,17 +356,14 @@ const login = async (req, res, next) => {
 };
 
 const googleLogin = async (req, res, next) => {
-  const client = new OAuth2Client(
-    "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com"
-  );
+  const client = new OAuth2Client(process.env.GOOGLE_LOGIN_KEY);
   const { email, password, tokenId } = req.body;
 
   let googleData;
   try {
     googleData = await client.verifyIdToken({
       idToken: tokenId,
-      audience:
-        "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com",
+      audience: process.env.GOOGLE_LOGIN_KEY,
     });
   } catch (err) {
     return next(
