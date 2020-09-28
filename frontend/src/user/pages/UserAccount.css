@@ -1,0 +1,16 @@
+.expand{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.container{
+    display: flex;
+  justify-content: center;
+  flex-direction: column; 
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  max-width: 40rem;
+  margin: 1rem auto;
+  background-color: white;
+  padding: 10px;
+}
