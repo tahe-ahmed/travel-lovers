@@ -1,5 +1,15 @@
 import React, { useState, useContext } from 'react';
-import {Avatar,Button,CssBaseline,Link,Grid,Box,Typography,Container,CircularProgress} from '@material-ui/core';
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  CircularProgress,
+} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -111,7 +121,7 @@ const Auth = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component='h1' variant='h5'>
-                Sign in
+                {isLoginMode ? 'Sign in' : 'Sign up'}
               </Typography>
             </div>
 
@@ -170,14 +180,19 @@ const Auth = () => {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href='#' variant='body2'>
-                    Forgot password?
-                  </Link>
-                </Grid>
+                {isLoginMode && (
+                  <Grid item xs>
+                    <Link href='#' variant='body2'>
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                )}
+
                 <Grid item>
                   <Link href='#' variant='body2' onClick={switchModeHandler}>
-                    {"Don't have an account? Sign Up"}
+                    {isLoginMode
+                      ? "Don't have an account? Sign Up"
+                      : 'Already have an account? Sign in'}
                   </Link>
                 </Grid>
               </Grid>
