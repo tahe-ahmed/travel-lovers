@@ -12,6 +12,7 @@ const userSchema = new Schema({
   interests:{type: String, required: false},
   biography:{type: String, required: false},
   image: { type: String, required: true },
+  signType: { type: String, required: true },// for bug
   places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }]
 });
 

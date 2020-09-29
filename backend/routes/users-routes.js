@@ -1,48 +1,37 @@
-const express = require('express');
-const { check } = require('express-validator');
+const express = require("express");
+const { check } = require("express-validator");
 
-const usersController = require('../controllers/users-controllers');
-const fileUpload = require('../middleware/file-upload');
+const usersController = require("../controllers/users-controllers");
+const fileUpload = require("../middleware/file-upload");
 
 const router = express.Router();
 
-router.get('/', usersController.getUsers);
+router.get("/", usersController.getUsers);
 
-router.get('/:uid', usersController.getUserById);
+router.get("/:uid", usersController.getUserById);
 
 router.post(
-  '/signup',
-  fileUpload.single('image'),
+  "/signup",
+  fileUpload.single("image"),
   [
-    check('name')
-      .not()
-      .isEmpty(),
-    check('email')
-      .normalizeEmail()
-      .isEmail(),
-    check('password').isLength({ min: 6 })
+    check("name").not().isEmpty(),
+    check("email").normalizeEmail().isEmail(),
+    check("password").isLength({ min: 6 }),
   ],
   usersController.signup
 );
 
+router.post("/login", usersController.login);
+
 router.patch(
-  '/:uid',
-  fileUpload.single('image'),
-  [
-    check('name')
-      .not()
-      .isEmpty()
-  ],
+  "/:uid",
+  fileUpload.single("image"),
+  [check("name").not().isEmpty()],
   usersController.updateUser
 );
 
-router.patch(
-  '/account/:uid',
-  usersController.updateUserAccount
-);
+router.patch("/account/:uid", usersController.updateUserAccount);
 
-
-
-router.post('/login', usersController.login);
-
+router.post("/googlelogin", usersController.googleLogin);
+router.post("/facebooklogin", usersController.facebooklogin); //facebook login
 module.exports = router;

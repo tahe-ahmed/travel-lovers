@@ -23,6 +23,7 @@ const UsersList = props => {
           id={user.id}
           image={user.image}
           name={user.name}
+          signType={user.signType}
           placeCount={user.places.length}
         />
       ))}
