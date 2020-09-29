@@ -1,14 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams ,useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 import Input from '../../shared/components/FormElements/Input';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Modal from '../../shared/components/UIElements/Modal';
-import Button from '../../shared/components/FormElements/Button';
+import Button from '@material-ui/core/Button';
+// import Button from '../../shared/components/FormElements/Button';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import './UpdateUser.css';
 
 const UpdateUser = () => {
@@ -25,7 +32,7 @@ const UpdateUser = () => {
   };
 
   const radioChange = (e) => {
-    setGenderOption(e.currentTarget.value);
+    setGenderOption(e.target.value);
   };
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -86,13 +93,12 @@ const UpdateUser = () => {
           },
           true
         );
+        console.log(responseData.user.gender);
         setGenderOption(responseData.user.gender);
-
       } catch (err) {}
     };
     fetchUser();
-  }, [sendRequest, userId, setLoadedUser,setFormData]);
-
+  }, [sendRequest, userId, setLoadedUser, setFormData]);
 
   const userUpdateSubmitHandler = async (event) => {
     event.preventDefault();
@@ -105,7 +111,7 @@ const UpdateUser = () => {
       formData.append('image', formState.inputs.image.value);
       formData.append('biography', formState.inputs.biography.value);
       formData.append('interests', formState.inputs.interests.value);
-  
+
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
         'PATCH',
@@ -117,9 +123,8 @@ const UpdateUser = () => {
 
       setSuccessModal(true);
 
-      auth.userImage=responseData.user.image;
+      auth.userImage = responseData.user.image;
       history.push('/user');
-      
     } catch (err) {}
   };
 
@@ -141,7 +146,12 @@ const UpdateUser = () => {
       {!isLoading && loadedUser && (
         <div className='container'>
           <div className='user-container'>
-            <form className='user-form' onSubmit={userUpdateSubmitHandler}>
+            <form
+              noValidate
+              autoComplete='off'
+              className='place-form'
+              onSubmit={userUpdateSubmitHandler}
+            >
               <ImageUpload
                 center
                 id='image'
@@ -162,24 +172,34 @@ const UpdateUser = () => {
                 initialValue={loadedUser.name}
                 initialValid={true}
               />
+              
+              <FormControl component='fieldset'>
+                <FormLabel component='legend'>Gender</FormLabel>
+                <RadioGroup
+                  aria-label='gender'
+                  name='gender'
+                  value={genderOption}
+                  onChange={radioChange}
+                >
+                  <FormControlLabel
+                    value='Female'
+                    control={<Radio />}
+                    label='Female'
+                  
+                  />
+                  <FormControlLabel
+                    value='Male'
+                    control={<Radio />}
+                    label='Male'
+                  />
+                  <FormControlLabel
+                    value='Other'
+                    control={<Radio />}
+                    label='Other'
+                  />
+                </RadioGroup>
+              </FormControl>
 
-              <label>Gender</label>
-              <div className='radio'>
-                <input
-                  type='radio'
-                  value='Female'
-                  checked={genderOption === 'Female'}
-                  onChange={radioChange}
-                />
-                Female
-                <input
-                  type='radio'
-                  value='Male'
-                  checked={genderOption === 'Male'}
-                  onChange={radioChange}
-                />
-                Male
-              </div>
               <Input
                 id='age'
                 element='input'
@@ -212,7 +232,12 @@ const UpdateUser = () => {
                 initialValid={true}
               />
               <div className='user-button'>
-                <Button type='submit' disabled={!formState.isValid}>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                  disabled={!formState.isValid}
+                >
                   SAVE CHANGES
                 </Button>
               </div>

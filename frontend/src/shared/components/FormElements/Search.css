@@ -1,4 +1,4 @@
-.search-bar-container {
+/* .search-bar-container {
   width: 100%;
   text-align: center;
 }
@@ -16,4 +16,10 @@
 .search-bar:focus {
   background-color: #f8df00;
   width: 23rem;
+} */
+
+
+.search-bar{
+  display: flex;
+  justify-content: flex-end;
 }

@@ -139,7 +139,7 @@ const UserAccount = () => {
                 onInput={inputHandler}
               />
               <Input
-                element='input'
+                element='password'
                 id='password'
                 type='password'
                 label='Current Password'
@@ -165,7 +165,7 @@ const UserAccount = () => {
             <hr />
             <form onSubmit={passwordSubmitHandler}>
               <Input
-                element='input'
+                element='password'
                 id='currentPassword'
                 type='password'
                 label='Current Password'
@@ -174,7 +174,7 @@ const UserAccount = () => {
                 onInput={inputHandler}
               />
               <Input
-                element='input'
+                element='password'
                 id='newPassword'
                 type='password'
                 label='New Password'

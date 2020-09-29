@@ -5,7 +5,8 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import PlaceList from "../components/PlaceList";
 import Search from "../../shared/components/FormElements/Search";
-import Pagination from "../../shared/components/UIElements/Pagination";
+// import Pagination from "../../shared/components/UIElements/Pagination";
+import Pagination from '@material-ui/lab/Pagination';
 
 const Users = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -83,12 +84,14 @@ const Users = () => {
       )}
       {loadedPlaces && filteredPlaces && <PlaceList items={currentPlaces} />}
       {loadedPlaces && filteredPlaces && (
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={placesPerPage}
-          totalItems={filteredPlaces.length}
-          paginate={paginate}
-        />
+        // <Pagination
+        //   currentPage={currentPage}
+        //   itemsPerPage={placesPerPage}
+        //   totalItems={filteredPlaces.length}
+        //   paginate={paginate}
+        // />
+
+        <Pagination count={10} />
       )}
     </React.Fragment>
   );
