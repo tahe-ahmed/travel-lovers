@@ -8,8 +8,8 @@ const UserItem = (props) => {
   const [imageURL, setImageURL] = useState(props.image);
   // check image url props if its data come from google/facebook API or uploads/images
   useEffect(() => {
-    //if (imageURL.startsWith("https://") || imageURL.startsWith("http://")) {
-    if (props.signType !== 'normal') { // for bug
+    if (imageURL.startsWith("https://") || imageURL.startsWith("http://")) {
+      //if (props.signType !== 'normal') { // for bug
       setImageURL(imageURL);
     } else {
       setImageURL(`${process.env.REACT_APP_ASSET_URL}/${props.image}`);

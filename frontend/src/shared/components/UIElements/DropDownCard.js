@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/auth-context';
 import { Link } from 'react-router-dom';
 import './DropDownCard.css';
@@ -13,10 +13,10 @@ const DropDownCard = () => {
         <ul className='dd-menu'>
           <li onClick={auth.logout}>Sign out</li>
           <li>
-            <Link className ="dd-link" to={`/user/${auth.userId}`}>Edit your profile</Link>{' '}
+            <Link className="dd-link" to={`/user/${auth.userId}`}>Edit your profile</Link>{' '}
           </li>
           <li>
-            <Link className= "dd-link" to={`/account/${auth.userId}`}>Account Settings</Link>
+            <Link className="dd-link" to={`/account/${auth.userId}`}>Account Settings</Link>
           </li>
         </ul>
       </div>
