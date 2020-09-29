@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.homepage {
+  background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  opacity: 0.7;
+  max-width: 100%;
+  background-size: cover;
+  /* height: 100vh; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.homepage h1,
+h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.points {
+  margin: 20px;
+}
+
+.point {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+  color: white;
+  font-weight: 900;
+  font-size: 1.6rem;
+}
+
+.point i {
+  margin-right: 8px;
+  font-size: xx-large;
+  color: #f8df00;
+}
+
+.signup h3 {
+  color: white;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+
+.signup a {
+  background-color: #1c87c9;
+  border: none;
+  color: white;
+  padding: 20px 34px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 15px;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .homepage h1,
+  h2 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+  }
+  .point {
+    font-size: 1.4rem;
+  }
+}
