@@ -32,7 +32,7 @@ const UserProfile = (props) => {
           alt={auth.userImage}
           onClick={() => setOpen((open) => !open)}
         />
-        {open && <DropDownCard  />}
+        {open && <DropDownCard />}
       </div>
     </React.Fragment>
   );
