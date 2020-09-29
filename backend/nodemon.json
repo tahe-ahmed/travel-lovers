@@ -1,9 +1,10 @@
 {
-    "env":{
-        "DB_USER":"zekiye",
-        "DB_PASSWORD":"zekiyeburak",
-        "DB_NAME":"mern",
-        "MAPBOX_API_KEY":"pk.eyJ1IjoiemVraXllIiwiYSI6ImNrZXNlNTQ2ZTNhdTIyeW5wYjhpcWR5OHAifQ.xvDhG3GwcfC6QL_yWjKr5Q",
-        "JWT_KEY":"supersecret_dont_share'"
-    }
+  "env": {
+    "DB_USER": "zekiye",
+    "DB_PASSWORD": "zekiyeburak",
+    "DB_NAME": "mern",
+    "MAPBOX_API_KEY": "pk.eyJ1IjoiemVraXllIiwiYSI6ImNrZXNlNTQ2ZTNhdTIyeW5wYjhpcWR5OHAifQ.xvDhG3GwcfC6QL_yWjKr5Q",
+    "JWT_KEY": "supersecret_dont_share'",
+    "GOOGLE_LOGIN_KEY": "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com"
+  }
 }
