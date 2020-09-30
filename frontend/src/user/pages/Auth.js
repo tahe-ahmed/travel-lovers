@@ -4,6 +4,8 @@ import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import Modal from '../../shared/components/UIElements/Modal';
+
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import {
@@ -21,6 +23,7 @@ import './Auth.css';
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [forgotPassword,setForgotPassword] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [isAutoLoad, setIsAutoLoad] = useState(false);      // for facebook login
   const [formState, inputHandler, setFormData] = useForm(
@@ -36,6 +39,8 @@ const Auth = () => {
     },
     false
   );
+
+  const closeForgotPassword = () => setForgotPassword(false);
 
   const switchModeHandler = () => {
     if (!isLoginMode) {
@@ -146,9 +151,45 @@ const Auth = () => {
     } catch (err) { }
 
   };
+
+
+  
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
+      <Modal
+        show={forgotPassword}
+        onCancel={closeForgotPassword}
+        header="deneme"
+        contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button inverse onClick={closeForgotPassword}>
+              CANCEL
+            </Button>
+            <Button danger >
+            Send Password Reset Email
+            </Button>
+          </React.Fragment>
+        }
+      >
+        <div className="map-container">
+
+        <Input
+            id="email"
+            element="input"
+            type="text"
+            label="Email"
+            validators={[VALIDATOR_EMAIL()]}
+            errorText="Please enter a valid email address."
+            onInput={inputHandler}
+            placeholder="Enter your email address"
+          />
+        </div>
+      </Modal>
+      <div className="container">
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>{isLoginMode ? 'Login' : 'Signup'} Required</h2>
@@ -225,6 +266,8 @@ const Auth = () => {
         <br />
         <br />
       </Card>
+      <a href="#" onClick={()=> setForgotPassword(prev => !prev) }>ForgotPassword</a>
+      </div>
     </React.Fragment>
   );
 };
