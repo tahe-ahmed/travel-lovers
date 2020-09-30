@@ -348,6 +348,7 @@ const login = async (req, res, next) => {
     userId: existingUser.id,
     email: existingUser.email,
     token: token,
+    image:existingUser.image //this image is used to add auth context in frontend side
   });
 };
 
