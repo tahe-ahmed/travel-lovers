@@ -83,7 +83,7 @@ const Auth = () => {
             'Content-Type': 'application/json'
           }
         );
-        auth.login(responseData.userId, responseData.token, responseData.image);
+        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
       } catch (err) { }
     } else {
       try {
@@ -98,7 +98,7 @@ const Auth = () => {
           formData
         );
 
-        auth.login(responseData.userId, responseData.token, responseData.image);
+        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
       } catch (err) { }
     }
   };
@@ -119,7 +119,7 @@ const Auth = () => {
           "Content-Type": "application/json",
         }
       );
-      auth.login(responseData.userId, responseData.token);
+      auth.login(responseData.userId, responseData.token,responseData.image);// here image is included to context!
     } catch (err) { }
   };
 
@@ -142,7 +142,7 @@ const Auth = () => {
           'Content-Type': 'application/json'
         }
       );
-      auth.login(responseData.userId, responseData.token);
+      auth.login(responseData.userId, responseData.token,responseData.image); // here image is included to context!
     } catch (err) { }
 
   };
