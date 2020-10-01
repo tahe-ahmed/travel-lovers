@@ -105,8 +105,8 @@ const Auth = () => {
             'Content-Type': 'application/json',
           }
         );
-        auth.login(responseData.userId, responseData.token, responseData.image);
-      } catch (err) {}
+        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
+      } catch (err) { }
     } else {
       try {
         const formData = new FormData();
@@ -120,8 +120,8 @@ const Auth = () => {
           formData
         );
 
-        auth.login(responseData.userId, responseData.token, responseData.image);
-      } catch (err) {}
+        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
+      } catch (err) { }
     }
   };
   // google handler
@@ -142,8 +142,10 @@ const Auth = () => {
         },
         500
       );
-      auth.login(responseData.userId, responseData.token);
-    } catch (err) {}
+
+      auth.login(responseData.userId, responseData.token,responseData.image);// here image is included to context!
+    } catch (err) { }
+
   };
 
   // facebook login handler
@@ -167,9 +169,9 @@ const Auth = () => {
         },
         500
       );
-      auth.login(responseData.userId, responseData.token);
-    } catch (err) {}
-  };
+      auth.login(responseData.userId, responseData.token,responseData.image); // here image is included to context!
+    } catch (err) { }
+  }
 
   const resetPassword = async () => {
     setIsAutoLoad(true);

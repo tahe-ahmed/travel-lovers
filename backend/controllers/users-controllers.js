@@ -635,6 +635,7 @@ const facebooklogin = async (req, res, next) => {
       image: createdUser.image, //this image is used to add auth context in frontend side
     }); //send data from backend to frontend
   }
+};
 
 //Sends the reset password to the registered mail address!
 const forgotPassword = async (req, res, next) => {
@@ -699,8 +700,6 @@ const forgotPassword = async (req, res, next) => {
     });
     res.status(200).json({ msg: "Your password was reset. Please check your email!" });
   });
-
-
 };
 
 exports.updateUserAccount = updateUserAccount;
