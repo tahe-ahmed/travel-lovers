@@ -37,7 +37,7 @@ const MainNavigation = props => {
           <span />
         </button>
         <h1 className="main-navigation__title">
-          <Link to="/">YourPlaces</Link>
+          <Link to="/"><img src="https://i.postimg.cc/KcssjcY4/travel-lovers.png" alt="logo" /></Link>
         </h1>
         <nav className="main-navigation__header-nav">
           <NavLinks />

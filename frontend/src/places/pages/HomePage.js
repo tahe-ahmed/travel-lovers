@@ -1,48 +1,120 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { NavLink } from "react-router-dom";
+import ImageGallery from "react-image-gallery";
+
+import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import "./HomePage.css";
 
 function HomePage() {
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlaces, setLoadedPlaces] = useState();
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/places`
+        );
+        const aa = responseData.places.map((place) => ({
+          original: `${process.env.REACT_APP_ASSET_URL}/${place.image}`,
+          tumbnail: `${process.env.REACT_APP_ASSET_URL}/${place.image}`,
+          description: place.address,
+          originalAlt: place.title,
+          originalTitle: place.title,
+        }));
+        setLoadedPlaces(aa);
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest]);
   return (
-    <div className="homepage">
-      <div>
-        <img src="https://i.postimg.cc/q78y7JjC/sadad.png" alt="logo" />
-      </div>
-
-      <h1>welcome to TravelLovers</h1>
-      <h2>
-        A place where you can share and connect with other passionate travellers
-      </h2>
-
-      <div className="points">
-        <div className="point">
-          <i class="fas fa-search-location"></i>
-          <p>Find people and communicate with each other</p>
-        </div>
-        <div className="point">
-          <i class="fas fa-comments"></i>
-          <p>Share your experience with your friends</p>
-        </div>
-
-        <div className="point">
-          <i class="fas fa-map-marked"></i>
-          <p>Plan your future trips</p>
+    <>
+      <div className="header">
+        <div className="info">
+          <h1 className="animated-text">EXPLORE. DREAM. DISCOVER.</h1>
         </div>
       </div>
+      <section className="content">
+        <div className="rainbow">
+          <h1 className="rainbow-text">
+            The world is a book and those <br /> who do not travel read only one
+            page.
+          </h1>
+        </div>
+        <div className="card-hp">
+          <Card className="card-items">
+            <i className="fas fa-search"></i>
+            <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
+            <p className="card-description">
+              You can find millions of travel lovers all over the world. They
+              are here, they want to get connected.
+            </p>
+          </Card>
+          <Card className="card-items">
+            <i className="fas fa-share"></i>
+            <h3 className="card-text">SHARE YOUR EXPERIENCE</h3>
+            <p className="card-description">
+              Let others light their candles. Spread your travel love all over
+              the world. Comment and rate others' experience.
+            </p>
+          </Card>
+          <Card className="card-items">
+            <i className="fas fa-map-marked-alt"></i>
+            <h3 className="card-text">PLAN YOUR FUTURE TRIPS</h3>
+            <p className="card-description">
+              Travel broadens the mind. Don't waste your time to think of where
+              to go. All world is in here.{" "}
+            </p>
+          </Card>
+        </div>
+      </section>
+      {loadedPlaces && (
+        <ImageGallery
+          items={loadedPlaces}
+          showThumbnails={false}
+          autoPlay={true}
+          slideInterval={2500}
+          onErrorImageURL="https://i.postimg.cc/Hs32TQT5/amsterda.jpg"
+        />
+      )}
 
-      <div className="signup">
-        <h3>You can sign up here</h3>
-        <a href="/auth">Sign up page</a>
+      <Card className="banner">
+        {!auth.isLoggedIn ? (
+          <>
+            <h1 className="banner-header">JOIN OUR JOURNEY</h1>
+            <p>
+              &#x1F31F; Create an account and start your dream trip. &#x1F31F;
+            </p>
+            <Button inverse href="/auth">
+              SIGN UP
+            </Button>
+          </>
+        ) : (
+          <>
+            <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
+            <p>
+              &#x1F31F; Let's explore new places or share your experience.
+              &#x1F31F;
+            </p>
+            <Button inverse href="/places/new">
+              ADD A NEW PLACE
+            </Button>
+            <Button inverse href="/places">
+              EXPLORE NEW PLACES
+            </Button>
+          </>
+        )}
+      </Card>
+
+      <div className="banner-bottom">
+        Made with <span className="heart">❤</span> in Amsterdam. 2020 /
+        class27@HYF
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-      <div>SLIDES / PLACES WITH USERS</div>
-      <div>OTHER STAFF</div>
-    </div>
+    </>
   );
 }
 
