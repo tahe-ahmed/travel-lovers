@@ -277,9 +277,12 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res
-    .status(201)
-    .json({ userId: createdUser.id, email: createdUser.email, token: token });
+  res.status(201).json({
+    userId: createdUser.id,
+    email: createdUser.email,
+    token: token,
+    image: existingUser.image, //this image is used to add auth context in frontend side
+  });
 };
 
 const login = async (req, res, next) => {
@@ -351,7 +354,7 @@ const login = async (req, res, next) => {
     userId: existingUser.id,
     email: existingUser.email,
     token: token,
-    image: existingUser.image,
+    image: existingUser.image, //this image is used to add auth context in frontend side
   });
 };
 
@@ -435,6 +438,7 @@ const googleLogin = async (req, res, next) => {
       userId: existingUser.id,
       email: existingUser.email,
       token: token,
+      image: existingUser.image, //this image is used to add auth context in frontend side
     });
   } else {
     // if signup
@@ -484,17 +488,17 @@ const googleLogin = async (req, res, next) => {
       );
     }
 
-    res
-      .status(201)
-      .json({ userId: createdUser.id, email: createdUser.email, token: token }); //176- generating token
+    res.status(201).json({
+      userId: createdUser.id,
+      email: createdUser.email,
+      token: token,
+      image: createdUser.image, //this image is used to add auth context in frontend side
+    }); //176- generating token
   }
 };
 
 const facebooklogin = async (req, res, next) => {
   // facebook login controller
-
-  console.log('facebooklogin');
-
   const { password, userID, accessToken, signType } = req.body;
 
   const URL = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
@@ -575,6 +579,7 @@ const facebooklogin = async (req, res, next) => {
       userId: existingUser.id,
       email: existingUser.email,
       token: token,
+      image: existingUser.image, //this image is used to add auth context in frontend side
     });
   } else {
     // we sign up the user automatically with user's facebook data
@@ -623,11 +628,13 @@ const facebooklogin = async (req, res, next) => {
         new HttpError('Facebook Signing up failed, please try again.', 500)
       );
     }
-    res
-      .status(201)
-      .json({ userId: createdUser.id, email: createdUser.email, token: token }); //send data from backend to frontend
+    res.status(201).json({
+      userId: createdUser.id,
+      email: createdUser.email,
+      token: token,
+      image: createdUser.image, //this image is used to add auth context in frontend side
+    }); //send data from backend to frontend
   }
-};
 
 //Sends the reset password to the registered mail address!
 const forgotPassword = async (req, res, next) => {
