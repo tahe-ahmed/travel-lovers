@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +32,11 @@ const UserItem = (props) => {
             </Link>
           </CardContent>
         </CardActionArea>
-=======
+</Card>
+</li>
+        )
+        }
+{/* =======
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../shared/components/UIElements/Avatar";
@@ -70,6 +73,6 @@ const UserItem = (props) => {
       </Card>
     </li>
   );
-};
+}; */}
 
 export default UserItem;

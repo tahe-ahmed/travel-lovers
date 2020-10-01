@@ -32,6 +32,7 @@ const getUserById = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(

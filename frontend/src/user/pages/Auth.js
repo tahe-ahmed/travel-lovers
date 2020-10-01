@@ -10,6 +10,8 @@ import {
   Container,
   CircularProgress,
 } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -36,7 +38,7 @@ const Auth = () => {
   const [forgotPassword, setForgotPassword] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [isAutoLoad, setIsAutoLoad] = useState(false); // for facebook login
-  const [resetPasswordMsg,setResetPasswordMsg] = useState('');
+  const [resetPasswordMsg, setResetPasswordMsg] = useState('');
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -162,7 +164,8 @@ const Auth = () => {
         }),
         {
           'Content-Type': 'application/json',
-        },500
+        },
+        500
       );
       auth.login(responseData.userId, responseData.token);
     } catch (err) {}
@@ -176,13 +179,13 @@ const Auth = () => {
         `${process.env.REACT_APP_BACKEND_URL}/users/forgotPassword`,
         'POST',
         JSON.stringify({
-          email:formState.inputs.resetEmail.value,
+          email: formState.inputs.resetEmail.value,
         }),
         {
           'Content-Type': 'application/json',
         }
       );
-      console.log("return",responseData.msg);
+      console.log('return', responseData.msg);
       setResetPasswordMsg(responseData.msg);
       // auth.login(responseData.userId, responseData.token);
     } catch (err) {}
@@ -199,122 +202,157 @@ const Auth = () => {
         footerClass='place-item__modal-actions'
         footer={
           <React.Fragment>
-            <Button inverse onClick={closeForgotPassword}>
+            <Button variant="contained" color="secondary" onClick={closeForgotPassword}>
               CANCEL
             </Button>
-            {resetPasswordMsg ==='' && <Button danger onClick={resetPassword}>
-              Reset Password
-            </Button>}
+            {resetPasswordMsg === '' && (
+              <Button color='primary'    variant='contained' onClick={resetPassword}>
+                Reset Password
+              </Button>
+            )}
           </React.Fragment>
         }
       >
         <div className='map-container'>
-          {resetPasswordMsg  === '' &&  <Input
-            id='resetEmail'
-            element='input'
-            type='text'
-            label='Email'
-            validators={[VALIDATOR_EMAIL()]}
-            errorText='Please enter a valid email address.'
-            onInput={inputHandler}
-            placeholder='Enter your email address'
-          /> 
-          }
-          {resetPasswordMsg !=='' && <p>{resetPasswordMsg} </p>}
-      
-        </div>
-      </Modal>
-      <div className='container'>
-        <Card className='authentication'>
-          {isLoading && <LoadingSpinner asOverlay />}
-          <h2>{isLoginMode ? 'Login' : 'Signup'} Required</h2>
-          <hr />
-          <form onSubmit={authSubmitHandler}>
-            {!isLoginMode && (
-              <Input
-                element='input'
-                id='name'
-                type='text'
-                label='Your Name'
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a name.'
-                onInput={inputHandler}
-              />
-            )}
-            {!isLoginMode && (
-              <ImageUpload
-                center
-                id='image'
-                onInput={inputHandler}
-                errorText='Please provide an image.'
-              />
-            )}
+          {resetPasswordMsg === '' && (
             <Input
+              id='resetEmail'
               element='input'
-              id='email'
-              type='email'
-              label='E-Mail'
+              type='text'
+              fullWidth
+              label='Email'
               validators={[VALIDATOR_EMAIL()]}
               errorText='Please enter a valid email address.'
               onInput={inputHandler}
-            />
-            <Input
-              element='input'
-              id='password'
-              type='password'
-              label='Password'
-              validators={[VALIDATOR_MINLENGTH(6)]}
-              errorText='Please enter a valid password, at least 6 characters.'
-              onInput={inputHandler}
-            />
-            <Button type='submit' disabled={!formState.isValid}>
-              {isLoginMode ? 'LOGIN' : 'SIGNUP'}
-            </Button>
-          </form>
-          <Button inverse onClick={switchModeHandler}>
-            SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
-          </Button>
-          <br />
-          <br />
-          {isLoginMode && (
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_LOGIN}
-              buttonText='Log in with Google'
-              onSuccess={responseGoogleHandler}
-              cookiePolicy={'single_host_origin'}
-              icon={true}
-              theme='white'
+              placeholder='Enter your email address'
             />
           )}
-          <br />
-          {isLoginMode && (
-            <FacebookLogin
-              appId={process.env.REACT_APP_FACEBOOK_LOGIN}
-              // autoLoad={isAutoLoad}
-              fields="name,email,picture"
-              callback={responseFacebookHandler}
-              icon='fa-facebook'
-              textButton=' Log in with Facebook'
-              size="small"
-         
-            />
-         
-          )}
-          <br />
-          <br />
-        </Card>
-
-        <div>
-          {isLoginMode && (
-            <p onClick={() => setForgotPassword((prev) => !prev)}>
-              ForgotPassword
-            </p>
-          )}
+          {resetPasswordMsg !== '' && <p>{resetPasswordMsg} </p>}
         </div>
+      </Modal>
+      <div className='login-background'>
+        <Container component='main' maxWidth='xs' className='login-form'>
+          <CssBaseline />
+          <div className='paper'>
+            <div className='header'>
+              {isLoading && <CircularProgress color='secondary' />}
+              <Avatar className='avatar'>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component='h1' variant='h5'>
+                {isLoginMode ? 'Sign in' : 'Sign up'}
+              </Typography>
+            </div>
+
+            <form noValidate className='form' onSubmit={authSubmitHandler}>
+              {!isLoginMode && (
+                <Input
+                  element='input'
+                  required
+                  fullWidth
+                  id='name'
+                  type='text'
+                  label='Your Name'
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText='Please enter a name.'
+                  onInput={inputHandler}
+                />
+              )}
+              {!isLoginMode && (
+                <ImageUpload
+                  center
+                  id='image'
+                  onInput={inputHandler}
+                  errorText='Please provide an image.'
+                />
+              )}
+              <Input
+                id='email'
+                element='input'
+                required
+                fullWidth
+                type='text'
+                label='Email Address'
+                validators={[VALIDATOR_EMAIL()]}
+                errorText='Please enter a valid title.'
+                onInput={inputHandler}
+              />
+              <Input
+                id='password'
+                element='password'
+                required
+                fullWidth
+                type='password'
+                label='Password'
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                errorText='Please enter a valid title.'
+                onInput={inputHandler}
+              />
+
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                disabled={!formState.isValid}
+              >
+                Sign In
+              </Button>
+            </form>
+            <Grid container>
+              {isLoginMode && (
+                <Grid item xs>
+                  <Link
+                    href='#'
+                    variant='body2'
+                    onClick={() => setForgotPassword((prev) => !prev)}
+                  >
+                    Forgot password?
+                  </Link>
+                </Grid>
+              )}
+
+              <Grid item>
+                <Link href='#' variant='body2' onClick={switchModeHandler}>
+                  {isLoginMode
+                    ? "Don't have an account? Sign Up"
+                    : 'Already have an account? Sign in'}
+                </Link>
+              </Grid>
+            </Grid>
+            <br />
+
+            <div className='signin-alternative'>
+              {isLoginMode && <div className='hr-sect'>or</div>}
+              {isLoginMode && (
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_LOGIN}
+                  buttonText='Log in with Google'
+                  onSuccess={responseGoogleHandler}
+                  cookiePolicy={'single_host_origin'}
+                  icon={true}
+                />
+              )}
+              <br />
+              <div className='facebook'>
+                {isLoginMode && (
+                  <FacebookLogin
+                    appId={process.env.REACT_APP_FACEBOOK_LOGIN}
+                    // autoLoad={isAutoLoad}
+                    fields='name,email,picture'
+                    callback={responseFacebookHandler}
+                    icon='fa-facebook'
+                    textButton=' Log in with Facebook'
+                    size='medium'
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </Container>
       </div>
     </React.Fragment>
   );
 };
 
 export default Auth;
-

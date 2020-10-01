@@ -102,7 +102,6 @@ const UpdateUser = () => {
 
   const userUpdateSubmitHandler = async (event) => {
     event.preventDefault();
-
     try {
       const formData = new FormData();
       formData.append('name', formState.inputs.name.value);
@@ -168,6 +167,7 @@ const UpdateUser = () => {
                 label='Name'
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='Please enter a valid title.'
+                fullWidth
                 onInput={inputHandler}
                 initialValue={loadedUser.name}
                 initialValid={true}
@@ -210,6 +210,7 @@ const UpdateUser = () => {
                 onInput={inputHandler}
                 initialValue={loadedUser.age}
                 initialValid={true}
+                fullWidth
               />
               <Input
                 id='interests'
@@ -220,11 +221,13 @@ const UpdateUser = () => {
                 onInput={inputHandler}
                 initialValue={loadedUser.interests}
                 initialValid={true}
+                fullWidth
               />
               <Input
                 id='biography'
                 element='textarea'
                 label='My biography'
+                fullWidth
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='Please enter a valid age.'
                 onInput={inputHandler}

@@ -132,6 +132,7 @@ const UserAccount = () => {
                 element='input'
                 id='newEmail'
                 type='email'
+                fullWidth
                 placeholder={loadedEmail}
                 label='New E-Mail'
                 validators={[VALIDATOR_EMAIL()]}
@@ -143,6 +144,7 @@ const UserAccount = () => {
                 id='password'
                 type='password'
                 label='Current Password'
+                fullWidth
                 validators={[VALIDATOR_MINLENGTH(6)]}
                 errorText='Please enter a valid password, at least 6 characters.'
                 onInput={inputHandler}
@@ -169,6 +171,7 @@ const UserAccount = () => {
                 id='currentPassword'
                 type='password'
                 label='Current Password'
+                fullWidth
                 validators={[VALIDATOR_MINLENGTH(6)]}
                 errorText='Please enter your current password.'
                 onInput={inputHandler}
@@ -178,6 +181,7 @@ const UserAccount = () => {
                 id='newPassword'
                 type='password'
                 label='New Password'
+                fullWidth
                 validators={[VALIDATOR_MINLENGTH(6)]}
                 errorText='Please enter a valid password, at least 6 characters.'
                 onInput={inputHandler}
