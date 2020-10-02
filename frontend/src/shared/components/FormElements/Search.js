@@ -3,7 +3,7 @@ import {Button,AppBar,Toolbar,IconButton,Typography,InputBase,Badge,MenuItem,Men
 
 import SearchIcon from '@material-ui/icons/Search';
 import "./Search.css";
-import useStyles from '../Navigation/MainNavigationStyle';
+import useStyles from '../../../shared/styles/material-ui-syles';
 
 const Search = (props) => {
 

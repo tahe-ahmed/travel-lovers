@@ -7,21 +7,31 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import './UserItem.css';
 
+import useStyles from '../../shared/styles/material-ui-syles';
+ 
+
 const UserItem = (props) => {
+  const classes = useStyles();
+
   return (
-    <li className='user-item' >
+    <li className='user-item'>
       <Card>
         <CardActionArea>
           <CardContent>
             <Link to={`/${props.id}/places`}>
               <Avatar
+                className={classes.large}
                 src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
                 alt={props.name}
-             
               />
 
-              <div className="card-content">
-                <Typography gutterBottom variant='h5' component='h2' color="primary">
+              <div className='card-content'>
+                <Typography
+                  gutterBottom
+                  variant='h5'
+                  component='h2'
+                  color='primary'
+                >
                   {props.name}
                 </Typography>
                 <Typography variant='subtitle1' color='textSecondary'>
@@ -32,11 +42,12 @@ const UserItem = (props) => {
             </Link>
           </CardContent>
         </CardActionArea>
-</Card>
-</li>
-        )
-        }
-{/* =======
+      </Card>
+    </li>
+  );
+};
+{
+  /* =======
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../shared/components/UIElements/Avatar";
@@ -73,6 +84,7 @@ const UserItem = (props) => {
       </Card>
     </li>
   );
-}; */}
+}; */
+}
 
 export default UserItem;
