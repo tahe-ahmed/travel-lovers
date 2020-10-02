@@ -11,7 +11,11 @@ const placeSchema = new Schema({
     lat: { type: Number, required: true },
     lng: { type: Number, required: true }
   },
-  creator: { type: mongoose.Types.ObjectId, required: true, ref: 'User' }
+  creator: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+  rate: [{                                                                              // for star rating
+    raterIds: { type: mongoose.Types.ObjectId, required: false, default: null },
+    raterRates: { type: Number, required: false, default: 0 }
+  }],
+  rateAvg: { type: Number, required: false, default: 0 }                                 // for star rating
 });
-
 module.exports = mongoose.model('Place', placeSchema);

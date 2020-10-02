@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-
+const ratePlaceControllers = require('../controllers/rate-controller'); //for rate
 const placesControllers = require('../controllers/places-controllers');
 const fileUpload = require('../middleware/file-upload');
 const checkAuth = require('../middleware/check-auth');
@@ -40,6 +40,9 @@ router.patch(
   ],
   placesControllers.updatePlace
 );
+
+router.patch('/rate/:pid', ratePlaceControllers.ratePlace); // rating star
+
 
 router.delete('/:pid', placesControllers.deletePlace);
 

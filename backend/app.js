@@ -47,12 +47,17 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
-mongoose
-  .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@hyf.463mg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
+// 122- connecting to database
+const user = "bluedot";
+const password = "bluedot1234";
+const db_name = 'places';
+const url = `mongodb+srv://${user}:${password}@cluster0.dul42.mongodb.net/${db_name}?retryWrites=true&w=majority`;
+
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
   .then(() => {
     console.log('Database is connected!')
     app.listen(process.env.PORT || 5000, () => {

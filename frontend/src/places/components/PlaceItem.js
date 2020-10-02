@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-
+import RatingPlaces from '../../shared/components/UIElements/Rating'; // star-rating 
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
@@ -90,6 +90,15 @@ const PlaceItem = (props) => {
               src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
               alt={props.title}
             />
+            <div className="star-rating">                         {/*   for star rating */}
+              <RatingPlaces
+                placeId={props.id}
+                raterIds={props.rate.raterIds}
+                rateLength={props.rate.length}
+                rateAvg={props.rateAvg}
+                creatorId={props.creatorId}
+              />
+            </div>
             <UserInfo creatorId={props.creatorId} />
           </div>
           <div className="place-item__info">
