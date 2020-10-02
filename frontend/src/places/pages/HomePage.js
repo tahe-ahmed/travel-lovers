@@ -100,8 +100,8 @@ function HomePage() {
               &#x1F31F; Let's explore new places or share your experience.
               &#x1F31F;
             </p>
-            <Button inverse href="/places/new">
-              ADD A NEW PLACE
+            <Button inverse>
+              <NavLink to="/places/new" className='add-places-link'>ADD PLACE</NavLink>
             </Button>
             <Button inverse href="/places">
               EXPLORE NEW PLACES

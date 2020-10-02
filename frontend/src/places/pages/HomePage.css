@@ -215,6 +215,13 @@ i {
   object-fit: contain;
 }
 
+.add-places-link {
+  color: #ff0055;
+}
+.button--inverse:hover .add-places-link{
+  color: white !important
+}
+
 @media only screen and (max-width: 600px) {
   .rainbow-text {
     font-size: 1.5rem;
