@@ -9,6 +9,8 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { Link } from "react-router-dom";
+
 import "./PlaceItem.css";
 
 
@@ -92,11 +94,13 @@ const PlaceItem = (props) => {
             />
             <UserInfo creatorId={props.creatorId} />
           </div>
+          <Link to={`/info/${props.id}`}>
           <div className="place-item__info">
             <h2>{props.title}</h2>
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
+          </Link>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
