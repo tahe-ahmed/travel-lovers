@@ -108,8 +108,8 @@ const UpdateUser = () => {
       formData.append('gender', genderOption);
       formData.append('age', formState.inputs.age.value);
       formData.append('image', formState.inputs.image.value);
-      formData.append('biography', formState.inputs.biography.value);
-      formData.append('interests', formState.inputs.interests.value);
+      formData.append('biography', formState.inputs.biography.value ? formState.inputs.biography.value : '' );
+      formData.append('interests', formState.inputs.interests.value ? formState.inputs.interests.value : '');
 
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,

@@ -32,7 +32,6 @@ const getUserById = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -211,7 +210,6 @@ const signup = async (req, res, next) => {
   }
 
   const { name, email, password } = req.body;
-
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -231,7 +229,6 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(password, 12);
@@ -281,7 +278,7 @@ const signup = async (req, res, next) => {
     userId: createdUser.id,
     email: createdUser.email,
     token: token,
-    image: existingUser.image, //this image is used to add auth context in frontend side
+    image: createdUser.image, //this image is used to add auth context in frontend side
   });
 };
 
@@ -641,17 +638,16 @@ const facebooklogin = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
   console.log('bbb');
   if (req.body.email === '') {
-    res.status(400).send({msg:'email required'});
+    res.status(400).send({ msg: 'email required' });
   }
   const password = generator.generate({
     length: 10,
-    numbers: true
+    numbers: true,
   });
-
 
   let hashedPassword;
   try {
-    hashedPassword =  await bcrypt.hash(password, 12);
+    hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
     const error = new HttpError(
       'Could not create user, please try again.',
@@ -660,7 +656,7 @@ const forgotPassword = async (req, res, next) => {
     return next(error);
   }
 
-   User.findOne({ email: req.body.email }, function (err, user) {
+  User.findOne({ email: req.body.email }, function (err, user) {
     if (err) throw err;
 
     if (!user) {
@@ -668,7 +664,7 @@ const forgotPassword = async (req, res, next) => {
       return next(error);
     }
 
-    user.password = hashedPassword; 
+    user.password = hashedPassword;
     user.save();
 
     const transporter = nodemailer.createTransport({
@@ -679,15 +675,15 @@ const forgotPassword = async (req, res, next) => {
       },
     });
 
-
     const mailOptions = {
-      from:`${process.env.EMAIL_ADDRESS}`,
+      from: `${process.env.EMAIL_ADDRESS}`,
       to: `${user.email}`,
       subject: 'Link To Reset Password',
       text:
-        'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
-        + 'Your new password:\n\n'
-        + password+'\n\n',
+        'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+        'Your new password:\n\n' +
+        password +
+        '\n\n',
     };
 
     transporter.sendMail(mailOptions, (err, response) => {
@@ -698,7 +694,9 @@ const forgotPassword = async (req, res, next) => {
         res.status(200).json('recovery email sent');
       }
     });
-    res.status(200).json({ msg: "Your password was reset. Please check your email!" });
+    res
+      .status(200)
+      .json({ msg: 'Your password was reset. Please check your email!' });
   });
 };
 

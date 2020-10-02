@@ -1,8 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import {Button,AppBar,Toolbar,IconButton,Typography,InputBase,Badge,MenuItem,Menu}  from '@material-ui/core';
+import {
+  Button,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -11,27 +20,17 @@ import { AuthContext } from '../../context/auth-context';
 import useStyles from './MainNavigationStyle';
 import Avatar from '@material-ui/core/Avatar';
 
+
 import './MainNavigation.css';
 
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
-
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
-  const openDrawerHandler = () => {
-    setDrawerIsOpen(true);
-  };
-
-  const closeDrawerHandler = () => {
-    setDrawerIsOpen(false);
-  };
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [isLogin,setIsLogin] = useState(true);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,6 +50,7 @@ const MainNavigation = (props) => {
   };
 
   const logout = () => {
+    setIsLogin(false);
     auth.logout();
   };
 
@@ -145,9 +145,18 @@ const MainNavigation = (props) => {
               <MenuIcon />
             </IconButton>
           </div>
-          <Typography className={classes.title} variant='h6' noWrap>
-            TRAVEL LOVERS
-          </Typography>
+
+          <Button
+            color='inherit'
+            component={NavLink}
+            to={{
+              pathname: `/`,
+            }}
+          >
+            <Typography className={classes.title} variant='h6' noWrap>
+              TRAVEL LOVERS{' '}
+            </Typography>
+          </Button>
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -223,10 +232,11 @@ const MainNavigation = (props) => {
                 </IconButton>
                 <div className={classes.root}>
                   <Avatar
-                    alt='Remy Sharp'
+                    alt='profile'
                     src={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
                     aria-controls={menuId}
                     onClick={handleProfileMenuOpen}
+                    className={classes.large}
                   />
                 </div>
               </React.Fragment>
@@ -246,7 +256,7 @@ const MainNavigation = (props) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      { isLogin && renderMenu}
     </div>
   );
 };
