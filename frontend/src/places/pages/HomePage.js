@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
-import ImageGallery from "react-image-gallery";
+import React, { useState, useEffect, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import ImageGallery from 'react-image-gallery';
 
-import Card from "../../shared/components/UIElements/Card";
-import Button from "../../shared/components/FormElements/Button";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
+import Card from '../../shared/components/UIElements/Card';
+import Button from '../../shared/components/FormElements/Button';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 
-import "./HomePage.css";
+import './HomePage.css';
 
 function HomePage() {
   const auth = useContext(AuthContext);
@@ -45,33 +45,33 @@ function HomePage() {
             page.
           </h1>
         </div>
-        <div className="card-hp">
-          <Card className="card-items">
-            <i className="fas fa-search"></i>
-            <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
-            <p className="card-description">
-              You can find millions of travel lovers all over the world. They
-              are here, they want to get connected.
-            </p>
-          </Card>
-          <Card className="card-items">
-            <i className="fas fa-share"></i>
-            <h3 className="card-text">SHARE YOUR EXPERIENCE</h3>
-            <p className="card-description">
-              Let others light their candles. Spread your travel love all over
-              the world. Comment and rate others' experience.
-            </p>
-          </Card>
-          <Card className="card-items">
-            <i className="fas fa-map-marked-alt"></i>
-            <h3 className="card-text">PLAN YOUR FUTURE TRIPS</h3>
-            <p className="card-description">
-              Travel broadens the mind. Don't waste your time to think of where
-              to go. All world is in here.{" "}
-            </p>
-          </Card>
-        </div>
       </section>
+      <div className="card-hp">
+        <Card className="card-items">
+          <i className="fas fa-search"></i>
+          <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
+          <p className="card-description">
+            You can find millions of travel lovers all over the world. They are
+            here, they want to get connected.
+          </p>
+        </Card>
+        <Card className="card-items">
+          <i className="fas fa-share"></i>
+          <h3 className="card-text">SHARE YOUR EXPERIENCE</h3>
+          <p className="card-description">
+            Let others light their candles. Spread your travel love all over the
+            world. Comment and rate others' experience.
+          </p>
+        </Card>
+        <Card className="card-items">
+          <i className="fas fa-map-marked-alt"></i>
+          <h3 className="card-text">PLAN YOUR FUTURE TRIPS</h3>
+          <p className="card-description">
+            Travel broadens the mind. Don't waste your time to think of where to
+            go. All world is in here.{' '}
+          </p>
+        </Card>
+      </div>
       {loadedPlaces && (
         <ImageGallery
           items={loadedPlaces}
