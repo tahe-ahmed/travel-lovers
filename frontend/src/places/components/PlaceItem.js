@@ -93,12 +93,14 @@ const PlaceItem = (props) => {
             />
             <UserInfo creatorId={props.creatorId} />
           </div>
-          <div className='place-item__info'>
+          <Link to={`/info/${props.id}`}>
+          <div className="place-item__info">
             <h2>{props.title}</h2>
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
-          <div className='place-item__actions'>
+          </Link>
+          <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
