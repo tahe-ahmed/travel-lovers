@@ -47,19 +47,6 @@ const SideDrawer = (props) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // const content = (
-  //   <CSSTransition
-  //     in={props.show}
-  //     timeout={200}
-  //     classNames="slide-in-left"
-  //     mountOnEnter
-  //     unmountOnExit
-  //   >
-  //     <aside className="side-drawer" onClick={props.onClick}>{props.children}</aside>
-  //   </CSSTransition>
-  // );
-
-  // return ReactDOM.createPortal(content, document.getElementById('drawer-hook'));
   return (
     <React.Fragment>
       <div className={classes.sectionMobile}>
@@ -92,34 +79,59 @@ const SideDrawer = (props) => {
           </IconButton>
         </div>
         <Divider />
-        {!auth.isLoggedIn && (
-          <List>
-            <ListItem key='All Users'>
+
+        <List>
+          <ListItem key='All Users'>
+            <Button
+              color='inherit'
+              component={NavLink}
+              to={{
+                pathname: `/`,
+              }}
+            >
+              All Users
+            </Button>
+          </ListItem>
+
+          <ListItem key='All Places'>
+            <Button
+              color='inherit'
+              component={NavLink}
+              to={{
+                pathname: `/places`,
+              }}
+            >
+              All Places
+            </Button>
+          </ListItem>
+
+          {auth.isLoggedIn && (
+            <ListItem key='My Places'>
               <Button
                 color='inherit'
                 component={NavLink}
                 to={{
-                  pathname: `/`,
+                  pathname: `/${auth.userId}/places`,
                 }}
               >
-                All Users
+                MY PLACES
               </Button>
             </ListItem>
-
-            <ListItem key='All Places'>
+          )}
+          {auth.isLoggedIn && (
+            <ListItem>
               <Button
                 color='inherit'
                 component={NavLink}
                 to={{
-                  pathname: `/places`,
+                  pathname: `/places/new`,
                 }}
               >
-                All Places
+                ADD PLACE
               </Button>
             </ListItem>
-          </List>
-        )}
-
+          )}
+        </List>
         <Divider />
       </Drawer>
     </React.Fragment>
