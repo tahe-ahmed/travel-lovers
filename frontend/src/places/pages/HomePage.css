@@ -8,6 +8,7 @@ a {
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: flex-start;
   align-content: flex-start;
@@ -54,10 +55,12 @@ a {
 }
 
 .info {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 15% 10% 0 10%;
   text-align: center;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  /* text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2); */
 }
 
 @keyframes grow {
@@ -68,6 +71,28 @@ a {
     transform: scale(1.1) translateY(-100px);
   }
 }
+
+.signup button {
+  margin-top: 80px;
+  font: inherit;
+  padding: 0.7rem 1.8rem;
+  border: 1px solid white;
+  outline: none;
+  /* border: none; */
+  border-radius: 4px;
+  background: #242939;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.signup button:hover {
+  background-color: white;
+  color: #242939;
+  border: #242939;
+}
+
 .content {
   padding: 3% 10%;
   text-align: justify;
@@ -85,7 +110,7 @@ a {
   color: rgba(217, 226, 130, 0.979);
   margin: -30px auto;
   background-color: rgba(68, 17, 42, 0.7);
-  text-shadow: 0 0 0.6rem yellowgreen;
+  /* text-shadow: 0 0 0.6rem yellowgreen; */
 }
 
 /* Animation */
@@ -130,9 +155,10 @@ a {
   justify-content: center;
   text-align: center;
   color: rgb(7, 4, 31);
+  /* margin: 100px 10px; */
   line-height: 1.7;
   background-color: rgba(36, 41, 57, 0.2);
-  box-shadow: 0 0 15px grey;
+  /* box-shadow: 0 0 15px grey; */
   padding: 20px 0;
   border-radius: 30px;
 }
@@ -215,6 +241,38 @@ i {
   object-fit: contain;
 }
 
+.quotes {
+  text-align: center;
+  margin-bottom: 80px;
+  margin-top: 40px;
+}
+
+.quotes h3 {
+  font-size: 2rem;
+}
+
+.card-quotes {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.card-quote {
+  width: 40%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  background-color: rgba(36, 41, 57, 0.2);
+  margin: 30px;
+}
+
+.card-quote h4 {
+  font-size: 1.8rem;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
 @media only screen and (max-width: 600px) {
   .rainbow-text {
     font-size: 1.5rem;
@@ -240,6 +298,16 @@ i {
     margin: 30px !important;
   }
 
+  .card-quotes {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-quote {
+    width: 80%;
+    margin: 20px 50px;
+  }
+
   .image-gallery-image,
   .image-gallery {
     width: 400px;
@@ -259,8 +327,12 @@ i {
   .card-hp {
     margin: 100px 10px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
+  }
+
+  .card-items {
+    margin: 100px 20px;
   }
 
   .card {

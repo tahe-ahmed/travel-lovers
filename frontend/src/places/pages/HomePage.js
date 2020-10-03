@@ -37,6 +37,12 @@ function HomePage() {
         <div className="info">
           <h1 className="animated-text">EXPLORE. DREAM. DISCOVER.</h1>
         </div>
+        <br />
+        <div className="signup">
+          <button inverse href="/auth">
+            SIGN UP
+          </button>
+        </div>
       </div>
       <section className="content">
         <div className="rainbow">
@@ -81,7 +87,28 @@ function HomePage() {
           onErrorImageURL="https://i.postimg.cc/Hs32TQT5/amsterda.jpg"
         />
       )}
-
+      <div className="quotes">
+        <h3>
+          Here are some quotes of the travelLovers users, describing their
+          experience
+        </h3>
+        <div className="card-quotes">
+          <div className="card-quote">
+            <h4>Omer</h4>
+            <p>
+              This is the best app ever, I've planned my trips based on other
+              users' experience, and already love it.
+            </p>
+          </div>
+          <div className="card-quote">
+            <h4>Ersin</h4>
+            <p>
+              What makes me so happy is sharing my places with other users and
+              friends, and give them an overview of my favorite places.
+            </p>
+          </div>
+        </div>
+      </div>
       <Card className="banner">
         {!auth.isLoggedIn ? (
           <>
