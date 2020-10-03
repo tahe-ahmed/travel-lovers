@@ -1,22 +1,26 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 // import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import PlaceItem from "../components/PlaceItem";
-import CommentList from "../components/comments/CommentList.js";
-import CommentForm from "../components/comments/CommentForm";
+import PlaceItem from '../components/PlaceItem';
+import CommentList from '../components/comments/CommentList.js';
+import CommentForm from '../components/comments/CommentForm';
 
-import "./DetailedPlace.css";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
+import './DetailedPlace.css';
 
 const DetailedPlace = (props) => {
   const auth = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [loadedUsers, setLoadedUsers] = useState();
   const [place, setPlace] = useState();
-  const [commentValueInput, setCommentValueInput] = useState("");
+  const [commentValueInput, setCommentValueInput] = useState('');
   const [mentions, setMentions] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -25,7 +29,7 @@ const DetailedPlace = (props) => {
   /////////// set up the mentions and notification data ////////////
   const usersToMention =
     loadedUsers &&
-    loadedUsers.map((user) => ({ id: "#", display: user.name, _id: user.id }));
+    loadedUsers.map((user) => ({ id: '#', display: user.name, _id: user.id }));
   ///////// get the users' id and display name when mentioned in the commnets
   const onAdd = (id, display) => {
     setMentions([...mentions, { id: id, display: display }]);
@@ -73,7 +77,7 @@ const DetailedPlace = (props) => {
 
   /////////////// when post new comments add them to the client state ////////////////
   const updateComment = (newComment) => {
-    setCommentValueInput("");
+    setCommentValueInput('');
     setComments((comments) => [...comments, newComment]);
   };
 
@@ -95,13 +99,13 @@ const DetailedPlace = (props) => {
 
     try {
       const rawResponse = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/comments",
+        process.env.REACT_APP_BACKEND_URL + '/comments',
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify(variables),
           headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.token,
           },
         }
       );
@@ -133,9 +137,9 @@ const DetailedPlace = (props) => {
   const ondelete = async (todeleteId) => {
     try {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/${todeleteId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          Authorization: "Bearer " + auth.token,
+          Authorization: 'Bearer ' + auth.token,
         },
       });
     } catch (err) {}
@@ -146,13 +150,12 @@ const DetailedPlace = (props) => {
     setComments(updatedcomments);
   };
 
-
   return (
     <React.Fragment>
       {isLoading ? (
         <LoadingSpinner asOverlay />
       ) : (
-        <div className="place-detail">
+        <div className='place-detail'>
           {place && (
             <PlaceItem
               key={place.id}
@@ -166,14 +169,11 @@ const DetailedPlace = (props) => {
               onDelete={props.onDeletePlace}
             />
           )}
-          <div className="container">
-            <div className="comments">
-              <h2>Comments:</h2>
-              {comments.length >= 1 && (
-                <CommentList data={comments} ondelete={ondelete} />
-              )}
-            </div>
-            <div className="form">
+          <Card>
+            <CardContent>
+              <Typography color='textSecondary' gutterBottom>
+                Comments
+              </Typography>
               {loadedUsers && (
                 <CommentForm
                   handleTextChange={handleChange}
@@ -183,8 +183,17 @@ const DetailedPlace = (props) => {
                   onAdd={onAdd}
                 />
               )}
-            </div>
-          </div>
+
+              {comments.length >= 1 && (
+                <CommentList
+                  data={comments.sort(function (a, b) {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                  })}
+                  ondelete={ondelete}
+                />
+              )}
+            </CardContent>
+          </Card>
         </div>
       )}
     </React.Fragment>

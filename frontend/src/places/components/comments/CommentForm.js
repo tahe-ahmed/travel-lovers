@@ -1,21 +1,35 @@
-import React from "react";
-import { MentionsInput, Mention } from "react-mentions";
+import React from 'react';
+import { MentionsInput, Mention } from 'react-mentions';
+import './CommentForm.css';
+import {Card,Button}  from '@material-ui/core';
 
 const CommentForm = (props) => {
   return (
-    <form onSubmit={props.submitComment}>
+    <>
       <MentionsInput
-        className="mentions-input"
-        markup="@[__display__](__type__:__id__)"
+        className='comments-textarea'
+        markup='@[__display__](__type__:__id__)'
         placeholder={"Mention people using '@'"}
         value={props.text}
         onChange={props.handleTextChange}
         appendSpaceOnAdd={true}
       >
-        <Mention trigger="@" data={props.users} href="#" onAdd={props.onAdd} />
+        <Mention
+          trigger='@'
+          data={props.users}
+          href='#'
+          onAdd={props.onAdd}
+          style={{
+            backgroundColor: '#daf4fa',
+          }}
+        />
       </MentionsInput>
-      <button type="submit">Submit</button>
-    </form>
+      <div className="comment-button">
+      <Button variant='contained' color='primary' onClick={props.submitComment}>
+        Submit
+      </Button>
+      </div>
+    </>
   );
 };
 
