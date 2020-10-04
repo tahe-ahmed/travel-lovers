@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-
+import fetchTimeout from 'fetch-timeout'
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -8,18 +8,18 @@ export const useHttpClient = () => {
 
   const sendRequest = useCallback(
    
-    async (url, method = 'GET', body = null, headers = {}) => {
+    async (url, method = 'GET', body = null, headers = {},timeout="") => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
 
       try {
-        const response = await fetch(url, {
+        const response = await fetchTimeout(url,{
           method,
           body,
           headers,
           signal: httpAbortCtrl.signal
-        });
+        },timeout);
 
         const responseData = await response.json();
    
