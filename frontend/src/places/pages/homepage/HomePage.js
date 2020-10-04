@@ -13,8 +13,8 @@ function HomePage() {
   let options = {
     sectionClassName: 'section',
     anchors: ['sectionOne', 'sectionTwo', 'sectionThree'],
-    scrollBar: false,
-    navigation: true,
+    scrollBar: true,
+    navigation: false,
     verticalAlign: false,
     sectionPaddingTop: '0px',
     sectionPaddingBottom: '0px',
@@ -26,9 +26,9 @@ function HomePage() {
       <Section>
         <SectionOne />
       </Section>
-      <Section>
+      {/* <Section>
         <SectionTwo />
-      </Section>
+      </Section> */}
       <Section>
         <SectionTree />
       </Section>

@@ -33,7 +33,7 @@ function SectionOne() {
     <>
       <div className={classes.Container} >
         <video autoPlay="autoplay" loop="loop" muted className={classes.Video} >
-          <source src={auth.isLoggedIn ? video2 : video1} type="video/mp4" /> Your browser does not support the video tag.
+          <source src={auth.isLoggedIn ? video2 : 'https://streamable.com/bq94b4'} type="video/mp4" /> Your browser does not support the video tag.
         </video>
 
         <div className={classes.Content}>
