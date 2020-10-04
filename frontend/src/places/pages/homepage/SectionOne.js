@@ -42,14 +42,14 @@ function SectionOne() {
               <>
                 <h1 className="banner-header">JOIN OUR JOURNEY</h1>
                 <p> <span role="img" aria-label="star">🌟 </span> Create an account and start your dream trip. <span role="img" aria-label="star">🌟 </span></p>
-                <Button inverse href="/auth">SIGN UP</Button>
+                <Button href="/auth">SIGN UP</Button>
               </>
             ) : (
                 <>
                   <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
                   <p><span role="img" aria-label="star">🌟 </span> Let's explore new places or share your experience.<span role="img" aria-label="star">🌟 </span></p>
-                  <Button inverse href="/places/new">ADD A NEW PLACE</Button>
-                  <Button inverse href="/places">EXPLORE NEW PLACES</Button>
+                  <Button href="/places/new">ADD A NEW PLACE</Button>
+                  <Button href="/places">EXPLORE NEW PLACES</Button>
                 </>
               )}
           </div>
