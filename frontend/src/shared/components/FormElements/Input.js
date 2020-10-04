@@ -89,7 +89,7 @@ const Input = (props) => {
       required
       fullWidth
       name='password'
-      label='Password'
+      label= {props.label}
       type='password'
       id='password'
       autoComplete='current-password'
