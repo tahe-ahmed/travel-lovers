@@ -1,0 +1,324 @@
+@import '~react-image-gallery/styles/css/image-gallery.css';
+html,
+a {
+  text-decoration: none;
+}
+
+/* SECTION ONE */
+.section-one-content {
+  padding: 2rem;
+  text-align: justify;
+}
+
+.section-one-rainbow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.section-one-rainbow-text {
+  position: relative;
+  text-align: center;
+  font-size: 1.8rem;
+  white-space: nowrap;
+  background: linear-gradient(92deg, #95d7e3, #eb76ff);
+  background: -webkit-linear-gradient(92deg, #95d7e3, #eb76ff);
+  background-size: 60vw 60vw;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textAnimate 5s linear infinite alternate;
+  margin: 1rem;
+}
+
+@keyframes textAnimate {
+  from {
+    filter: hue-rotate(0deg);
+    background-position-x: 0%;
+  }
+  to {
+    filter: hue-rotate(360deg);
+    background-position-x: 600vw;
+  }
+}
+
+
+
+/* SECTION TWO */
+
+/*Cards*/
+.card-hp {
+  margin: 2% 1%;
+  display: flex;
+  justify-content: space-between;
+  height: 30vh;
+}
+
+.card-items {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: rgb(7, 4, 31);
+  line-height: 1.7;
+  background-color: rgba(36, 41, 57, 0.2);
+  box-shadow: 0 0 5px grey;
+  padding: 2%;
+  /* border-radius: 30px; */
+}
+
+.card-text {
+  margin: 4% auto;
+  padding: 1%;
+}
+
+.card-description {
+  margin: 0;
+}
+
+i {
+  font-size: 2.5em;
+  color: #931a25;
+}
+
+
+
+
+
+/* SECTION TREE */
+.section-tree {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  height: 80vh;
+  max-height: 80vh;
+  min-width: 300px;
+  color: #eee;
+  margin-top: -17px;
+}
+.section-tree:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 90%,
+    rgba(27, 32, 48, 1) 100%
+  );
+}
+.section-tree:before {
+  content: '';
+  width: 100%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  scale: (0.5, 0.5);
+  transform: translateZ(0);
+  background: #1b2030
+    url(https://i.postimg.cc/FzXW9gcj/jace-afsoon-VEXIw-Dc-Y1gw-unsplash.jpg)
+    50% 0 no-repeat;
+  background-size: 100%;
+  background-attachment: center;
+  animation: grow 60s linear 50ms infinite;
+  transition: all 0.4s ease-in-out;
+  z-index: -2;
+}
+
+.info {
+  width: 100%;
+  padding: 15% 10% 0 10%;
+  text-align: center;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1) translateY(0px);
+  }
+  50% {
+    transform: scale(1.1) translateY(-100px);
+  }
+}
+
+
+.animated-text {
+  border-right: solid 3px rgba(0, 255, 0, 0.75);
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2em;
+  color: rgba(245, 245, 244, 0.979);
+  margin: -30px auto;
+  background-color: rgba(94, 80, 87, 0.7);
+  text-shadow: 0 0 0.6rem rgb(33, 36, 27);
+}
+
+/* Animation */
+.animated-text {
+  animation: animated-text 4s steps(29, end) 1s 1 normal both,
+    animated-cursor 600ms steps(29, end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text {
+  from {
+    width: 0;
+  }
+  to {
+    width: 680px;
+  }
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor {
+  from {
+    border-right-color: rgba(0, 255, 0, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
+
+.section-tree-bottom {
+  margin-bottom: 20px;
+  margin-top: 30px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.heart {
+  color: #e25555;
+}
+
+
+
+
+
+
+
+
+
+
+
+.banner {
+  text-align: center;
+  /* margin: 3% 10% !important;
+  background-color: rgba(84, 88, 145, 0.279) !important;
+  padding: 3% 10%;
+  border-radius: 50px; */
+}
+
+.banner-header {
+  margin: 20px auto;
+  font-size: 3em;
+}
+
+
+.image-gallery-image,
+.image-gallery {
+  width: 600px;
+  height: 400px !important;
+  margin: 0 auto;
+  object-fit: contain;
+}
+<<<<<<< HEAD:frontend/src/places/pages/HomePage.css
+
+.add-places-link {
+  color: #ff0055;
+}
+.button--inverse:hover .add-places-link{
+  color: white !important
+}
+
+@media only screen and (max-width: 600px) {
+  .rainbow-text {
+    font-size: 1.5rem;
+    margin-top: 50px;
+  }
+
+  .card-hp {
+    display: block;
+    margin-top: 70px;
+  }
+
+  .card-items {
+    width: 100%;
+  }
+
+  .card {
+    /* width: 100%; */
+    margin-bottom: 20px !important;
+  }
+
+  .animated-text {
+    font-size: 1.6em;
+    margin: 30px !important;
+  }
+
+  .image-gallery-image,
+  .image-gallery {
+    width: 400px;
+    height: 300px !important;
+  }
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 380px;
+    }
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 960px) {
+  .card-hp {
+    margin: 100px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    /* width: 100%; */
+    margin-bottom: 20px !important;
+  }
+
+  .animated-text {
+    font-size: 2rem;
+    margin-top: 20px;
+  }
+
+  .rainbow-text {
+    font-size: 1.9rem;
+  }
+
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 480px;
+    }
+  }
+}
+=======
+>>>>>>> 35897361c65e0fa6a465f12796ac1a2e32f7c5fb:frontend/src/places/pages/homepage/HomePage.css

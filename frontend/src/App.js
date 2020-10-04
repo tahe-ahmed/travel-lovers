@@ -15,7 +15,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
-import HomePage from "./places/pages/HomePage";
+import HomePage from "./places/pages/homepage/HomePage";
 
 const Users = React.lazy(() => import("./user/pages/Users"));
 const UpdateUser = React.lazy(() => import("./user/pages/UpdateUser"));
