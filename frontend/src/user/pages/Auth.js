@@ -200,7 +200,7 @@ const Auth = () => {
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
         footer={
-          <React.Fragment>
+            <div className="footer-button">
             <Button variant="contained" color="secondary" onClick={closeForgotPassword}>
               CANCEL
             </Button>
@@ -209,7 +209,8 @@ const Auth = () => {
                 Reset Password
               </Button>
             )}
-          </React.Fragment>
+            </div>
+         
         }
       >
         <div className='map-container'>
