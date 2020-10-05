@@ -11,6 +11,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
 
+
 import Avatar from '@material-ui/core/Avatar';
 
 import './PlaceItem.css';
@@ -46,7 +47,7 @@ const PlaceItem = (props) => {
         }
       );
       props.onDelete(props.id);
-    } catch (err) { }
+    } catch (err) {}
   };
 
   return (
