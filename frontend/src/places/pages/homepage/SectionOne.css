@@ -1,11 +1,14 @@
 .section-one-list {
   list-style: none;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  
+}
+
+.button-section-one {
+  margin-right: 20px !important;
 }
 
 .section-one-user-item {
@@ -50,4 +53,22 @@
 
 .user-item__info h3 {
   margin: 0;
+}
+
+@media screen and (max-width: 750px) {
+  .section-one-list {
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .section-one-user-item{
+    width: 90%;
+    margin: 20px auto;
+  }
+}
+
+@media screen and (min-width: 751px) and (max-width: 900px) {
+  .section-one-list {
+    margin-bottom: 80px;
+  }
 }

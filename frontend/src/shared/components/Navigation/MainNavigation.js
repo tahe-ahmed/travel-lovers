@@ -146,7 +146,7 @@ const MainNavigation = (props) => {
             }}
           >
             <Typography className={classes.title} variant='h6' noWrap>
-              TRAVEL LOVERS{' '}
+              <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo"/>
             </Typography>
           </Button>
 
@@ -157,6 +157,15 @@ const MainNavigation = (props) => {
               component={NavLink}
               to={{
                 pathname: `/`,
+              }}
+            >
+              HOMEPAGE
+            </Button>
+            <Button
+              color='inherit'
+              component={NavLink}
+              to={{
+                pathname: `/users`,
               }}
             >
               ALL USERS
