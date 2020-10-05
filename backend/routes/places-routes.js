@@ -43,7 +43,6 @@ router.patch(
 
 router.patch('/rate/:pid', ratePlaceControllers.ratePlace); // rating star
 
-
 router.delete('/:pid', placesControllers.deletePlace);
 
 module.exports = router;

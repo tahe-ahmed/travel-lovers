@@ -2,18 +2,13 @@
   margin: 1rem 0;
 }
 
-.form-control label,
-.form-control input,
-.form-control textarea {
-  display: block;
-}
 
-.form-control label {
+/* .form-control label {
   font-weight: bold;
   margin-bottom: 0.5rem;
-}
+} */
 
-.form-control input,
+/* .form-control input,
 .form-control textarea {
   width: 100%;
   font: inherit;
@@ -22,16 +17,16 @@
   padding: 0.15rem 0.25rem;
   border: 1px solid #E4E6EF;
     border-radius: 0.42rem;
-}
+} */
 
-.form-control input:focus,
+/* .form-control input:focus,
 .form-control textarea:focus {
   outline: none;
   background: #ebebeb;
   border-color: #510077;
-}
+} */
 
-.form-control--invalid label,
+/* .form-control--invalid label,
 .form-control--invalid p {
   color: red;
 }
@@ -40,4 +35,4 @@
 .form-control--invalid textarea {
   border-color: red;
   background: #ffd1d1;
-}
+} */

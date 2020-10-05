@@ -1,0 +1,386 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+html,
+a {
+  text-decoration: none;
+}
+
+/* SECTION ONE */
+.section-one-content {
+  padding: 1rem;
+  text-align: justify;
+}
+
+.section-one-rainbow {
+  height: 9.5vh;
+}
+
+.section-one-rainbow-text {
+  position: relative;
+  text-align: center;
+  font-size: 1.8rem;
+  background: linear-gradient(92deg, #95d7e3, #eb76ff);
+  background: -webkit-linear-gradient(92deg, #95d7e3, #eb76ff);
+  background-size: 60vw 60vw;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textAnimate 5s linear infinite alternate;
+  margin: 1rem;
+}
+
+@keyframes textAnimate {
+  from {
+    filter: hue-rotate(0deg);
+    background-position-x: 0%;
+  }
+  to {
+    filter: hue-rotate(360deg);
+    background-position-x: 600vw;
+  }
+}
+
+/* SECTION TWO */
+
+/*Cards*/
+.card-hp {
+  margin: 3%;
+  display: flex;
+  justify-content: space-between;
+  height: 30vh;
+  align-items: center;
+}
+
+.card-items {
+  width: 32%;
+  text-align: center;
+  color: rgb(7, 4, 31);
+  line-height: 1.7;
+  background-color: rgba(36, 41, 57, 0.2);
+  box-shadow: 0 0 5px grey;
+}
+
+.card-text {
+  margin: 4% auto;
+  padding: 1%;
+}
+
+.card-description {
+  margin-top: 10px !important;
+  line-height: 1.5 !important;
+}
+
+i {
+  font-size: 2em;
+  color: #931a25;
+  margin-bottom: 10px;
+}
+
+.is-visible {
+  transform: translate(-50%, -50%);
+}
+
+.SectionContainer {
+  margin-top: -20px;
+}
+
+
+/* SECTION TREE */
+.section-tree {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  height: 80vh;
+  max-height: 80vh;
+  min-width: 300px;
+  color: #eee;
+  margin-top: 30px;
+}
+.section-tree:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 90%,
+    rgba(27, 32, 48, 1) 100%
+  );
+}
+.section-tree:before {
+  content: "";
+  width: 100%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  scale: (0.5, 0.5);
+  transform: translateZ(0);
+  background: #1b2030
+    url(https://i.postimg.cc/FzXW9gcj/jace-afsoon-VEXIw-Dc-Y1gw-unsplash.jpg)
+    50% 0 no-repeat;
+  background-size: 130%;
+  background-attachment: center;
+  animation: grow 100s linear 90ms infinite;
+  transition: all 0.4s ease-in-out;
+  z-index: -2;
+}
+
+.info {
+  width: 100%;
+  padding: 15% 10% 0 10%;
+  text-align: center;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 70px;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1) translateY(0px);
+  }
+  50% {
+    transform: scale(1.1) translateY(-100px);
+  }
+}
+
+.animated-text {
+  border-right: solid 3px rgba(0, 255, 0, 0.75);
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: "Source Code Pro", monospace;
+  font-size: 3em;
+  color: rgba(245, 245, 244, 0.979);
+  margin: -30px auto;
+  background-color: rgba(94, 80, 87, 0.7);
+  text-shadow: 0 0 0.6rem rgb(33, 36, 27);
+}
+
+/* Animation */
+.animated-text {
+  animation: animated-text 4s steps(29, end) 1s 1 normal both,
+    animated-cursor 600ms steps(29, end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text {
+  from {
+    width: 0;
+  }
+  to {
+    width: 750px;
+  }
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor {
+  from {
+    border-right-color: rgba(0, 255, 0, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
+.section-tree-bottom {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-size: 1em;
+  text-align: center;
+  background-color: #132743;
+  color: white;
+}
+
+.heart {
+  color: #e25555;
+}
+
+.banner {
+  text-align: center;
+}
+
+.banner-header {
+  margin: 20px auto;
+  font-size: 3em;
+  color: crimson
+}
+.banner-header2 {
+  margin: 20px auto;
+  font-size: 3em;
+  color: white
+}
+
+.image-gallery-image,
+.image-gallery {
+  width: 600px;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.image-gallery-image {
+  height: 400px;
+}
+
+.banner-text{
+  color: rgb(92, 15, 15) !important;
+    font-weight: bold;  
+}
+.banner-text2{
+  color: white !important;
+    font-weight: bold;  
+}
+
+@media screen and (max-width: 600px) {
+
+  
+  .banner-header {
+    font-size: 1.8em;
+    margin: -10% -50px;
+  }
+
+  .banner-text {
+    font-size: 16px !important;
+    margin-top: 60px;
+  }
+  .banner-header2 {
+    font-size: 1.8em;
+    margin: -10% -50px;
+  }
+
+  .banner-text2 {
+    font-size: 16px !important;
+    margin-top: 60px;
+  }
+
+  .section-one-rainbow-text {
+    font-size: 1.3rem;
+  }
+
+  .card-hp {
+    display: block;
+    margin-bottom: 500px;
+  }
+
+  .card-items {
+    width: 90%;
+    margin: 15px auto;
+  }
+  .image-gallery {
+    width: 450px;
+  }
+  .animated-text {
+    font-size: 1.7rem;
+    margin: 20px auto -10px;
+  }
+
+  .section-tree {
+    height: 60vw;
+  }
+
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 440px;
+    }
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 750px) {
+
+  .banner-header {
+    font-size: 1.9em;
+    margin: 0;
+  }
+  .banner-header2 {
+    font-size: 1.9em;
+    margin: 0;
+  }
+  .image-gallery {
+    width: 500px;
+  }
+
+  .section-one-rainbow-text {
+    font-size: 1.3rem;
+  }
+
+  .card-hp {
+    display: block;
+    margin-bottom: 450px;
+  }
+
+  .card-items {
+    width: 90%;
+    margin: 15px auto;
+  }
+
+  .animated-text {
+    font-size: 1.7rem;
+    margin: 20px auto -10px;
+  }
+
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 430px;
+    }
+  }
+
+  .section-tree {
+    height: 60vw;
+  }
+}
+
+@media screen and (min-width: 751px) and (max-width: 1100px) {
+
+  .image-gallery {
+    width: 500px;
+  }
+
+  .section-one-rainbow-text {
+    font-size: 1.7rem;
+  }
+
+  .card-hp {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+
+  .card-items {
+   min-height: 280px;
+   
+  }
+
+  .animated-text {
+    font-size: 2.2rem;
+    margin: 20px auto -10px;
+  }
+
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 520px;
+    }
+  }
+
+  .section-tree {
+    height: 50vw;
+  }
+}

@@ -18,4 +18,5 @@ const placeSchema = new Schema({
   }],
   rateAvg: { type: Number, required: false, default: 0 }                                 // for star rating
 });
+
 module.exports = mongoose.model('Place', placeSchema);

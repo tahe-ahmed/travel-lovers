@@ -60,14 +60,13 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: rgba(236, 240, 243, 0.63);
   padding: .6rem;
   border: 1px solid #ffc107;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 40px !important;
-  background-color: rgba(36, 41, 57, 0.815);
+  background-color: rgba(61, 67, 87, 0.815);
   color: yellow;
   border-radius: 20px;
 }

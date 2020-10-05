@@ -98,6 +98,7 @@ const NewPlace = () => {
           element="input"
           type="text"
           label="Title"
+          fullWidth
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid title."
           onInput={inputHandler}
@@ -106,6 +107,7 @@ const NewPlace = () => {
           id="description"
           element="textarea"
           label="Description"
+          fullWidth
           validators={[VALIDATOR_MINLENGTH(5)]}
           errorText="Please enter a valid description (at least 5 characters)."
           onInput={inputHandler}
