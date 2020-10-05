@@ -10,8 +10,6 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 
-import Avatar from '@material-ui/core/Avatar';
-
 import './PlaceItem.css';
 
 const PlaceItem = (props) => {

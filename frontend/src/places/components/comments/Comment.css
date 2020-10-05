@@ -1,11 +1,7 @@
 .comment-card{
     display: flex;
 }
-.card{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+
 
 .comment-button{
     display: flex;

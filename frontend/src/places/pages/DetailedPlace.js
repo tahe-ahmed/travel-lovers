@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -9,13 +9,37 @@ import PlaceItem from '../components/PlaceItem';
 import CommentList from '../components/comments/CommentList.js';
 import CommentForm from '../components/comments/CommentForm';
 
-import Card from '@material-ui/core/Card';
+import { Card, Avatar } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import './DetailedPlace.css';
+import { CardMedia } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '64vw',
+    height: '40vw',
+  },
+
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  content: {
+    flex: '1 2 auto',
+  },
+  cover: {
+    width: 270,
+  },
+}));
 
 const DetailedPlace = (props) => {
+  const classes = useStyles();
+  const theme = useTheme();
+
   const auth = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [loadedUsers, setLoadedUsers] = useState();
@@ -157,19 +181,45 @@ const DetailedPlace = (props) => {
       ) : (
         <div className='place-detail'>
           {place && (
-            <PlaceItem
-              key={place.id}
-              id={place.id}
-              image={place.image}
-              title={place.title}
-              description={place.description}
-              address={place.address}
-              creatorId={place.creator}
-              coordinates={place.location}
-              onDelete={props.onDeletePlace}
-            />
+            <Card className={`${classes.root} place-item`}>
+              <CardMedia
+                className={classes.cover}
+                image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
+                title={place.title}
+              />
+              <CardContent className={classes.content}>
+                <Typography component='h5' variant='h5'>
+                  {place.title}
+                </Typography>
+                <Typography variant='subtitle1' color='textSecondary'>
+                  {place.address}
+                </Typography>
+                <Typography variant='subtitle1' color='textSecondary'>
+                  {place.description}
+                </Typography>
+                <div>
+                  <div>
+                    <Avatar
+                      alt='Remy Sharp'
+                      src={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
+                    />
+                    {loadedUsers && (
+                      <Typography variant='subtitle1' color='textSecondary'>
+                        {
+                          loadedUsers.find((user) => user.id === auth.userId)
+                            .name
+                        }
+                      </Typography>
+                    )}
+                  </div>
+                  <Typography variant='subtitle1' color='textSecondary'>
+                    Follow
+                  </Typography>
+                </div>
+              </CardContent>
+            </Card>
           )}
-          <Card>
+          <Card className='place-item'>
             <CardContent>
               <Typography color='textSecondary' gutterBottom>
                 Comments
