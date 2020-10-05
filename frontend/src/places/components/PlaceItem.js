@@ -9,6 +9,8 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
+
 
 import Avatar from '@material-ui/core/Avatar';
 
@@ -92,14 +94,23 @@ const PlaceItem = (props) => {
               src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
               alt={props.title}
             />
+            <div className="star-rating">                         {/*   for star rating */}
+              <RatingMaterialStar
+                placeId={props.id}
+                raterIds={props.rate.raterIds}
+                rateLength={props.rate.length}
+                rateAvg={props.rateAvg}
+                creatorId={props.creatorId}
+              />
+            </div>
             <UserInfo creatorId={props.creatorId} />
           </div>
           <Link to={`/info/${props.id}`}>
-          <div className="place-item__info">
-            <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
-            <p>{props.description}</p>
-          </div>
+            <div className="place-item__info">
+              <h2>{props.title}</h2>
+              <h3>{props.address}</h3>
+              <p>{props.description}</p>
+            </div>
           </Link>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>

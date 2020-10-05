@@ -53,6 +53,32 @@
   width: 100%;
 }
 
+
+/* star rating */
+.star-rating{
+  width: fit-content;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: .6rem;
+  border: 1px solid #ffc107;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px !important;
+  background-color: rgba(61, 67, 87, 0.815);
+  color: yellow;
+  border-radius: 20px;
+}
+.rating-total{
+  text-align: center;
+  font-size: 0.4rem;
+  margin-right: 0.8rem;
+}
+.rating-total span{
+  font-size: 1rem;
+}
+
 @media (min-width: 768px) {
   .place-item__image {
     height: 20rem;
