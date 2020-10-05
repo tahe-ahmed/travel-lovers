@@ -1,4 +1,36 @@
 .user-header {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.user-detail {
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px auto;
+}
+
+@media (max-width: 800px) {
+  .user-detail {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 30px auto;
     text-align: center;
-    font-size: 1.4rem;
+  }
+}
+.image-user {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-user img {
+  margin-bottom: 15px;
+  border-radius: 3px;
+}
+
+.follow {
+  margin-top: 55px;
 }
