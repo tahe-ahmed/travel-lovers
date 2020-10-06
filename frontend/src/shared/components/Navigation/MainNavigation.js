@@ -222,8 +222,13 @@ const MainNavigation = (props) => {
               pathname: `/`,
             }}
           >
+<<<<<<< HEAD
             <Typography className={classes.title} variant="h6" noWrap>
               TRAVEL LOVERS{" "}
+=======
+            <Typography className={classes.title} variant='h6' noWrap>
+              <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo"/>
+>>>>>>> development
             </Typography>
           </Button>
 
@@ -234,6 +239,15 @@ const MainNavigation = (props) => {
               component={NavLink}
               to={{
                 pathname: `/`,
+              }}
+            >
+              HOMEPAGE
+            </Button>
+            <Button
+              color='inherit'
+              component={NavLink}
+              to={{
+                pathname: `/users`,
               }}
             >
               ALL USERS
