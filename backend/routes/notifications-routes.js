@@ -8,5 +8,7 @@ router.get('/:rid', notificationsControllers.getNotificationByReceiverId);
 
 router.post('/', notificationsControllers.setNotifications);
 
-router.delete('/:rid', notificationsControllers.deleteNotificationById)
+router.delete('/:cid', notificationsControllers.deleteNotificationByCommentId);
+router.patch('/', notificationsControllers.updateNotifiReceiverIds);
+
 module.exports = router;

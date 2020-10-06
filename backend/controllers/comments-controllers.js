@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const HttpError = require("../models/http-error");
 const { Comment } = require("../models/comments");
+const Notifications = require("../models/notifications");
 
 ////////// find the comments for specific place id ////////
 const getCommentsByPlaceId = async (req, res, next) => {
@@ -107,7 +108,33 @@ const deleteComment = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(200).json({ message: "Deleted place.", comment: comment });
+  ///////////// delete any notifications mentions related to the comment
+  let notifi;
+  try {
+    notifi = await Notifications.findOne({comment:commentId});
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not delete notification in comment, maybe comment not exist.",
+      500
+    );
+    return next(error);
+  }
+  if (!notifi) {
+    const error = new HttpError("Could not find notification with this comment id.", 404);
+    return next(error);
+  }
+  // delete from database
+  try {
+    await notifi.remove();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not delete notification.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ message: "Deleted place.", comment: comment , notifi});
 };
 
 exports.createComment = createComment;
