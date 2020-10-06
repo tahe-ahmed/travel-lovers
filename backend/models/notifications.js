@@ -7,10 +7,7 @@ const notificationSchema = mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    receiver: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
+    receiver: [{ type: Schema.Types.ObjectId, ref: "User" }], // Ids of the receivers of the notification
 
     place: {
       type: Schema.Types.ObjectId,
@@ -19,9 +16,16 @@ const notificationSchema = mongoose.Schema(
     message: {
       type: String,
     },
-    read: {
-      type: Boolean,
+    comment: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
     },
+    read_by: [
+      {
+        readerId: { type: Schema.Types.ObjectId, ref: "User" },
+        read_at: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

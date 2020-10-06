@@ -1,26 +1,26 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { AuthContext } from '../../shared/context/auth-context';
-import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 // import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import PlaceItem from '../components/PlaceItem';
-import CommentList from '../components/comments/CommentList.js';
-import CommentForm from '../components/comments/CommentForm';
+import PlaceItem from "../components/PlaceItem";
+import CommentList from "../components/comments/CommentList.js";
+import CommentForm from "../components/comments/CommentForm";
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
-import './DetailedPlace.css';
+import "./DetailedPlace.css";
 
 const DetailedPlace = (props) => {
   const auth = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [loadedUsers, setLoadedUsers] = useState();
   const [place, setPlace] = useState();
-  const [commentValueInput, setCommentValueInput] = useState('');
+  const [commentValueInput, setCommentValueInput] = useState("");
   const [mentions, setMentions] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -29,7 +29,7 @@ const DetailedPlace = (props) => {
   /////////// set up the mentions and notification data ////////////
   const usersToMention =
     loadedUsers &&
-    loadedUsers.map((user) => ({ id: '#', display: user.name, _id: user.id }));
+    loadedUsers.map((user) => ({ id: "#", display: user.name, _id: user.id }));
   ///////// get the users' id and display name when mentioned in the commnets
   const onAdd = (id, display) => {
     setMentions([...mentions, { id: id, display: display }]);
@@ -77,7 +77,7 @@ const DetailedPlace = (props) => {
 
   /////////////// when post new comments add them to the client state ////////////////
   const updateComment = (newComment) => {
-    setCommentValueInput('');
+    setCommentValueInput("");
     setComments((comments) => [...comments, newComment]);
   };
 
@@ -99,47 +99,68 @@ const DetailedPlace = (props) => {
 
     try {
       const rawResponse = await fetch(
-        process.env.REACT_APP_BACKEND_URL + '/comments',
+        process.env.REACT_APP_BACKEND_URL + "/comments",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(variables),
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + auth.token,
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
           },
         }
       );
       newComment = await rawResponse.json();
       updateComment(newComment.comment);
+      sendNotifiMentionsToBackend(newComment);
     } catch (err) {}
 
     ////////////////// create the notification data to be sent to server upon submiting the comment /////////////
+  };
+
+  const sendNotifiMentionsToBackend = async (newComment) => {
+    newComment && console.log(newComment.comment);
     if (mentions.length >= 1) {
       if (usersToMention) {
         const notificationReceivers = mentions.map(
           (mention) =>
             usersToMention.filter((user) => user.display === mention.display)[0]
         );
-
         const notificationData = {
           receiver: notificationReceivers,
           sender: auth.userId,
           placeId: place.id,
-          read: false,
+          read: [{}],
+          comment: newComment.comment._id,
         };
         // send to backend ==============>
-        console.log(notificationData);
+        try {
+          const response = await fetch(
+            process.env.REACT_APP_BACKEND_URL + "/notifications",
+            {
+              method: "POST",
+              body: JSON.stringify(notificationData),
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + auth.token,
+              },
+            }
+          );
+
+          const not = await response.json();
+          setMentions([]);
+        } catch (err) {}
       }
     }
   };
 
   ////////// send DELETE request to the server and update the local state ////////
   const ondelete = async (todeleteId) => {
+    ////// delete the comment from backend/////
     try {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/${todeleteId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Authorization: 'Bearer ' + auth.token,
+          Authorization: "Bearer " + auth.token,
         },
       });
     } catch (err) {}
@@ -155,7 +176,7 @@ const DetailedPlace = (props) => {
       {isLoading ? (
         <LoadingSpinner asOverlay />
       ) : (
-        <div className='place-detail'>
+        <div className="place-detail">
           {place && (
             <PlaceItem
               key={place.id}
@@ -171,7 +192,7 @@ const DetailedPlace = (props) => {
           )}
           <Card>
             <CardContent>
-              <Typography color='textSecondary' gutterBottom>
+              <Typography color="textSecondary" gutterBottom>
                 Comments
               </Typography>
               {loadedUsers && (
