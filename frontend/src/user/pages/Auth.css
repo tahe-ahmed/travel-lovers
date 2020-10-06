@@ -81,3 +81,8 @@ padding: 20px;
 .facebook{
   background: #4c69ba
 }
+
+.footer-button{
+  display: flex;
+  justify-content: space-between;
+}

@@ -5,19 +5,16 @@ import {
   CssBaseline,
   Link,
   Grid,
-  Box,
   Typography,
   Container,
   CircularProgress,
 } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Modal from '../../shared/components/UIElements/Modal';
 
-import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import {
   VALIDATOR_EMAIL,
@@ -203,7 +200,7 @@ const Auth = () => {
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
         footer={
-          <React.Fragment>
+            <div className="footer-button">
             <Button variant="contained" color="secondary" onClick={closeForgotPassword}>
               CANCEL
             </Button>
@@ -212,7 +209,8 @@ const Auth = () => {
                 Reset Password
               </Button>
             )}
-          </React.Fragment>
+            </div>
+         
         }
       >
         <div className='map-container'>

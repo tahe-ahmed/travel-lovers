@@ -1,37 +1,15 @@
 import React, { useContext } from 'react';
-import ReactDOM from 'react-dom';
-import { CSSTransition } from 'react-transition-group';
-
-import './SideDrawer.css';
-
-import clsx from 'clsx';
-import MenuIcon from '@material-ui/icons/Menu';
-
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { AuthContext } from '../../context/auth-context';
-
-import { Link, NavLink } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 import {
   Button,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  InputBase,
-  Badge,
-  MenuItem,
-  Menu,
+  IconButton,Drawer,List,ListItem,Divider,useTheme
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { AuthContext } from '../../context/auth-context';
+
+
 import useStyles from '../../styles/material-ui-syles';
 
 const SideDrawer = (props) => {
