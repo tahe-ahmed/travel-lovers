@@ -5,17 +5,17 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
-// import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import PlaceItem from '../components/PlaceItem';
-import CommentList from '../components/comments/CommentList.js';
-import CommentForm from '../components/comments/CommentForm';
 
+// import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import PlaceItem from "../components/PlaceItem";
+import CommentList from "../components/comments/CommentList.js";
+import CommentForm from "../components/comments/CommentForm";
 import { Card, Avatar, Button } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
 import './DetailedPlace.css';
 import { CardMedia } from '@material-ui/core';
+import "./DetailedPlace.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const DetailedPlace = (props) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -45,7 +46,7 @@ const DetailedPlace = (props) => {
   const [comments, setComments] = useState([]);
   const [loadedUsers, setLoadedUsers] = useState();
   const [place, setPlace] = useState();
-  const [commentValueInput, setCommentValueInput] = useState('');
+  const [commentValueInput, setCommentValueInput] = useState("");
   const [mentions, setMentions] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -54,7 +55,7 @@ const DetailedPlace = (props) => {
   /////////// set up the mentions and notification data ////////////
   const usersToMention =
     loadedUsers &&
-    loadedUsers.map((user) => ({ id: '#', display: user.name, _id: user.id }));
+    loadedUsers.map((user) => ({ id: "#", display: user.name, _id: user.id }));
   ///////// get the users' id and display name when mentioned in the commnets
   const onAdd = (id, display) => {
     setMentions([...mentions, { id: id, display: display }]);
@@ -102,7 +103,7 @@ const DetailedPlace = (props) => {
 
   /////////////// when post new comments add them to the client state ////////////////
   const updateComment = (newComment) => {
-    setCommentValueInput('');
+    setCommentValueInput("");
     setComments((comments) => [...comments, newComment]);
   };
 
@@ -124,47 +125,68 @@ const DetailedPlace = (props) => {
 
     try {
       const rawResponse = await fetch(
-        process.env.REACT_APP_BACKEND_URL + '/comments',
+        process.env.REACT_APP_BACKEND_URL + "/comments",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(variables),
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + auth.token,
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
           },
         }
       );
       newComment = await rawResponse.json();
       updateComment(newComment.comment);
+      sendNotifiMentionsToBackend(newComment);
     } catch (err) {}
 
     ////////////////// create the notification data to be sent to server upon submiting the comment /////////////
+  };
+
+  const sendNotifiMentionsToBackend = async (newComment) => {
+    newComment && console.log(newComment.comment);
     if (mentions.length >= 1) {
       if (usersToMention) {
         const notificationReceivers = mentions.map(
           (mention) =>
             usersToMention.filter((user) => user.display === mention.display)[0]
         );
-
         const notificationData = {
           receiver: notificationReceivers,
           sender: auth.userId,
           placeId: place.id,
-          read: false,
+          read: [{}],
+          comment: newComment.comment._id,
         };
         // send to backend ==============>
-        console.log(notificationData);
+        try {
+          const response = await fetch(
+            process.env.REACT_APP_BACKEND_URL + "/notifications",
+            {
+              method: "POST",
+              body: JSON.stringify(notificationData),
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + auth.token,
+              },
+            }
+          );
+
+          const not = await response.json();
+          setMentions([]);
+        } catch (err) {}
       }
     }
   };
 
   ////////// send DELETE request to the server and update the local state ////////
   const ondelete = async (todeleteId) => {
+    ////// delete the comment from backend/////
     try {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/${todeleteId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Authorization: 'Bearer ' + auth.token,
+          Authorization: "Bearer " + auth.token,
         },
       });
     } catch (err) {}
@@ -180,79 +202,25 @@ const DetailedPlace = (props) => {
       {isLoading ? (
         <LoadingSpinner asOverlay />
       ) : (
-        <div className='place-detail'>
+        <div className="place-detail">
           {place && (
-            <Card className={`${classes.root} place-item`}>
-              <CardMedia
-                className={classes.cover}
-                image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
-                title={place.title}
-                component={Link}
-                to={{
-                  pathname: `/${auth.userId}/places`,
-                }}
-              />
-
-              <CardContent className={`${classes.content} info-container`}>
-                <div>
-                  <Link
-                    to={`/${auth.userId}/places`}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <Typography component='h5' variant='h5'>
-                      {place.title}
-                    </Typography>
-                    <Typography variant='subtitle1' color='textSecondary'>
-                      {place.address}
-                    </Typography>
-                    <Typography variant='subtitle1' color='textSecondary'>
-                      {place.description}
-                    </Typography>
-                  </Link>
-                </div>
-                <div className='info-detail-container'>
-                  <div className='detail-info'>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
-                      component={Link}
-                      to={{
-                        pathname: `/${auth.userId}/places`,
-                      }}
-                    />
-                    <div className="name-followersCount">
-                      {loadedUsers && (
-                        <Typography
-                          variant='subtitle1'
-                          color='textSecondary'
-                          component={Link}
-                          to={{
-                            pathname: `/${auth.userId}/places`,
-                          }}
-                        >
-                          {
-                            loadedUsers.find((user) => user.id === auth.userId)
-                              .name
-                          }
-                        </Typography>
-                      )}
-                      <Typography variant='subtitle1' color='textSecondary'>
-                        35 followers
-                      </Typography>
-                    </div>
-                  </div>
-                  <div className='follow-button'>
-                    <Button variant='contained' color='secondary'>
-                      Follow
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <PlaceItem
+              key={place.id}
+              id={place.id}
+              image={place.image}
+              title={place.title}
+              description={place.description}
+              address={place.address}
+              creatorId={place.creator}
+              coordinates={place.location}
+              onDelete={props.onDeletePlace}
+              rate={place.rate} // for star rating
+              rateAvg={place.rateAvg}
+            />
           )}
           <Card className='place-item'>
             <CardContent>
-              <Typography color='textSecondary' gutterBottom>
+              <Typography color="textSecondary" gutterBottom>
                 Comments
               </Typography>
               {loadedUsers && (
