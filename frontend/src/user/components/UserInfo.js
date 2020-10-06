@@ -25,7 +25,7 @@ function UserInfo(props) {
   }, [sendRequest, props.creatorId]);
 
   return (
-    <>
+    <div>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <Link to={`/${props.creatorId}/places`}>
@@ -38,7 +38,7 @@ function UserInfo(props) {
           <p className="user-name">{loadedUser.name}</p>
         </div>
       </Link>
-    </>
+    </div>
   );
 }
 

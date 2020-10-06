@@ -95,7 +95,7 @@ const UpdateUser = () => {
         );
         console.log(responseData.user.gender);
         setGenderOption(responseData.user.gender);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchUser();
   }, [sendRequest, userId, setLoadedUser, setFormData]);
@@ -108,7 +108,7 @@ const UpdateUser = () => {
       formData.append('gender', genderOption);
       formData.append('age', formState.inputs.age.value);
       formData.append('image', formState.inputs.image.value);
-      formData.append('biography', formState.inputs.biography.value ? formState.inputs.biography.value : '' );
+      formData.append('biography', formState.inputs.biography.value ? formState.inputs.biography.value : '');
       formData.append('interests', formState.inputs.interests.value ? formState.inputs.interests.value : '');
 
       const responseData = await sendRequest(
@@ -124,7 +124,7 @@ const UpdateUser = () => {
 
       auth.userImage = responseData.user.image;
       history.push('/user');
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -156,7 +156,7 @@ const UpdateUser = () => {
                 id='image'
                 onInput={inputHandler}
                 errorText='Please provide an image.'
-                initialValue={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`}
+                initialValue={loadedUser.image}
                 text='Upload an Image'
               />
 
@@ -172,7 +172,7 @@ const UpdateUser = () => {
                 initialValue={loadedUser.name}
                 initialValid={true}
               />
-              
+
               <FormControl component='fieldset'>
                 <FormLabel component='legend'>Gender</FormLabel>
                 <RadioGroup
@@ -185,7 +185,7 @@ const UpdateUser = () => {
                     value='Female'
                     control={<Radio />}
                     label='Female'
-                  
+
                   />
                   <FormControlLabel
                     value='Male'

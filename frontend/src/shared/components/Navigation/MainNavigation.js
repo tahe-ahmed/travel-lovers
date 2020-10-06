@@ -66,7 +66,7 @@ const MainNavigation = (props) => {
         }
       );
       const not = await response.json();
-    } catch (err) {}
+    } catch (err) { }
 
     /// update the local state
     const filterednotifications = notifications.filter(
@@ -101,7 +101,7 @@ const MainNavigation = (props) => {
           );
           console.log(responseData.notifications);
           setNotifications(responseData.notifications);
-        } catch (err) {}
+        } catch (err) { }
       };
       fetchNotifications();
     }
@@ -168,7 +168,7 @@ const MainNavigation = (props) => {
       onClose={handleMobileMenuClose}
     >
       {auth.isLoggedIn && (
-        <>
+        <div>
           <MenuItem>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -196,7 +196,7 @@ const MainNavigation = (props) => {
             </IconButton>
             <p>Profile</p>
           </MenuItem>
-        </>
+        </div>
       )}
     </Menu>
   );
@@ -214,7 +214,7 @@ const MainNavigation = (props) => {
             }}
           >
             <Typography className={classes.title} variant='h6' noWrap>
-              <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo"/>
+              <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo" />
             </Typography>
           </Button>
 
@@ -317,37 +317,37 @@ const MainNavigation = (props) => {
                       </span>
                     </MenuItem>
                   ) : (
-                    notifications &&
-                    notifications.map((notifi) => (
-                      <>
-                        <MenuItem
-                          onClick={() =>
-                            handleNotificationClick(notifi.place, notifi._id)
-                          }
-                        >
-                          <ListItemAvatar>
-                            <Avatar
-                              alt="profile"
-                              src={notifi.sender.image}
-                              aria-controls={menuId}
-                              className="notification-image"
-                            />
-                          </ListItemAvatar>
-                          <span className="notifications-name">
-                            {notifi.sender.name}
-                          </span>
+                      notifications &&
+                      notifications.map((notifi) => (
+                        <div>
+                          <MenuItem
+                            onClick={() =>
+                              handleNotificationClick(notifi.place, notifi._id)
+                            }
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="profile"
+                                src={notifi.sender.image}
+                                aria-controls={menuId}
+                                className="notification-image"
+                              />
+                            </ListItemAvatar>
+                            <span className="notifications-name">
+                              {notifi.sender.name}
+                            </span>
                           has mentioned you in a place
                         </MenuItem>
-                        <Divider />
-                      </>
-                    ))
-                  )}
+                          <Divider />
+                        </div>
+                      ))
+                    )}
                 </Menu>
 
                 <div className={classes.root}>
                   <Avatar
                     alt="profile"
-                    src={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
+                    src={auth.userImage} // hosting images
                     aria-controls={menuId}
                     onClick={handleProfileMenuOpen}
                     className={classes.large}

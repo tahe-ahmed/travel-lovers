@@ -27,12 +27,12 @@ function HomePage() {
           originalTitle: place.title,
         }));
         setLoadedPlaces(aa);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlaces();
   }, [sendRequest]);
   return (
-    <>
+    <div>
       <div className="header">
         <div className="info">
           <h1 className="animated-text">EXPLORE. DREAM. DISCOVER.</h1>
@@ -84,7 +84,7 @@ function HomePage() {
 
       <Card className="banner">
         {!auth.isLoggedIn ? (
-          <>
+          <div>
             <h1 className="banner-header">JOIN OUR JOURNEY</h1>
             <p>
               &#x1F31F; Create an account and start your dream trip. &#x1F31F;
@@ -92,29 +92,29 @@ function HomePage() {
             <Button inverse href="/auth">
               SIGN UP
             </Button>
-          </>
+          </div>
         ) : (
-          <>
-            <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
-            <p>
-              &#x1F31F; Let's explore new places or share your experience.
-              &#x1F31F;
+            <div>
+              <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
+              <p>
+                &#x1F31F; Let's explore new places or share your experience.
+                &#x1F31F;
             </p>
-            <Button inverse>
-              <NavLink to="/places/new" className='add-places-link'>ADD PLACE</NavLink>
+              <Button inverse>
+                <NavLink to="/places/new" className='add-places-link'>ADD PLACE</NavLink>
+              </Button>
+              <Button inverse href="/places">
+                EXPLORE NEW PLACES
             </Button>
-            <Button inverse href="/places">
-              EXPLORE NEW PLACES
-            </Button>
-          </>
-        )}
+            </div>
+          )}
       </Card>
 
       <div className="banner-bottom">
         Made with <span className="heart">❤</span> in Amsterdam. 2020 /
         class27@HYF
       </div>
-    </>
+    </div>
   );
 }
 

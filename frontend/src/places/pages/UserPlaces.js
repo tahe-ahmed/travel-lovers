@@ -28,7 +28,7 @@ const UserPlaces = () => {
         );
         setLoadedPlaces(responseData.places);
         setUserInfo(responseData.userWithPlaces);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlaces();
   }, [sendRequest, userId]);
@@ -57,7 +57,7 @@ const UserPlaces = () => {
         </div>
       )}
       {!isLoading && loadedPlaces && userInfo && (
-        <>
+        <div>
           <p className="user-header">
             {auth.userId === userInfo.id ? "My" : `${userInfo.name}'s`} Places
           </p>
@@ -65,7 +65,7 @@ const UserPlaces = () => {
             items={currentPlaces}
             onDeletePlace={placeDeletedHandler}
           />
-        </>
+        </div>
       )}
       {loadedPlaces && (
         <Pagination
