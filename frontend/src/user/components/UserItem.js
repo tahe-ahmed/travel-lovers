@@ -8,7 +8,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import './UserItem.css';
 
 import useStyles from '../../shared/styles/material-ui-syles';
- 
+
 
 const UserItem = (props) => {
   const classes = useStyles();
@@ -21,7 +21,7 @@ const UserItem = (props) => {
             <Link to={`/${props.id}/places`}>
               <Avatar
                 className={classes.large}
-                src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
+                src={props.image}    // hosting image
                 alt={props.name}
               />
 

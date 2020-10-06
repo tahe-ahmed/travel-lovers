@@ -1,28 +1,17 @@
 const multer = require('multer');
-const uuid = require('uuid');
+const cloudinary = require('../util/cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');  // A multer storage engine for Cloudinary.
 
-const MIME_TYPE_MAP = {
-  'image/png': 'png',
-  'image/jpeg': 'jpeg',
-  'image/jpg': 'jpg'
-};
+const FILE_TYPE = ['png', 'jpeg', 'jpg'];
 
-const fileUpload = multer({
-  limits: 500000,
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/images');
-    },
-    filename: (req, file, cb) => {
-      const ext = MIME_TYPE_MAP[file.mimetype];
-      cb(null, uuid.v1() + '.' + ext);
-    }
-  }),
-  fileFilter: (req, file, cb) => {
-    const isValid = !!MIME_TYPE_MAP[file.mimetype];
-    let error = isValid ? null : new Error('Invalid mime type!');
-    cb(error, isValid);
-  }
+const storage = new CloudinaryStorage({
+  cloudinary,
+  folder: 'dev_setups',
+  allowedFormats: FILE_TYPE,
+  transformation: [{ width: 500, height: 500, crop: 'limit' }]
 });
 
+const fileUpload = multer({ storage });
+// cleaned prev version for fileUpload for storage cloud
 module.exports = fileUpload;
+
