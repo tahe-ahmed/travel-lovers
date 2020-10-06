@@ -188,6 +188,8 @@ const DetailedPlace = (props) => {
               creatorId={place.creator}
               coordinates={place.location}
               onDelete={props.onDeletePlace}
+              rate={place.rate} // for star rating
+              rateAvg={place.rateAvg}
             />
           )}
           <Card>

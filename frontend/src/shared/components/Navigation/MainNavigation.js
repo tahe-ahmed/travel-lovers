@@ -18,9 +18,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { AuthContext } from "../../context/auth-context";
-
 import { useHttpClient } from "../../hooks/http-hook";
-
 import useStyles from "../../styles/material-ui-syles";
 
 import SideDrawer from "./SideDrawer";
@@ -35,7 +33,6 @@ const MainNavigation = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogin, setIsLogin] = useState(true);
-
   const [notifiAnchorEl, setNotifiAnchorEl] = React.useState(null);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [notifications, setNotifications] = useState();
@@ -48,17 +45,14 @@ const MainNavigation = (props) => {
   const handleClose = () => {
     setNotifiAnchorEl(null);
   };
+  /////// when notification clicked close the list and delete the notification
   const handleNotificationClick = async (pid, notifiID) => {
     setNotifiAnchorEl(null);
     ////// delete the notification from database and from the local state
-
     const notifiToUpdate = {
       notifiID: notifiID,
       receiverID: auth.userId,
     };
-
-    console.log(notifications);
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
@@ -72,7 +66,6 @@ const MainNavigation = (props) => {
         }
       );
       const not = await response.json();
-      console.log(not);
     } catch (err) {}
 
     /// update the local state
@@ -84,9 +77,6 @@ const MainNavigation = (props) => {
     history.push(`/info/${pid}`);
   };
 
-  // const [notificationsNumber , setNotificationsNumber] = useState(0);
-
-  // console.log(auth.userId);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -100,6 +90,7 @@ const MainNavigation = (props) => {
     handleMobileMenuClose();
   };
 
+  //////// when login fetch the notifications
   useEffect(() => {
     if (auth.isLoggedIn && auth.userId !== null) {
       // fetch notification for auth.userIn
@@ -222,13 +213,8 @@ const MainNavigation = (props) => {
               pathname: `/`,
             }}
           >
-<<<<<<< HEAD
-            <Typography className={classes.title} variant="h6" noWrap>
-              TRAVEL LOVERS{" "}
-=======
             <Typography className={classes.title} variant='h6' noWrap>
               <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo"/>
->>>>>>> development
             </Typography>
           </Button>
 
