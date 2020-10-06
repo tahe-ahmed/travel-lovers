@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -9,7 +10,7 @@ import PlaceItem from '../components/PlaceItem';
 import CommentList from '../components/comments/CommentList.js';
 import CommentForm from '../components/comments/CommentForm';
 
-import { Card, Avatar } from '@material-ui/core';
+import { Card, Avatar, Button } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
@@ -186,35 +187,65 @@ const DetailedPlace = (props) => {
                 className={classes.cover}
                 image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
                 title={place.title}
+                component={Link}
+                to={{
+                  pathname: `/${auth.userId}/places`,
+                }}
               />
-              <CardContent className={classes.content}>
-                <Typography component='h5' variant='h5'>
-                  {place.title}
-                </Typography>
-                <Typography variant='subtitle1' color='textSecondary'>
-                  {place.address}
-                </Typography>
-                <Typography variant='subtitle1' color='textSecondary'>
-                  {place.description}
-                </Typography>
+
+              <CardContent className={`${classes.content} info-container`}>
                 <div>
-                  <div>
+                  <Link
+                    to={`/${auth.userId}/places`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Typography component='h5' variant='h5'>
+                      {place.title}
+                    </Typography>
+                    <Typography variant='subtitle1' color='textSecondary'>
+                      {place.address}
+                    </Typography>
+                    <Typography variant='subtitle1' color='textSecondary'>
+                      {place.description}
+                    </Typography>
+                  </Link>
+                </div>
+                <div className='info-detail-container'>
+                  <div className='detail-info'>
                     <Avatar
                       alt='Remy Sharp'
                       src={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
+                      component={Link}
+                      to={{
+                        pathname: `/${auth.userId}/places`,
+                      }}
                     />
-                    {loadedUsers && (
+                    <div className="name-followersCount">
+                      {loadedUsers && (
+                        <Typography
+                          variant='subtitle1'
+                          color='textSecondary'
+                          component={Link}
+                          to={{
+                            pathname: `/${auth.userId}/places`,
+                          }}
+                        >
+                          {
+                            loadedUsers.find((user) => user.id === auth.userId)
+                              .name
+                          }
+                        </Typography>
+                      )}
                       <Typography variant='subtitle1' color='textSecondary'>
-                        {
-                          loadedUsers.find((user) => user.id === auth.userId)
-                            .name
-                        }
+                        35 followers
                       </Typography>
-                    )}
+                    </div>
                   </div>
-                  <Typography variant='subtitle1' color='textSecondary'>
-                    Follow
-                  </Typography>
+                  <div className='follow-button'>
+                    <Button variant='contained' color='secondary'>
+                      Follow
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -5,6 +5,26 @@
     width: 90%;
     max-width: 40rem;
   }
+  .detail-info{
+    display: flex;
+    
+  }
+  .info-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+  }
+  .info-detail-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .follow-button{
+    display: flex;
+    align-items: center;
+  }
+  .name-followersCount{
+    margin:5px;
+  }
   /* .place-item {
     margin: 1rem 0;
   }

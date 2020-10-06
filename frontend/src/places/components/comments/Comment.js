@@ -25,7 +25,7 @@ const Comment = (props) => {
     <React.Fragment>
       {props.writer && (
         <Card>
-          <CardContent>
+          <CardContent className="card">
             <div className="comment-card">
               <div className="comment-profile">
                 <Avatar
