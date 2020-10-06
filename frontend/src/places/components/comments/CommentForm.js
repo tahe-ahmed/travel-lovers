@@ -1,11 +1,11 @@
 import React from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 import './CommentForm.css';
-import {Card,Button}  from '@material-ui/core';
+import { Card, Button } from '@material-ui/core';
 
 const CommentForm = (props) => {
   return (
-    <>
+    <div>
       <MentionsInput
         className='comments-textarea'
         markup='@[__display__](__type__:__id__)'
@@ -25,11 +25,11 @@ const CommentForm = (props) => {
         />
       </MentionsInput>
       <div className="comment-button">
-      <Button variant='contained' color='primary' onClick={props.submitComment}>
-        Submit
+        <Button variant='contained' color='primary' onClick={props.submitComment}>
+          Submit
       </Button>
       </div>
-    </>
+    </div>
   );
 };
 

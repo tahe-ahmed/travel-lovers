@@ -6,8 +6,8 @@
     "MAPBOX_API_KEY": "pk.eyJ1IjoiemVraXllIiwiYSI6ImNrZXNlNTQ2ZTNhdTIyeW5wYjhpcWR5OHAifQ.xvDhG3GwcfC6QL_yWjKr5Q",
     "JWT_KEY": "supersecret_dont_share'",
     "GOOGLE_LOGIN_KEY": "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com",
-    "EMAIL_ADDRESS":"hyfgradproject@gmail.com",
-    "EMAIL_PASSWORD":"Hyfgradproject27"
-
+    "CLOUDINARY_API_SECRET": "nxAVupCU8lBLug15ZkyDJC9Oi1E",
+    "CLOUDINARY_CLOUD_NAME": "hyf",
+    "CLOUDINARY_API_KEY": "193564857226994"
   }
 }

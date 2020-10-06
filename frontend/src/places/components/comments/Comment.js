@@ -31,7 +31,7 @@ const Comment = (props) => {
                 <Avatar
                   alt="user_image"
                   className="userImage"
-                  src={`${process.env.REACT_APP_ASSET_URL}/${props.writer.image}`}
+                  src={props.writer.image} // hosting image
                 />
                 <Typography color="textSecondary">
                   {props.writer.name}

@@ -47,7 +47,7 @@ const PlaceItem = (props) => {
         }
       );
       props.onDelete(props.id);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -91,7 +91,7 @@ const PlaceItem = (props) => {
           {isLoading && <LoadingSpinner asOverlay />}
           <div className='place-item__image'>
             <img
-              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
+              src={props.image}                   // hosting image
               alt={props.title}
             />
             <div className="star-rating">                         {/*   for star rating */}

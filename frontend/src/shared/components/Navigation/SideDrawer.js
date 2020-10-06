@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import {  NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   Button,
-  IconButton,Drawer,List,ListItem,Divider,useTheme
+  IconButton, Drawer, List, ListItem, Divider, useTheme
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -52,14 +52,14 @@ const SideDrawer = (props) => {
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
-              <ChevronRightIcon />
-            )}
+                <ChevronRightIcon />
+              )}
           </IconButton>
         </div>
         <Divider />
 
         <List>
-          <ListItem key='All Users'>
+          <ListItem key='Homepage'>
             <Button
               color='inherit'
               component={NavLink}
@@ -67,10 +67,20 @@ const SideDrawer = (props) => {
                 pathname: `/`,
               }}
             >
+              Homepage
+            </Button>
+          </ListItem>
+          <ListItem key='All Users'>
+            <Button
+              color='inherit'
+              component={NavLink}
+              to={{
+                pathname: `/users`,
+              }}
+            >
               All Users
             </Button>
           </ListItem>
-
           <ListItem key='All Places'>
             <Button
               color='inherit'

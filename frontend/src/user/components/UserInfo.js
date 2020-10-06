@@ -9,7 +9,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./UserInfo.css";
 
 function UserInfo(props) {
-  
+
   const [loadedUser, setLoadedUser] = useState({});
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   useEffect(() => {
@@ -19,26 +19,26 @@ function UserInfo(props) {
           `${process.env.REACT_APP_BACKEND_URL}/users/${props.creatorId}`
         );
         setLoadedUser(responseData.user);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchUser();
   }, [sendRequest, props.creatorId]);
 
   return (
-    <>
+    <div>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <Link to={`/${props.creatorId}/places`}>
         <div className="user-avatar">
           <Avatar
-            image={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`}
+            image={loadedUser.image}            // hosting image
             alt={props.name}
             className="user-avatar-img"
           />
           <p className="user-name">{loadedUser.name}</p>
         </div>
       </Link>
-    </>
+    </div>
   );
 }
 
