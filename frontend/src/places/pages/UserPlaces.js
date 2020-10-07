@@ -26,8 +26,7 @@ const UserPlaces = () => {
 
   const auth = useContext(AuthContext);
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const [userInfo, setUserInfo] = useState();
-  const [userDetail, setUserDetail] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [currentPage, setCurrentPage] = useState(1);
   const [placesPerPage] = useState(3);
@@ -35,18 +34,30 @@ const UserPlaces = () => {
   const userId = useParams().userId;
 
   useEffect(() => {
+    console.log('efffffff');
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         );
-        console.log('deneme',responseData);
-        setUserDetail({ image: responseData.userWithPlaces.image });
         setLoadedPlaces(responseData.places);
-        setUserInfo(responseData.userWithPlaces);
       } catch (err) {}
     };
 
+    const fetchUserInfo = async () => {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
+        );
+        console.log('fetch info',responseData.user);
+        console.log('fetch info',responseData.user.image);
+
+        setUserInfo(responseData.user);
+      } catch (err) {}
+    };
+
+  
+    fetchUserInfo();
     fetchPlaces();
     // fetchFollowList();
   }, [sendRequest, userId]);
@@ -67,29 +78,25 @@ const UserPlaces = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
-
-
-
-
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
 
       {
         <div className='user-detail'>
           <Avatar
             alt='profile'
-            src={`${process.env.REACT_APP_ASSET_URL}/${userDetail.image}`}
+            src={`${process.env.REACT_APP_ASSET_URL}/${userInfo.image}`}
             // aria-controls={menuId}
             // onClick={handleProfileMenuOpen}
             className={classes.xxLarge}
           />
           <CardContent>
             <Typography gutterBottom variant='h5' component='h2'>
-              Lizard
+              {userInfo.name}
             </Typography>
             <Typography className={classes.pos} color='textSecondary'>
-              adjective
+              {userInfo.age}
             </Typography>
             <Follower />
        

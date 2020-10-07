@@ -19,7 +19,7 @@ const Follower = (props) => {
 
   const [loginUserFollowing, setLoginUserFollowing] = useState();
   const [followStatus, setFollowStatus] = useState(false);
-
+  
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
