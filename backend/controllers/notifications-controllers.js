@@ -89,7 +89,7 @@ const updateNotifiReceiverIds = async (req, res, next) => {
       );
       return next(error);
     }
-    res.status(200).json({ notifi });
+    // res.status(200).json({ notifi });
   }
 
   const filteredNotifi = notifi.receiver.filter(

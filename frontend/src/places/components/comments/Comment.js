@@ -20,8 +20,6 @@ const Comment = (props) => {
     }
   }
 
-  //console.log(props);
-
   return (
     <React.Fragment>
       {props.writer && (
@@ -35,7 +33,7 @@ const Comment = (props) => {
                   src={props.writer.image} // hosting image
                 />
                 <Typography color="textSecondary">
-                  {props.writer.name}
+                  {props.writer._id === auth.userId ? "You" : props.writer.name}
                 </Typography>
               </div>
               <Typography variant="body2" component="p">

@@ -5,7 +5,7 @@ const HttpError = require("../models/http-error");
 const { Comment } = require("../models/comments");
 const Notifications = require("../models/notifications");
 
-////////// find the comments for specific place id //////// /
+////////// find the comments for specific place id ////////
 const getCommentsByPlaceId = async (req, res, next) => {
   const placeId = req.params.pid;
   let comments;
@@ -52,9 +52,10 @@ const createComment = async (req, res, next) => {
 
       Comment.find({ _id: comment._id })
         .lean()
-        .populate("writerId.name")
-        .exec((err, result) => {
+        .populate("writerId", "name image")
+        .exec((err, comment) => {
           if (err) return res.json({ success: false, err });
+          res.status(200).json({ comment: comment });
         });
     });
   } catch (err) {
@@ -64,8 +65,6 @@ const createComment = async (req, res, next) => {
     );
     return next(error);
   }
-
-  res.status(201).json({ comment: createdComment });
 };
 
 ////////// delete the comment from DB and return the deleted comment ///////
@@ -89,13 +88,13 @@ const deleteComment = async (req, res, next) => {
     return next(error);
   }
 
-  //   if (comment.writerId._id !== req.userData.userId) {
-  //     const error = new HttpError(
-  //       "You are not allowed to delete this comment.",
-  //       401
-  //     );
-  //     return next(error);
-  //   }
+  // if ((comment.writerId._id).toString() !== req.userData.userId) {
+  //   const error = new HttpError(
+  //     "You are not allowed to delete this comment.",
+  //     401
+  //   );
+  //   return next(error);
+  // }
 
   //delete from database
   try {
@@ -120,7 +119,10 @@ const deleteComment = async (req, res, next) => {
     return next(error);
   }
   if (!notifi) {
-    const error = new HttpError("Could not find notification with this comment id.", 404);
+    const error = new HttpError(
+      "Could not find notification with this comment id.",
+      404
+    );
     return next(error);
   }
   // delete from database
