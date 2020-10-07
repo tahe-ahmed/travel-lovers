@@ -12,6 +12,8 @@ import {
   Button,
 } from '@material-ui/core';
 
+import './Follower.css'
+
 const Follower = (props) => {
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
@@ -19,7 +21,7 @@ const Follower = (props) => {
 
   const [loginUserFollowing, setLoginUserFollowing] = useState();
   const [followStatus, setFollowStatus] = useState(false);
-  
+
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
@@ -144,7 +146,7 @@ const Follower = (props) => {
       <>
         <Typography className='follow-section'>
           <Typography>
-            <Button
+            <Button 
             onClick={() =>
               setShowFollowers((showFollowers) => !showFollowers)
             }
@@ -165,13 +167,15 @@ const Follower = (props) => {
             
            </Typography>
         </Typography>
-        <Button
+        <div className="follow-button">
+        <Button 
           variant='contained'
-          color='secondary'
+          color= {followStatus ? 'primary':'secondary'} 
           onClick={followStatus ? unfollowHandler : followHandler}
         >
-          {followStatus ? 'You are Following' : 'unFollow'}
+          {followStatus ? 'Following' : 'Follow'}
         </Button>
+        </div>
       </>
     </>
   );

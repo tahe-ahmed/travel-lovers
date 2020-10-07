@@ -21,6 +21,7 @@
   .follow-button{
     display: flex;
     align-items: center;
+    justify-content: center;
   }
   .name-followersCount{
     margin:5px;

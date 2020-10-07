@@ -92,14 +92,13 @@ const UserPlaces = () => {
             className={classes.xxLarge}
           />
           <CardContent>
-            <Typography gutterBottom variant='h5' component='h2'>
+            <Typography className="user-info" gutterBottom variant='h5' component='h2'>
               {userInfo.name}
             </Typography>
-            <Typography className={classes.pos} color='textSecondary'>
+            <Typography className="user-info" color='textSecondary'>
               {userInfo.age}
             </Typography>
             <Follower />
-       
           </CardContent>
     
         </div>

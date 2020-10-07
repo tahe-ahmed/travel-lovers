@@ -36,7 +36,10 @@
 .follow-name{
   padding:7px;
 }
-
+.user-info{
+  display: flex;
+  justify-content: center;
+}
 @media (max-width: 800px) {
   .user-detail {
     display: flex;
