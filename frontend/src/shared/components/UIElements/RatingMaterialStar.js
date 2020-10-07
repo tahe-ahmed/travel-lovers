@@ -22,7 +22,6 @@ export default function RatingMaterialStar(props) {
   }, [ratingAverage]);
 
   const ratingChangedHandler = async rating => {                // onChange handler of ReactStars component
-    console.log(rating);
     if (auth.isLoggedIn) {                                      // only auth user can edit rate
       try {
         const response = await sendRequest(

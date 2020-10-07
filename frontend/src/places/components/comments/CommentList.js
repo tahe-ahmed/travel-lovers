@@ -4,7 +4,6 @@ import Comment from "./Comment";
 
 const CommentList = (props) => {
   const commentData = props.data;
-
   return (
     <React.Fragment>
       {commentData &&

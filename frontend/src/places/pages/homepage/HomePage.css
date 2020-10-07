@@ -224,7 +224,7 @@ i {
 
 .image-gallery-image,
 .image-gallery {
-  width: 600px;
+  width: 1000px;
   margin: 0 auto;
   object-fit: cover;
 }
@@ -232,7 +232,10 @@ i {
 .image-gallery-image {
   height: 400px;
 }
-
+/* image galary slide make full */
+div.image-gallery-slide.center > div{
+  width: 100%;
+}
 .banner-text{
   color: rgb(92, 15, 15) !important;
     font-weight: bold;  

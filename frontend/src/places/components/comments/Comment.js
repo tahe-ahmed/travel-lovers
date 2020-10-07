@@ -19,7 +19,8 @@ const Comment = (props) => {
       if (props.writer._id !== auth.userId) showRemove = false;
     }
   }
-  // console.log(showRemove);
+
+  //console.log(props);
 
   return (
     <React.Fragment>

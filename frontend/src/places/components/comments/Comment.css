@@ -3,7 +3,7 @@
 }
 .card{
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /*  detail fixing styele */
     justify-content: space-between;
 }
 

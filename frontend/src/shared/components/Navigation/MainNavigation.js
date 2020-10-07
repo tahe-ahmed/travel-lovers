@@ -28,15 +28,33 @@ import "./MainNavigation.css";
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogin, setIsLogin] = useState(true);
-  const [notifiAnchorEl, setNotifiAnchorEl] = React.useState(null);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [notifiAnchorEl, setNotifiAnchorEl] = useState(null);
+  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used 
+  const { sendRequest } = useHttpClient();
   const [notifications, setNotifications] = useState();
   const history = useHistory();
+
+  //////// when login fetch the notifications
+  useEffect(() => {
+    if (auth.isLoggedIn && auth.userId !== null) {
+      // fetch notification for auth.userIn
+      const fetchNotifications = async () => {
+        try {
+          const responseData = await sendRequest(
+            `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
+          );
+          //console.log(responseData.notifications);
+          setNotifications(responseData.notifications);
+        } catch (err) { }
+      };
+      fetchNotifications();
+    }
+  }, [auth.isLoggedIn, auth.userId]);
 
   const handleClick = (event) => {
     setNotifiAnchorEl(event.currentTarget);
@@ -54,7 +72,8 @@ const MainNavigation = (props) => {
       receiverID: auth.userId,
     };
     try {
-      const response = await fetch(
+      //const response = await fetch(
+      await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         {
           method: "PATCH",
@@ -65,7 +84,7 @@ const MainNavigation = (props) => {
           },
         }
       );
-      const not = await response.json();
+      //const not = await response.json();      //   Line 68:13:  'not' is assigned a value but never used 
     } catch (err) { }
 
     /// update the local state
@@ -90,22 +109,7 @@ const MainNavigation = (props) => {
     handleMobileMenuClose();
   };
 
-  //////// when login fetch the notifications
-  useEffect(() => {
-    if (auth.isLoggedIn && auth.userId !== null) {
-      // fetch notification for auth.userIn
-      const fetchNotifications = async () => {
-        try {
-          const responseData = await sendRequest(
-            `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
-          );
-          console.log(responseData.notifications);
-          setNotifications(responseData.notifications);
-        } catch (err) { }
-      };
-      fetchNotifications();
-    }
-  }, [auth.isLoggedIn, auth.userId]);
+
 
   ////// count the notifications
   const notificationsNumber =
@@ -143,7 +147,7 @@ const MainNavigation = (props) => {
       </MenuItem>
       <MenuItem
         onClick={handleMenuClose}
-        onClick={handleMenuClose}
+        // onClick={handleMenuClose}   //  Line 147:9:  No duplicate props allowed  
         color="inherit"
         component={NavLink}
         to={{

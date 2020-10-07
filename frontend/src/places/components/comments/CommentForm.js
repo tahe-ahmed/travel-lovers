@@ -1,7 +1,7 @@
 import React from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 import './CommentForm.css';
-import { Card, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 const CommentForm = (props) => {
   return (

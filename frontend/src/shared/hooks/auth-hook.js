@@ -6,9 +6,9 @@ export const useAuth = () => {
   const [token, setToken] = useState(false);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(false);
-  const [userImage,setUserImage] = useState('');
+  const [userImage, setUserImage] = useState('');
 
-  const login = useCallback((uid, token,userImage, expirationDate) => {
+  const login = useCallback((uid, token, userImage, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setUserImage(userImage);
@@ -20,7 +20,7 @@ export const useAuth = () => {
       JSON.stringify({
         userId: uid,
         token: token,
-        userImage:userImage,
+        userImage: userImage,
         expiration: tokenExpirationDate.toISOString()
       })
     );
@@ -50,9 +50,9 @@ export const useAuth = () => {
       storedData.token &&
       new Date(storedData.expiration) > new Date()
     ) {
-      login(storedData.userId, storedData.token, storedData.userImage,new Date(storedData.expiration));
+      login(storedData.userId, storedData.token, storedData.userImage, new Date(storedData.expiration));
     }
   }, [login]);
 
-  return { token, login, logout, userId ,userImage };
+  return { token, login, logout, userId, userImage };
 };

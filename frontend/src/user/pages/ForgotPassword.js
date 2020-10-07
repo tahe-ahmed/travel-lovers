@@ -5,7 +5,7 @@ module.exports = (app) => {
     if (req.body.email === '') {
       res.status(400).send('email required');
     }
-    console.error(req.body.email);
+    //console.error(req.body.email);
     User.findOne({
       where: {
         email: req.body.email,

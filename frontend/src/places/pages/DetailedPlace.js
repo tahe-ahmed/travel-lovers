@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-// import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PlaceItem from "../components/PlaceItem";
 import CommentList from "../components/comments/CommentList.js";
 import CommentForm from "../components/comments/CommentForm";
@@ -23,7 +23,7 @@ const DetailedPlace = (props) => {
   const [commentValueInput, setCommentValueInput] = useState("");
   const [mentions, setMentions] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const [commentCount, setCommentCount] = useState(0); // for render user image and name immediately
   const placeId = useParams().placeId;
 
   /////////// set up the mentions and notification data ////////////
@@ -44,7 +44,7 @@ const DetailedPlace = (props) => {
         );
 
         setLoadedUsers(responseData.users);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchUsers();
   }, [sendRequest]);
@@ -57,7 +57,7 @@ const DetailedPlace = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`
         );
         setPlace(responseData.place);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlace();
   }, [sendRequest, placeId]);
@@ -70,15 +70,16 @@ const DetailedPlace = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/comments/${placeId}`
         );
         setComments(responseData.comment);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchComments();
-  }, [sendRequest, placeId]);
+  }, [sendRequest, placeId, commentCount]);
 
   /////////////// when post new comments add them to the client state ////////////////
   const updateComment = (newComment) => {
     setCommentValueInput("");
     setComments((comments) => [...comments, newComment]);
+    setCommentCount(prevState => prevState + 1);
   };
 
   ///////////////////  when typing in the comment input update the commnetValueInput ////
@@ -112,13 +113,13 @@ const DetailedPlace = (props) => {
       newComment = await rawResponse.json();
       updateComment(newComment.comment);
       sendNotifiMentionsToBackend(newComment);
-    } catch (err) {}
+    } catch (err) { }
 
     ////////////////// create the notification data to be sent to server upon submiting the comment /////////////
   };
 
   const sendNotifiMentionsToBackend = async (newComment) => {
-    newComment && console.log(newComment.comment);
+    //newComment && console.log(newComment.comment);
     if (mentions.length >= 1) {
       if (usersToMention) {
         const notificationReceivers = mentions.map(
@@ -134,7 +135,8 @@ const DetailedPlace = (props) => {
         };
         // send to backend ==============>
         try {
-          const response = await fetch(
+          // const response = await fetch(       //  Line 138:17:  'response' is assigned a value but never used  no-unused-vars
+          await fetch(
             process.env.REACT_APP_BACKEND_URL + "/notifications",
             {
               method: "POST",
@@ -146,9 +148,9 @@ const DetailedPlace = (props) => {
             }
           );
 
-          const not = await response.json();
+          //const not = await response.json();
           setMentions([]);
-        } catch (err) {}
+        } catch (err) { }
       }
     }
   };
@@ -163,7 +165,7 @@ const DetailedPlace = (props) => {
           Authorization: "Bearer " + auth.token,
         },
       });
-    } catch (err) {}
+    } catch (err) { }
     //delete from the array
     const updatedcomments = comments.filter(
       (comment) => comment._id !== todeleteId
@@ -173,52 +175,53 @@ const DetailedPlace = (props) => {
 
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading ? (
         <LoadingSpinner asOverlay />
       ) : (
-        <div className="place-detail">
-          {place && (
-            <PlaceItem
-              key={place.id}
-              id={place.id}
-              image={place.image}
-              title={place.title}
-              description={place.description}
-              address={place.address}
-              creatorId={place.creator}
-              coordinates={place.location}
-              onDelete={props.onDeletePlace}
-              rate={place.rate} // for star rating
-              rateAvg={place.rateAvg}
-            />
-          )}
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                Comments
+          <div className="place-detail">
+            {place && (
+              <PlaceItem
+                key={place.id}
+                id={place.id}
+                image={place.image}
+                title={place.title}
+                description={place.description}
+                address={place.address}
+                creatorId={place.creator}
+                coordinates={place.location}
+                onDelete={props.onDeletePlace}
+                rate={place.rate} // for star rating
+                rateAvg={place.rateAvg}
+              />
+            )}
+            <Card>
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                  Comments
               </Typography>
-              {loadedUsers && (
-                <CommentForm
-                  handleTextChange={handleChange}
-                  submitComment={onSubmit}
-                  text={commentValueInput}
-                  users={usersToMention}
-                  onAdd={onAdd}
-                />
-              )}
+                {loadedUsers && (
+                  <CommentForm
+                    handleTextChange={handleChange}
+                    submitComment={onSubmit}
+                    text={commentValueInput}
+                    users={usersToMention}
+                    onAdd={onAdd}
+                  />
+                )}
 
-              {comments.length >= 1 && (
-                <CommentList
-                  data={comments.sort(function (a, b) {
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-                  })}
-                  ondelete={ondelete}
-                />
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      )}
+                {comments.length >= 1 && (
+                  <CommentList
+                    data={comments.sort(function (a, b) {
+                      return new Date(b.createdAt) - new Date(a.createdAt);
+                    })}
+                    ondelete={ondelete}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
     </React.Fragment>
   );
 };
