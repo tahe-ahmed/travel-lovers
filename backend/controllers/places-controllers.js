@@ -56,7 +56,13 @@ const getPlacesByUserId = async (req, res, next) => {
   // let places;
   let userWithPlaces;
   try {
-    userWithPlaces = await User.findById(userId, "name").populate("places");
+    userWithPlaces = await User.findById(userId).populate({
+      path: 'user places',
+      populate: {
+        path: 'place',
+        model: 'Place'
+      } 
+    })
   } catch (err) {
     const error = new HttpError(
       "Fetching places failed, please try again later.",

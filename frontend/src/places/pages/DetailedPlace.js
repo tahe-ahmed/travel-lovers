@@ -10,6 +10,7 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import PlaceItem from "../components/PlaceItem";
 import CommentList from "../components/comments/CommentList.js";
 import CommentForm from "../components/comments/CommentForm";
+
 import { Card, Avatar, Button } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';

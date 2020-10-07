@@ -14,8 +14,10 @@ const getCommentsByPlaceId = async (req, res, next) => {
       .populate("writerId", "name image")
       .exec((err, comment) => {
         if (err) return res.status(400).send(err);
+        console.log('comments',comment);
         res.status(200).json({ comment });
       });
+   
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find comments.",

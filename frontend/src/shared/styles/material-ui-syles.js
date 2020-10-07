@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(7),
       height: theme.spacing(7),
     },
+    xxLarge:{
+      width: theme.spacing(17),
+      height: theme.spacing(17),
+    },
 
 
     //sidebar

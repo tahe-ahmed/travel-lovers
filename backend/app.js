@@ -9,6 +9,7 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const commentsRoutes = require('./routes/comments-routes');
 const notificationsRoutes = require('./routes/notifications-routes')
+const followRoutes = require('./routes/follow-routes');
 
 const HttpError = require('./models/http-error');
 
@@ -32,7 +33,8 @@ app.use((req, res, next) => {
 app.use('/api/places', placesRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/comments', commentsRoutes);
-app.use('/api/notifications', notificationsRoutes)
+app.use('/api/notifications', notificationsRoutes);
+app.use('/api/follow',followRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
@@ -59,6 +61,7 @@ mongoose
     useCreateIndex: true
   })
   .then(() => {
+    `mongodb+srv://zekiye:zekiyeburak@hyf.463mg.mongodb.net/mern?retryWrites=true&w=majority`
     console.log('Database is connected!')
     app.listen(process.env.PORT || 5000, () => {
       console.log('Server is running!')
