@@ -137,7 +137,7 @@ const Auth = () => {
         {
           'Content-Type': 'application/json',
         },
-        500
+        10000 // user should login in 10 sc
       );
 
       auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
@@ -164,7 +164,7 @@ const Auth = () => {
         {
           'Content-Type': 'application/json',
         },
-        500
+        10000 // user should login in 10 sc
       );
       auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
     } catch (err) { }
@@ -334,21 +334,21 @@ const Auth = () => {
                 />
               )}
               <br />
-              <div className='facebook'>
-                {isLoginMode && (
-                  <FacebookLogin
-                    appId={process.env.REACT_APP_FACEBOOK_LOGIN}
-                    // autoLoad={isAutoLoad}
-                    fields='name,email,picture'
-                    callback={responseFacebookHandler}
-                    icon='fa-facebook'
-                    textButton=' Log in with Facebook'
-                    size='medium'
-                  />
-                )}
-              </div>
+              {/* <div className='facebook'> */}
+              {isLoginMode && (
+                <FacebookLogin
+                  appId={process.env.REACT_APP_FACEBOOK_LOGIN}
+                  // autoLoad={isAutoLoad}
+                  fields='name,email,picture'
+                  callback={responseFacebookHandler}
+                  icon='fa-facebook'
+                  textButton=' Log in with Facebook'
+                  size='medium'
+                />
+              )}
             </div>
           </div>
+          {/* </div> */}
         </Container>
       </div>
     </React.Fragment>

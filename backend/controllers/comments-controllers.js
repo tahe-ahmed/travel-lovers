@@ -5,7 +5,7 @@ const HttpError = require("../models/http-error");
 const { Comment } = require("../models/comments");
 const Notifications = require("../models/notifications");
 
-////////// find the comments for specific place id ////////
+////////// find the comments for specific place id //////// /
 const getCommentsByPlaceId = async (req, res, next) => {
   const placeId = req.params.pid;
   let comments;
@@ -111,7 +111,7 @@ const deleteComment = async (req, res, next) => {
   ///////////// delete any notifications mentions related to the comment
   let notifi;
   try {
-    notifi = await Notifications.findOne({comment:commentId});
+    notifi = await Notifications.findOne({ comment: commentId });
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete notification in comment, maybe comment not exist.",
@@ -134,7 +134,7 @@ const deleteComment = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(200).json({ message: "Deleted place.", comment: comment , notifi});
+  res.status(200).json({ message: "Deleted place.", comment: comment, notifi });
 };
 
 exports.createComment = createComment;
