@@ -78,9 +78,13 @@ padding: 20px;
   flex-wrap:wrap;
   width: 357px
 }
-.facebook{
-  background: #4c69ba
+/* make facebook button same as google login button */
+div.signin-alternative > span > button {  
+ width: 100%;
+ text-align: left;
+ text-transform: inherit;
 }
+
 
 .footer-button{
   display: flex;

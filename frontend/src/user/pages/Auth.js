@@ -296,9 +296,10 @@ const Auth = () => {
                 color='primary'
                 disabled={!formState.isValid}
               >
-                Sign In
+                {isLoginMode ? 'Sign in' : 'Sign up'}
               </Button>
             </form>
+            <br />
             <Grid container>
               {isLoginMode && (
                 <Grid item xs>
@@ -334,7 +335,6 @@ const Auth = () => {
                 />
               )}
               <br />
-              {/* <div className='facebook'> */}
               {isLoginMode && (
                 <FacebookLogin
                   appId={process.env.REACT_APP_FACEBOOK_LOGIN}
@@ -348,7 +348,6 @@ const Auth = () => {
               )}
             </div>
           </div>
-          {/* </div> */}
         </Container>
       </div>
     </React.Fragment>
