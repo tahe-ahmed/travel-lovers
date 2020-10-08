@@ -1,5 +1,6 @@
 .place-item {
   margin: 1rem 0;
+  padding: 5px;
 }
 
 .place-item__content {
@@ -53,6 +54,17 @@
   width: 100%;
 }
 
+.MuiCardActions-root{
+  justify-content: center;
+}
+.item-info-part{
+  display:none
+}
+
+.place-item-container:hover .item-info-part {
+  display:block;
+  background-color: white;
+}
 
 /* star rating */
 .star-rating{
@@ -77,6 +89,19 @@
 }
 .rating-total span{
   font-size: 1rem;
+}
+
+.item-rating{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 13px;
+}
+.MuiBox-root{
+  margin-left: 1px;
+}
+.rating-total {
+  font-size: 0.6rem;
 }
 
 @media (min-width: 768px) {

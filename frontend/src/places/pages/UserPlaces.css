@@ -18,10 +18,7 @@
   flex-direction: row;
   align-items: center;
 }
-.modal-follow-content{
-  left: calc(64% - 20rem);
-  width: 31rem;
-}
+
 .modal-follow{
   display: flex;
   flex-direction: row;
@@ -36,10 +33,27 @@
 .follow-name{
   padding:7px;
 }
+.user-place-item{
+  margin:10px;
+}
 .user-info{
   display: flex;
   justify-content: center;
 }
+.user-places-container{
+  display: flex;
+  flex-direction: row;
+  margin:10px;
+  padding:10px;
+}
+
+/* .hover-content {
+  display:none;
+}
+.parent:hover .hover-content {
+  display:block;
+} */
+
 @media (max-width: 800px) {
   .user-detail {
     display: flex;

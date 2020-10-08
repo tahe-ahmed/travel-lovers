@@ -30,9 +30,9 @@ const getList = async (req, res, next) => {
 };
 /////////// follow
 const follow = async (req, res, next) => {
-
   const user_id = req.params.uid;
   const follow_id = req.body.follow_id;
+  const logginUser = req.body.logginUser;
 
   ////  We add user A to user B’s followers and B to user A’s following
 
@@ -55,7 +55,7 @@ const follow = async (req, res, next) => {
         user: user_id,
         following: follow_id,
       });
-      follower = await  createdFollow.save();
+      follower = await createdFollow.save();
     } catch (err) {
       const errorResult = new HttpError(
         'Create follow failed, please try again later.',
@@ -66,7 +66,6 @@ const follow = async (req, res, next) => {
   }
   if (follower && !follower.following.includes(follow_id)) {
     try {
-
       follower.following.push(follow_id);
       follower = await follower.save();
     } catch (err) {
@@ -96,7 +95,7 @@ const follow = async (req, res, next) => {
         user: follow_id,
         followers: user_id,
       });
-     following = await createdFollow.save();
+      following = await createdFollow.save();
     } catch (err) {
       const error = new HttpError(
         'Create follow failed, please try again later.',
@@ -117,20 +116,29 @@ const follow = async (req, res, next) => {
       return next(error);
     }
   }
+  console.log('takip edilen ;', follower.following);
+  console.log('seni takip eden ;', follower.followers);
 
-  res.status(200).json({
-    msg: 'Follow is success!',
-    followers: following.followers,
-    following: following.following,
-  });
-
-
+  if (logginUser) {
+    res.status(200).json({
+      msg: 'Follow is success!',
+      followers: follower.followers,
+      following: follower.following,
+    });
+  } else {
+    res.status(200).json({
+      msg: 'Follow is success!',
+      followers: following.followers,
+      following: following.following,
+    });
+  }
 };
 
 const unfollow = async (req, res, next) => {
   const user_id = req.params.uid;
   const follow_id = req.body.follow_id;
- 
+  const logginUser = req.body.logginUser;
+    
   ////  We add user A to user B’s followers and B to user A’s following
 
   // Section 1
@@ -158,7 +166,7 @@ const unfollow = async (req, res, next) => {
     }
   }
 
-  // 2.Section 2
+  // 2. Section 2
 
   let following;
   try {
@@ -183,12 +191,24 @@ const unfollow = async (req, res, next) => {
       return next(error);
     }
   }
+  console.log('unn - takip edilen ;', follower.following);
+  console.log('unn - seni takip eden ;', follower.followers);
 
-  res.status(200).json({
-    msg: 'Follow is success!',
-    followers: following.followers,
-    following: following.following,
-  });
+  if (logginUser) {
+    res.status(200).json({
+      msg: 'Follow is success!',
+      followers: follower.followers,
+      following: follower.following,
+    });
+  } else {
+    res.status(200).json({
+      msg: 'Follow is success!',
+      followers: following.followers,
+      following: following.following,
+    });
+  }
+
+  
 };
 
 exports.follow = follow;

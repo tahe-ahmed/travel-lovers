@@ -4,22 +4,16 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
 import Modal from '../../shared/components/UIElements/Modal';
-import {
-  Card,
-  CardContent,
-  Avatar,
-  Typography,
-  Button,
-} from '@material-ui/core';
+import { Avatar, Typography, Button } from '@material-ui/core';
 
-import './Follower.css'
+import './Follower.css';
 
 const Follower = (props) => {
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const [loginUserFollowing, setLoginUserFollowing] = useState();
+  const [loginUserFollowing, setLoginUserFollowing] = useState([]);
   const [followStatus, setFollowStatus] = useState(false);
 
   const [showFollowers, setShowFollowers] = useState(false);
@@ -32,7 +26,6 @@ const Follower = (props) => {
   useEffect(() => {
     const fetchFollowList = async () => {
       try {
-        console.log('userID', props.userId);
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/follow/list/${userId}`
         );
@@ -41,22 +34,22 @@ const Follower = (props) => {
         ) {
           setFollowStatus(true);
         }
-
-        console.log('follower', responseData);
-
         setFollowing(responseData.follow[0].following);
         setFollowers(responseData.follow[0].followers);
-
-        const loginUserData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/follow/list/${auth.userId}`
-        );
-        console.log('loginuser', loginUserData.follow[0].following);
-        setLoginUserFollowing(loginUserData.follow[0].following);
       } catch (err) {}
     };
 
+    const fetchLogginUserFollowingList = async () => {
+      try {
+        const loginUserData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/follow/list/${auth.userId}`
+        );
+        setLoginUserFollowing(loginUserData.follow[0].following);
+      } catch (err) {}
+    };
+    fetchLogginUserFollowingList();
     fetchFollowList();
-  }, [sendRequest, userId]);
+  }, [sendRequest, userId, loginUserFollowing.length]);
 
   const followHandler = async (event) => {
     event.preventDefault();
@@ -75,11 +68,9 @@ const Follower = (props) => {
       );
       setFollowStatus(true);
       setFollowers(responseData.followers);
-      //setFollowingCount(responseData.followingCount);
-      console.log(responseData);
+
     } catch (err) {}
   };
-
   const unfollowHandler = async (event) => {
     event.preventDefault();
     try {
@@ -94,14 +85,63 @@ const Follower = (props) => {
         },
         500
       );
-      console.log('unfollow', responseData.followers);
       setFollowers(responseData.followers);
       setFollowStatus(false);
     } catch (err) {}
   };
 
+  // this part related to loggin user followers
+  // if loggin user follow the this user's followers or following , this method word
+  const followHandlerByLogginUser = async (event, followId) => {
+    event.preventDefault();
+    console.log('followHandlerByLogginUser', followId);
+
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/follow/${auth.userId}`,
+        'POST',
+        JSON.stringify({
+          follow_id: followId,
+          logginUser: true,
+        }),
+        {
+          'Content-Type': 'application/json',
+        },
+        500
+      );
+      console.log('burdayim;', responseData);
+
+      setLoginUserFollowing(responseData.following);
+      console.log('takip edilen sayi user;', loginUserFollowing.length);
+    } catch (err) {}
+  };
+
+  const unfollowHandlerByLogginUser = async (event, unfollowId) => {
+    console.log('unfolloww, login');
+    event.preventDefault();
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/follow/unfollow/${auth.userId}`,
+        'POST',
+        JSON.stringify({
+          follow_id: unfollowId,
+          logginUser: true,
+        }),
+        {
+          'Content-Type': 'application/json',
+        },
+        500
+      );
+      console.log('unfollow', responseData.following);
+      setLoginUserFollowing(responseData.following);
+    } catch (err) {}
+  };
+
   const closeFollowers = () => {
     setShowFollowers(false);
+  };
+  const closeFollowings = () => {
+    setShowFollowing(false);
   };
 
   return (
@@ -119,9 +159,50 @@ const Follower = (props) => {
                   <Avatar
                     alt='profile'
                     src={`${process.env.REACT_APP_ASSET_URL}/${item.image}`}
-                    // aria-controls={menuId}
-                    // onClick={handleProfileMenuOpen}
-                    // className={classes.large}
+                  />
+                  <Typography className='follow-name'>{item.name}</Typography>
+                </div>
+                <div>
+                  {item._id !== auth.userId &&
+                    (loginUserFollowing &&
+                    loginUserFollowing.filter((x) => x._id === item._id)
+                      .length > 0 ? (
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={(e) =>
+                          unfollowHandlerByLogginUser(e, item._id)
+                        }
+                      >
+                        Following
+                      </Button>
+                    ) : (
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        onClick={(e) => followHandlerByLogginUser(e, item._id)}
+                      >
+                        Follow
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            );
+          })}
+      </Modal>
+      <Modal
+        className='modal-follow-content'
+        show={showFollowing}
+        onCancel={closeFollowings}
+      >
+        {following &&
+          following.map((item) => {
+            return (
+              <div className='modal-follow'>
+                <div className='modal-info'>
+                  <Avatar
+                    alt='profile'
+                    src={`${process.env.REACT_APP_ASSET_URL}/${item.image}`}
                   />
                   <Typography className='follow-name'>{item.name}</Typography>
                 </div>
@@ -142,39 +223,43 @@ const Follower = (props) => {
             );
           })}
       </Modal>
-
       <>
         <Typography className='follow-section'>
-          <Typography>
-            <Button 
-            onClick={() =>
-              setShowFollowers((showFollowers) => !showFollowers)
-            }
-            >
-              {followers && followers.length} followers
-            </Button>
-          </Typography>
-          <Typography> . </Typography>
-          <Typography>
-            
-          <Button
-            onClick={() =>
-              setShowFollowers((showFollowers) => !showFollowers)
-            }
-            >
-              {following && following.length} following
-            </Button>
-            
-           </Typography>
+          {followers && followers.length > 0 && (
+            <Typography>
+              <Button
+                onClick={() =>
+                  setShowFollowers((showFollowers) => !showFollowers)
+                }
+              >
+                {followers && followers.length} followers
+              </Button>
+            </Typography>
+          )}
+          {followers &&
+            followers.length > 0 &&
+            following &&
+            following.length > 0 && <Typography> . </Typography>}
+          {following && following.length > 0 && (
+            <Typography>
+              <Button
+                onClick={() =>
+                  setShowFollowing((showFollowing) => !showFollowing)
+                }
+              >
+                {following && following.length} following
+              </Button>
+            </Typography>
+          )}
         </Typography>
-        <div className="follow-button">
-        <Button 
-          variant='contained'
-          color= {followStatus ? 'primary':'secondary'} 
-          onClick={followStatus ? unfollowHandler : followHandler}
-        >
-          {followStatus ? 'Following' : 'Follow'}
-        </Button>
+        <div className='follow-button'>
+          <Button
+            variant='contained'
+            color={followStatus ? 'primary' : 'secondary'}
+            onClick={followStatus ? unfollowHandler : followHandler}
+          >
+            {followStatus ? 'Following' : 'Follow'}
+          </Button>
         </div>
       </>
     </>
