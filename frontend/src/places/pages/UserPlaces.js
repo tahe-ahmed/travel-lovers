@@ -41,6 +41,7 @@ const UserPlaces = () => {
   const [userInfo, setUserInfo] = useState({});
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [currentPage, setCurrentPage] = useState(1);
+  const [showInfo, setShowInfo] = useState(false);
   const [placesPerPage] = useState(3);
 
   const userId = useParams().userId;
@@ -84,48 +85,104 @@ const UserPlaces = () => {
   // Change the places when the pagination pageNumber clicked
   // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const closeInfo = () => {
+    setShowInfo(false);
+  };
+
   return (
     <React.Fragment>
       {/* <ErrorModal error={error} onClear={clearError} /> */}
 
-      {
-        <div className='user-detail'>
-          <Avatar
-            alt='profile'
-            src={`${process.env.REACT_APP_ASSET_URL}/${userInfo.image}`}
-            // aria-controls={menuId}
-            // onClick={handleProfileMenuOpen}
-            className={classes.xxLarge}
-          />
-          <CardContent>
-            <Typography
-              className='user-info'
-              gutterBottom
-              variant='h5'
-              component='h2'
-            >
-              {userInfo.name}
-            </Typography>
-            <Typography className='user-info' color='textSecondary'>
+      <Modal
+        header={`More about ${userInfo.name}`}
+        className="modal-user-info"
+        show={showInfo}
+        onCancel={closeInfo}
+      >
+        <Typography
+          className="user-info"
+          gutterBottom
+          variant="h5"
+          component="h2"
+        >
+          Name: {userInfo.name ? userInfo.name : 'Not added yet'}
+        </Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          className="user-info"
+          // color="textSecondary"
+        >
+          Age: {userInfo.age ? userInfo.age : 'Not added yet'}
+        </Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          className="user-info"
+          // color="textSecondary"
+        >
+          interests: {userInfo.interests ? userInfo.interests : 'Not added yet'}
+        </Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          className="user-info"
+          // color="textSecondary"
+        >
+          Bio: {userInfo.biography ? userInfo.biography : 'Not added yet'}
+        </Typography>
+        <Typography
+          variant="h5"
+          component="h2"
+          className="user-info"
+          // color="textSecondary"
+        >
+          Gender: {userInfo.gender ? userInfo.gender : 'Not added yet'}
+        </Typography>
+      </Modal>
+
+      <div className="user-detail">
+        <Avatar
+          alt="profile"
+          src={`${process.env.REACT_APP_ASSET_URL}/${userInfo.image}`}
+          // aria-controls={menuId}
+          // onClick={handleProfileMenuOpen}
+          className={classes.xxLarge}
+        />
+        <CardContent>
+          <Typography
+            className="user-info"
+            gutterBottom
+            variant="h5"
+            component="h2"
+          >
+            {userInfo.name}
+          </Typography>
+          {/* <Typography className='user-info' color='textSecondary'>
               {userInfo.age}
-            </Typography>
-            <Follower />
-          </CardContent>
-        </div>
-      }
+            </Typography> */}
+          <Typography>
+            <Button inverse onClick={() => setShowInfo(true)}>
+              more
+            </Button>
+          </Typography>
+          <Follower />
+        </CardContent>
+      </div>
+
       {loadedPlaces && userInfo && (
         <>
           {/* <p className='user-header'>
             {auth.userId === userInfo.id ? 'My' : `${userInfo.name}'s`} Places
           </p> */}
-          <div className='user-places-container'>
+          <div className="user-places-container">
             {loadedPlaces.map((place) => {
               return (
-                <Card className='user-place-item'>
+                <Card className="user-place-item">
                   <CardMedia
                     className={`${classes.media} parent`}
                     image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
-                    title='Contemplative Reptile'
+                    title="Contemplative Reptile"
                   >
                     {/* <div className='hover-content'>
                       <h2>{place.title}</h2>
