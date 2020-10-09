@@ -28,41 +28,41 @@ function SectionTree() {
           <h1 className="animated-text explore">EXPLORE. DREAM. DISCOVER.</h1>
         </div>
         {!auth.isLoggedIn ? (
-              <>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  href="/auth"
-                  size="large"
-                >
-                  SIGN UP
+          <div>
+            <Button
+              variant="contained"
+              color="secondary"
+              href="/auth"
+              size="large"
+            >
+              SIGN UP
                 </Button>
-              </>
-            ) : (
-              <>
-                
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  href="/places"
-                  size="large"
-                  className="button-section-one"
-                >
-                  EXPLORE NEW PLACES
+          </div>
+        ) : (
+            <div>
+
+              <Button
+                variant="contained"
+                color="secondary"
+                href="/places"
+                size="large"
+                className="button-section-one"
+              >
+                EXPLORE NEW PLACES
                 </Button>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  component={NavLink}
-                  to={{
-                    pathname: `/places/new`,
-                  }}
-                >
-                  ADD PLACE
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                component={NavLink}
+                to={{
+                  pathname: `/places/new`,
+                }}
+              >
+                ADD PLACE
                 </Button>
-              </>
-            )}
+            </div>
+          )}
       </div>
       <div className="section-tree-bottom">
         Made with <span className="heart">❤</span> in Amsterdam. 2020

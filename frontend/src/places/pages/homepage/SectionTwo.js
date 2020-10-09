@@ -35,38 +35,38 @@ function SectionTwo() {
           `${process.env.REACT_APP_BACKEND_URL}/places`
         );
         const mapPlaces = responseData.places.map((place) => ({
-          original: `${process.env.REACT_APP_ASSET_URL}/${place.image}`,
-          tumbnail: `${process.env.REACT_APP_ASSET_URL}/${place.image}`,
+          original: place.image, // hosting image
+          tumbnail: place.image,
           description: place.address,
           originalAlt: place.title,
           originalTitle: place.description,
-          id:place._id
+          id: place._id
         }));
         if (responseData.places && responseData.places.length > 0) {
           setLoadedPlaces(mapPlaces);
         }
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlaces();
   }, [sendRequest]);
 
   const imageGalleryClickHandler = () => {
-    if(!auth.isLoggedIn) {
+    if (!auth.isLoggedIn) {
       alert('You should sign up first to explore the places!')
-      
+
     }
     const currentIndex = gallery.current.getCurrentIndex();
     history.push(`/info/${loadedPlaces[currentIndex].id}`)
   }
 
   return (
-    <>
+    <div>
       <div className="card-hp">
         <Card className='card-items' variant="outlined">
           <CardContent>
             <Typography
               gutterBottom
-              >
+            >
               <i className="fas fa-search"></i>
             </Typography>
             <Typography variant="h6" component="h2">
@@ -78,11 +78,11 @@ function SectionTwo() {
               are here, they want to get connected.
             </Typography>
           </CardContent>
-            <CardActions>
-              <Button size="small" href="/users" color="secondary">
-                See travel lovers
+          <CardActions>
+            <Button size="small" href="/users" color="secondary">
+              See travel lovers
               </Button>
-            </CardActions>
+          </CardActions>
         </Card>
         <Card className='card-items' variant="outlined">
           <CardContent>
@@ -100,24 +100,24 @@ function SectionTwo() {
               the world. Comment and rate others' experience.
             </Typography>
           </CardContent>
-            <CardActions>
-              {auth.isLoggedIn ? (
-                <Button
-                  size="small"
-                  to={{
-                    pathname: `/places/new`,
-                  }}
-                  color="secondary"
-                  component={NavLink}
-                >
-                  Share a place
-                </Button>
-              ) : (
+          <CardActions>
+            {auth.isLoggedIn ? (
+              <Button
+                size="small"
+                to={{
+                  pathname: `/places/new`,
+                }}
+                color="secondary"
+                component={NavLink}
+              >
+                Share a place
+              </Button>
+            ) : (
                 <Button size="small" href="/auth" color="secondary">
                   Start to share
                 </Button>
               )}
-            </CardActions>
+          </CardActions>
         </Card>
         <Card className='card-items' variant="outlined">
           <CardContent>
@@ -135,11 +135,11 @@ function SectionTwo() {
               to go. All world is in here.
             </Typography>
           </CardContent>
-            <CardActions>
-              <Button size="small" href="/places" color="secondary">
-                See others' places
+          <CardActions>
+            <Button size="small" href="/places" color="secondary">
+              See others' places
               </Button>
-            </CardActions>
+          </CardActions>
         </Card>
       </div>
       <div className='image-gallery-container'>
@@ -153,17 +153,17 @@ function SectionTwo() {
             autoPlay={true}
             slideInterval={2500}
             onErrorImageURL="https://i.postimg.cc/Hs32TQT5/amsterda.jpg"
-            onClick= {imageGalleryClickHandler}
+            onClick={imageGalleryClickHandler}
           />
         )}
       </div>
-    </>
+    </div>
   );
 }
 
 export default SectionTwo;
 
-                  {/*  <Card className="card-items">
+{/*  <Card className="card-items">
                     <i className="fas fa-search"></i>
                     <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
                     <p className="card-description">

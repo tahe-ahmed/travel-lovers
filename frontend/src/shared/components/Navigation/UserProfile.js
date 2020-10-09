@@ -28,7 +28,7 @@ const UserProfile = (props) => {
 
       <div className='user-profile' ref={drop}>
         <Avatar
-          image={`${process.env.REACT_APP_ASSET_URL}/${auth.userImage}`}
+          image={auth.userImage}        // hosting image
           alt={auth.userImage}
           onClick={() => setOpen((open) => !open)}
         />

@@ -8,15 +8,15 @@ import './HomePage.css';
 
 function HomePage() {
 
-  return (<>
-  
-        <SectionOne />
-     
-        <SectionTwo />
-      
-        <SectionTree />
-     
-  </>
+  return (<div>
+
+    <SectionOne />
+
+    <SectionTwo />
+
+    <SectionTree />
+
+  </div>
   );
 }
 
