@@ -39,6 +39,7 @@ const Follower = (props) => {
       } catch (err) {}
     };
 
+    /* We get users that the logged-in user follows, in this part. */
     const fetchLogginUserFollowingList = async () => {
       try {
         const loginUserData = await sendRequest(
@@ -53,7 +54,7 @@ const Follower = (props) => {
 
   const followHandler = async (event) => {
     event.preventDefault();
-    console.log('follow');
+
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/follow/${auth.userId}`,
@@ -68,7 +69,7 @@ const Follower = (props) => {
       );
       setFollowStatus(true);
       setFollowers(responseData.followers);
-
+      sendNotifiMentionsToBackend(userId);
     } catch (err) {}
   };
   const unfollowHandler = async (event) => {
@@ -91,10 +92,9 @@ const Follower = (props) => {
   };
 
   // this part related to loggin user followers
-  // if loggin user follow the this user's followers or following , this method word
+  // if loggin user follow the this user's followers or following , this method works.
   const followHandlerByLogginUser = async (event, followId) => {
     event.preventDefault();
-    console.log('followHandlerByLogginUser', followId);
 
     try {
       const responseData = await sendRequest(
@@ -109,7 +109,6 @@ const Follower = (props) => {
         },
         500
       );
-      console.log('burdayim;', responseData);
 
       setLoginUserFollowing(responseData.following);
       console.log('takip edilen sayi user;', loginUserFollowing.length);
@@ -117,7 +116,6 @@ const Follower = (props) => {
   };
 
   const unfollowHandlerByLogginUser = async (event, unfollowId) => {
-    console.log('unfolloww, login');
     event.preventDefault();
     try {
       const responseData = await sendRequest(
@@ -132,8 +130,30 @@ const Follower = (props) => {
         },
         500
       );
-      console.log('unfollow', responseData.following);
       setLoginUserFollowing(responseData.following);
+    } catch (err) {}
+  };
+
+  /* create the notification data to be sent to server upon submiting the comment */
+  const sendNotifiMentionsToBackend = async (followedID) => {
+    console.log('notif create edeceksin');
+    const notificationData = {
+      receiver: [{"_id":followedID,}],
+      sender: auth.userId,
+      read: [{}],
+      follow:true,
+    };
+    // send to backend ==============>
+    try {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/notifications`,
+        "POST",
+        JSON.stringify(notificationData),
+        {
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + auth.token,
+        }
+      );
     } catch (err) {}
   };
 
@@ -158,7 +178,7 @@ const Follower = (props) => {
                 <div className='modal-info'>
                   <Avatar
                     alt='profile'
-                    src={`${process.env.REACT_APP_ASSET_URL}/${item.image}`}
+                    src={`${item.image}`}
                   />
                   <Typography className='follow-name'>{item.name}</Typography>
                 </div>
@@ -202,7 +222,7 @@ const Follower = (props) => {
                 <div className='modal-info'>
                   <Avatar
                     alt='profile'
-                    src={`${process.env.REACT_APP_ASSET_URL}/${item.image}`}
+                    src={`${item.image}`}
                   />
                   <Typography className='follow-name'>{item.name}</Typography>
                 </div>

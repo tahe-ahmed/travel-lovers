@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import {
   Button,
   AppBar,
@@ -10,20 +10,20 @@ import {
   Badge,
   MenuItem,
   Menu,
-} from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import { AccountCircle } from "@material-ui/icons";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import { AuthContext } from "../../context/auth-context";
-import { useHttpClient } from "../../hooks/http-hook";
-import useStyles from "../../styles/material-ui-syles";
+} from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import { AccountCircle } from '@material-ui/icons';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { AuthContext } from '../../context/auth-context';
+import { useHttpClient } from '../../hooks/http-hook';
+import useStyles from '../../styles/material-ui-syles';
 
-import SideDrawer from "./SideDrawer";
+import SideDrawer from './SideDrawer';
 
-import "./MainNavigation.css";
+import './MainNavigation.css';
 
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
@@ -46,7 +46,12 @@ const MainNavigation = (props) => {
     setNotifiAnchorEl(null);
   };
   /////// when notification clicked close the list and delete the notification
-  const handleNotificationClick = async (pid, notifiID) => {
+  const handleNotificationClick = async (
+    pid,
+    notifiID,
+    follow = 'false',
+    senderId
+  ) => {
     setNotifiAnchorEl(null);
     ////// delete the notification from database and from the local state
     const notifiToUpdate = {
@@ -54,19 +59,20 @@ const MainNavigation = (props) => {
       receiverID: auth.userId,
     };
     try {
-      const response = await fetch(
+      const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
+        'PATCH',
+        JSON.stringify(notifiToUpdate),
         {
-          method: "PATCH",
-          body: JSON.stringify(notifiToUpdate),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          },
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token,
         }
       );
-      const not = await response.json();
-    } catch (err) { }
+
+      console.log('Notificationssss:', response);
+      console.log('senderID', senderId);
+      // const not = await response.json();
+    } catch (err) {}
 
     /// update the local state
     const filterednotifications = notifications.filter(
@@ -74,7 +80,11 @@ const MainNavigation = (props) => {
     );
     setNotifications(filterednotifications);
 
-    history.push(`/info/${pid}`);
+    if (follow) {
+      history.push(`/${senderId}/places`);
+    } else {
+      history.push(`/info/${pid}`);
+    }
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -99,9 +109,8 @@ const MainNavigation = (props) => {
           const responseData = await sendRequest(
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
-          console.log(responseData.notifications);
           setNotifications(responseData.notifications);
-        } catch (err) { }
+        } catch (err) {}
       };
       fetchNotifications();
     }
@@ -120,20 +129,20 @@ const MainNavigation = (props) => {
     auth.logout();
   };
 
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem
         onClick={handleMenuClose}
-        color="inherit"
+        color='inherit'
         component={NavLink}
         to={{
           pathname: `/user/${auth.userId}`,
@@ -144,7 +153,7 @@ const MainNavigation = (props) => {
       <MenuItem
         onClick={handleMenuClose}
         onClick={handleMenuClose}
-        color="inherit"
+        color='inherit'
         component={NavLink}
         to={{
           pathname: `/account/${auth.userId}`,
@@ -156,30 +165,30 @@ const MainNavigation = (props) => {
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       {auth.isLoggedIn && (
         <div>
           <MenuItem>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton aria-label='show 4 new mails' color='inherit'>
+              <Badge badgeContent={4} color='secondary'>
                 <MailIcon />
               </Badge>
             </IconButton>
             <p>Messages</p>
           </MenuItem>
           <MenuItem>
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={11} color="secondary">
+            <IconButton aria-label='show 11 new notifications' color='inherit'>
+              <Badge badgeContent={11} color='secondary'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -187,10 +196,10 @@ const MainNavigation = (props) => {
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
+              aria-label='account of current user'
+              aria-controls='primary-search-account-menu'
+              aria-haspopup='true'
+              color='inherit'
             >
               <AccountCircle />
             </IconButton>
@@ -203,25 +212,28 @@ const MainNavigation = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <SideDrawer />
           <Button
-            color="inherit"
+            color='inherit'
             component={NavLink}
             to={{
               pathname: `/`,
             }}
           >
             <Typography className={classes.title} variant='h6' noWrap>
-              <img src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png" alt="logo" />
+              <img
+                src='https://i.postimg.cc/SQM3CGxw/croped-image-wh.png'
+                alt='logo'
+              />
             </Typography>
           </Button>
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button
-              color="inherit"
+              color='inherit'
               component={NavLink}
               to={{
                 pathname: `/`,
@@ -240,7 +252,7 @@ const MainNavigation = (props) => {
             </Button>
 
             <Button
-              color="inherit"
+              color='inherit'
               component={NavLink}
               to={{
                 pathname: `/places`,
@@ -251,7 +263,7 @@ const MainNavigation = (props) => {
 
             {auth.isLoggedIn && (
               <Button
-                color="inherit"
+                color='inherit'
                 component={NavLink}
                 to={{
                   pathname: `/${auth.userId}/places`,
@@ -263,7 +275,7 @@ const MainNavigation = (props) => {
 
             {auth.isLoggedIn && (
               <Button
-                color="inherit"
+                color='inherit'
                 component={NavLink}
                 to={{
                   pathname: `/places/new`,
@@ -275,7 +287,7 @@ const MainNavigation = (props) => {
 
             {!auth.isLoggedIn && (
               <Button
-                color="inherit"
+                color='inherit'
                 component={NavLink}
                 to={{
                   pathname: `/auth`,
@@ -286,25 +298,25 @@ const MainNavigation = (props) => {
             )}
             {auth.isLoggedIn && (
               <React.Fragment>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                  <Badge badgeContent={4} color="secondary">
+                <IconButton aria-label='show 4 new mails' color='inherit'>
+                  <Badge badgeContent={4} color='secondary'>
                     <MailIcon />
                   </Badge>
                 </IconButton>
                 <IconButton
-                  aria-label="show 17 new notifications"
-                  color="inherit"
+                  aria-label='show 17 new notifications'
+                  color='inherit'
                 >
                   <Badge
                     onClick={handleClick}
                     badgeContent={notificationsNumber}
-                    color="secondary"
+                    color='secondary'
                   >
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
                 <Menu
-                  id="simple-menu"
+                  id='simple-menu'
                   anchorEl={notifiAnchorEl}
                   keepMounted
                   open={Boolean(notifiAnchorEl)}
@@ -312,14 +324,39 @@ const MainNavigation = (props) => {
                 >
                   {notificationsNumber === 0 ? (
                     <MenuItem>
-                      <span className="notifications-name">
+                      <span className='notifications-name'>
                         no notifications
                       </span>
                     </MenuItem>
                   ) : (
-                      notifications &&
-                      notifications.map((notifi) => (
-                        <div>
+                    notifications &&
+                    notifications.map((notifi) => (
+                      <div>
+                        {notifi.follow ? (
+                          <MenuItem
+                            onClick={() =>
+                              handleNotificationClick(
+                                notifi.place,
+                                notifi._id,
+                                true,
+                                notifi.sender._id
+                              )
+                            }
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt='profile'
+                                src={notifi.sender.image}
+                                aria-controls={menuId}
+                                className='notification-image'
+                              />
+                            </ListItemAvatar>
+                            <span className='notifications-name'>
+                              {notifi.sender.name}
+                            </span>
+                            started following you
+                          </MenuItem>
+                        ) : (
                           <MenuItem
                             onClick={() =>
                               handleNotificationClick(notifi.place, notifi._id)
@@ -327,26 +364,28 @@ const MainNavigation = (props) => {
                           >
                             <ListItemAvatar>
                               <Avatar
-                                alt="profile"
+                                alt='profile'
                                 src={notifi.sender.image}
                                 aria-controls={menuId}
-                                className="notification-image"
+                                className='notification-image'
                               />
                             </ListItemAvatar>
-                            <span className="notifications-name">
+                            <span className='notifications-name'>
                               {notifi.sender.name}
                             </span>
-                          has mentioned you in a place
-                        </MenuItem>
-                          <Divider />
-                        </div>
-                      ))
-                    )}
+                            has mentioned you in a place
+                          </MenuItem>
+                        )}
+
+                        <Divider />
+                      </div>
+                    ))
+                  )}
                 </Menu>
 
                 <div className={classes.root}>
                   <Avatar
-                    alt="profile"
+                    alt='profile'
                     src={auth.userImage} // hosting images
                     aria-controls={menuId}
                     onClick={handleProfileMenuOpen}
@@ -359,11 +398,11 @@ const MainNavigation = (props) => {
           <div className={classes.sectionMobile}>
             {auth.isLoggedIn && (
               <IconButton
-                aria-label="show more"
+                aria-label='show more'
                 aria-controls={mobileMenuId}
-                aria-haspopup="true"
+                aria-haspopup='true'
                 onClick={handleMobileMenuOpen}
-                color="inherit"
+                color='inherit'
               >
                 <MoreIcon />
               </IconButton>
@@ -371,7 +410,7 @@ const MainNavigation = (props) => {
 
             {!auth.isLoggedIn && (
               <Button
-                color="inherit"
+                color='inherit'
                 component={NavLink}
                 to={{
                   pathname: `/auth`,

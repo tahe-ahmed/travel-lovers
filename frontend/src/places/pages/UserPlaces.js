@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import PlaceList from '../components/PlaceList';
+import UserPlaceList from '../components/UserPlaceList';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Modal from '../../shared/components/UIElements/Modal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -11,6 +11,7 @@ import Pagination from '../../shared/components/UIElements/Pagination';
 import useStyles from '../../shared/styles/material-ui-syles';
 import Follower from '../../user/components/Follower';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import './UserPlaces.css';
 import {
@@ -99,57 +100,31 @@ const UserPlaces = () => {
         show={showInfo}
         onCancel={closeInfo}
       >
-        <Typography
-          className="user-info"
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >
-          Name: {userInfo.name ? userInfo.name : 'Not added yet'}
+        <Typography>
+          {userInfo.name && `Name: ${userInfo.name}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Age: {userInfo.age ? userInfo.age : 'Not added yet'}
+        <Typography>
+           {userInfo.age  && `Age:${userInfo.age}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          interests: {userInfo.interests ? userInfo.interests : 'Not added yet'}
+        <Typography>
+          {userInfo.interests && `Interests ${userInfo.interests}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Bio: {userInfo.biography ? userInfo.biography : 'Not added yet'}
+        <Typography>
+
+         {userInfo.biography && `Bio: ${userInfo.biography}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Gender: {userInfo.gender ? userInfo.gender : 'Not added yet'}
+        <Typography>
+          {userInfo.gender && `Gender: ${userInfo.gender}`}
         </Typography>
       </Modal>
 
       <div className="user-detail">
         <Avatar
           alt="profile"
-          src={`${process.env.REACT_APP_ASSET_URL}/${userInfo.image}`}
-          // aria-controls={menuId}
-          // onClick={handleProfileMenuOpen}
+          src={`${userInfo.image}`}
           className={classes.xxLarge}
         />
-        <CardContent>
+        <CardContent className="user-info-content">
           <Typography
             className="user-info"
             gutterBottom
@@ -158,12 +133,10 @@ const UserPlaces = () => {
           >
             {userInfo.name}
           </Typography>
-          {/* <Typography className='user-info' color='textSecondary'>
-              {userInfo.age}
-            </Typography> */}
           <Typography>
             <Button inverse onClick={() => setShowInfo(true)}>
-              more
+           <MoreHorizIcon/>
+           
             </Button>
           </Typography>
           <Follower />
@@ -172,43 +145,26 @@ const UserPlaces = () => {
 
       {loadedPlaces && userInfo && (
         <>
-          {/* <p className='user-header'>
-            {auth.userId === userInfo.id ? 'My' : `${userInfo.name}'s`} Places
-          </p> */}
           <div className="user-places-container">
             {loadedPlaces.map((place) => {
               return (
                 <Card className="user-place-item">
                   <CardMedia
                     className={`${classes.media} parent`}
-                    image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
+                    image={`${place.image}`}
                     title="Contemplative Reptile"
                   >
-                    {/* <div className='hover-content'>
-                      <h2>{place.title}</h2>
-                      <h3>{place.address}</h3>
-                      <p>{place.description}</p>
-                    </div> */}
                   </CardMedia>
                 </Card>
               );
             })}{' '}
-            <PlaceList
+            <UserPlaceList
               items={loadedPlaces}
               onDeletePlace={placeDeletedHandler}
             />
           </div>
         </>
       )}
-
-      {/* {loadedPlaces && (
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={placesPerPage}
-          totalItems={loadedPlaces.length}
-          paginate={paginate}
-        />
-      )} */}
     </React.Fragment>
   );
 };

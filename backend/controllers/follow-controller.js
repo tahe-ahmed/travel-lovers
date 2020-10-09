@@ -1,8 +1,8 @@
-// const { validationResult } = require("express-validator");
-
 const HttpError = require('../models/http-error');
 const { Follow } = require('../models/follow');
 
+
+/**  We are getting all the users that the relevant user follows and all the users who follow him/her */
 const getList = async (req, res, next) => {
   const userId = req.params.uid;
 
@@ -28,19 +28,19 @@ const getList = async (req, res, next) => {
     return next(error);
   }
 };
-/////////// follow
+
+ /*  This method works when a follow-up request is sent to a user */
 const follow = async (req, res, next) => {
   const user_id = req.params.uid;
   const follow_id = req.body.follow_id;
   const logginUser = req.body.logginUser;
 
-  ////  We add user A to user B’s followers and B to user A’s following
+  /*  We add user A to user B’s followers and B to user A’s following */ 
 
   // Section 1
   let follower;
   try {
     follower = await Follow.findOne({ user: user_id });
-    console.log('follower', follower);
   } catch (err) {
     const error = new HttpError(
       'Fetching follow failed, please try again later.',
@@ -116,9 +116,10 @@ const follow = async (req, res, next) => {
       return next(error);
     }
   }
-  console.log('takip edilen ;', follower.following);
-  console.log('seni takip eden ;', follower.followers);
 
+  /** Whose information do you want to send?
+  Is it the user you follow or the user who follows you?
+  At this point, you decide on it. */
   if (logginUser) {
     res.status(200).json({
       msg: 'Follow is success!',
@@ -134,12 +135,13 @@ const follow = async (req, res, next) => {
   }
 };
 
+/** This method works when a unfollow-up request is sent to a user */
 const unfollow = async (req, res, next) => {
   const user_id = req.params.uid;
   const follow_id = req.body.follow_id;
   const logginUser = req.body.logginUser;
-    
-  ////  We add user A to user B’s followers and B to user A’s following
+
+  /** We add user A to user B’s followers and B to user A’s following*/ 
 
   // Section 1
   let follower;
@@ -191,9 +193,13 @@ const unfollow = async (req, res, next) => {
       return next(error);
     }
   }
-  console.log('unn - takip edilen ;', follower.following);
-  console.log('unn - seni takip eden ;', follower.followers);
 
+
+/* 
+  Whose information do you want to send?
+  Is it the user you follow or the user who follows you?
+  At this point, you decide on it.
+*/
   if (logginUser) {
     res.status(200).json({
       msg: 'Follow is success!',
@@ -207,8 +213,6 @@ const unfollow = async (req, res, next) => {
       following: following.following,
     });
   }
-
-  
 };
 
 exports.follow = follow;
