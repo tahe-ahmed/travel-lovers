@@ -1,0 +1,9 @@
+.follow-button{
+    display: flex;
+   justify-content: center;
+  }
+
+  .modal-follow-content{
+    left: calc(53% - 20rem);
+    width: 31rem;
+  }

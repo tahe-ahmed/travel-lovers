@@ -1,21 +1,48 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 // import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PlaceItem from "../components/PlaceItem";
 import CommentList from "../components/comments/CommentList.js";
 import CommentForm from "../components/comments/CommentForm";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-
+import { Card, Avatar, Button } from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import './DetailedPlace.css';
+import { CardMedia } from '@material-ui/core';
 import "./DetailedPlace.css";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '64vw',
+    height: '40vw',
+  },
+
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  content: {
+    flex: '1 2 auto',
+  },
+  cover: {
+    width: 270,
+  },
+}));
+
+
 const DetailedPlace = (props) => {
+  const classes = useStyles();
+  const theme = useTheme();
+
   const auth = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [loadedUsers, setLoadedUsers] = useState();
@@ -192,7 +219,7 @@ const DetailedPlace = (props) => {
               rateAvg={place.rateAvg}
             />
           )}
-          <Card>
+          <Card className='place-item'>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 Comments

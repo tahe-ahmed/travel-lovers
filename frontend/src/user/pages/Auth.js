@@ -231,12 +231,12 @@ const Auth = () => {
         </div>
       </Modal>
       <div className='login-background'>
-        <Container component='main' maxWidth='xs' className='login-form'>
+        <Container component='main' maxWidth='xs'>
           <CssBaseline />
           <div className='paper'>
             <div className='header'>
               {isLoading && <CircularProgress color='secondary' />}
-              <Avatar className='avatar'>
+              <Avatar className='avatar-lock'>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component='h1' variant='h5'>

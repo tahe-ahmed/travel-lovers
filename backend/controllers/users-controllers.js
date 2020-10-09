@@ -7,6 +7,7 @@ const User = require('../models/user');
 const { OAuth2Client } = require('google-auth-library'); //for google login
 const nodemailer = require('nodemailer');
 var generator = require('generate-password');
+
 const getUserById = async (req, res, next) => {
   const userId = req.params.uid;
   let user;

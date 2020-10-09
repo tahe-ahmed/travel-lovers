@@ -1,4 +1,80 @@
 .user-header {
+  text-align: center;
+  font-size: 1.4rem;
+}
+.user-detail{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .user-detail {
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px auto;
+} */
+.follow-section{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.modal-follow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.modal-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px;
+}
+.follow-name{
+  padding:7px;
+}
+.user-place-item{
+  margin:10px;
+}
+.user-info{
+  display: flex;
+  justify-content: center;
+}
+.user-places-container{
+  display: flex;
+  flex-direction: row;
+  margin:10px;
+  padding:10px;
+}
+
+/* .hover-content {
+  display:none;
+}
+.parent:hover .hover-content {
+  display:block;
+} */
+
+@media (max-width: 800px) {
+  .user-detail {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 30px auto;
     text-align: center;
-    font-size: 1.4rem;
+  }
+}
+.image-user {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-user img {
+  margin-bottom: 15px;
+  border-radius: 3px;
+}
+
+.follow {
+  margin-top: 55px;
 }
