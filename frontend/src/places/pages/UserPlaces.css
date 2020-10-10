@@ -85,3 +85,10 @@
 .follow {
   margin-top: 55px;
 }
+.modal-info-content{
+  padding:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

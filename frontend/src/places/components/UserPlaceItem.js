@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
-import UserInfo from '../../user/components/UserInfo';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material
 import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 import {
   Card,
   Button,
@@ -20,16 +19,13 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
-import RoomIcon from '@material-ui/icons/Room';
 import './UserPlaceItem.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 350,
-   
   },
   media: {
     height: 420,
@@ -150,8 +146,9 @@ const UserPlaceItem = (props) => {
             title='Paella dish'
           >
             <div className='item-info-part'>
+            <Link to={`/info/${props.id}`}>
               <CardHeader
-    className={classes.root}
+                className={classes.root}
                 avatar={
                   <Avatar
                     aria-label='recipe'
@@ -168,6 +165,7 @@ const UserPlaceItem = (props) => {
                 title={props.title}
                 subheader={props.address}
               />
+              </Link>
               <div className='item-rating'>
                 <RatingMaterialStar
                   placeId={props.id}
@@ -187,7 +185,6 @@ const UserPlaceItem = (props) => {
                   variant='outlined'
                   color='primary'
                   onClick={openMapHandler}
-                
                 >
                   VIEW ON MAP
                 </Button>
@@ -196,7 +193,6 @@ const UserPlaceItem = (props) => {
                     variant='contained'
                     color='primary'
                     to={`/places/${props.id}`}
-
                   >
                     EDIT
                   </Button>

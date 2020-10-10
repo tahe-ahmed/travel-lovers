@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
-// import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
 import UserInfo from '../../user/components/UserInfo';
@@ -10,8 +9,6 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
-
-
 import {Avatar,Button} from '@material-ui/core';
 
 import './PlaceItem.css';
