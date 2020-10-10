@@ -68,7 +68,6 @@ const resetPassword = async (req, res, next) => {
         $gt: Date.now(),
       },
     });
-    console.log('user', user);
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find a user.',
@@ -77,7 +76,6 @@ const resetPassword = async (req, res, next) => {
     return next(error);
   }
 
-  console.log('gettt',user);
   if (user && user.length === 0) {
     const error = new HttpError(
       'Password reset link is invalid or has expired',
@@ -102,7 +100,6 @@ const updatePasswordViaEmail = async (req, res, next) => {
         $gt: Date.now(),
       },
     });
-    console.log('user', user);
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find a user.',

@@ -24,7 +24,7 @@ const PlaceItem = (props) => {
   const [isInBucketList, setIsInBucketList] = useState();   // check place is in My Buckets 
 
   useEffect(() => {                                         // to check if the place in users bucket list
-    if (props.bucketAdderList.includes(auth.userId)) {
+    if (props.bucketAdderList && props.bucketAdderList.includes(auth.userId)) {
       setIsInBucketList(true);
     } else {
       setIsInBucketList(false);
