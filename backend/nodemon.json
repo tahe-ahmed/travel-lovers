@@ -10,6 +10,7 @@
     "CLOUDINARY_CLOUD_NAME": "hyf",
     "CLOUDINARY_API_KEY": "193564857226994",
     "EMAIL_ADDRESS":"hyfgradproject@gmail.com",
-    "EMAIL_PASSWORD":"Hyfgradproject27"
+    "EMAIL_PASSWORD":"Hyfgradproject27",
+    "APP_URL_BASE":"localhost:3000"
   }
 }

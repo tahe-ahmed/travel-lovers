@@ -175,7 +175,7 @@ const Auth = () => {
     //console.log('resetemail', formState.inputs.resetEmail.value);
     try {
       const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/forgotPassword`,
+        `${process.env.REACT_APP_BACKEND_URL}/reset/forgotPassword`,
         'POST',
         JSON.stringify({
           email: formState.inputs.resetEmail.value,
