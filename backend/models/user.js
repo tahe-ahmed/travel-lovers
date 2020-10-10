@@ -13,8 +13,10 @@ const userSchema = new Schema({
   biography: { type: String, required: false },
   signType: { type: String, required: true },// for bug login
   image: { type: String, required: true },
-  places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }]
+  places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }],
+  buckets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }]  // check and display lister count
 });
+
 
 userSchema.plugin(uniqueValidator);
 

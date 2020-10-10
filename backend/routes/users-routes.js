@@ -1,6 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 
+const bucketController = require('../controllers/bucket-controllers');
 const usersController = require('../controllers/users-controllers');
 const fileUpload = require('../middleware/file-upload');
 
@@ -46,6 +47,11 @@ router.post('/login', usersController.login);
 router.post("/googlelogin", usersController.googleLogin);
 router.post('/facebooklogin', usersController.facebooklogin);     //facebook login
 
-router.post('/forgotPassword',usersController.forgotPassword);
+router.post('/forgotPassword', usersController.forgotPassword);
+
+
+router.get("/bucketlist/:uid", bucketController.getUserBucketList);               // travel bucket list
+router.patch("/bucketlist/:pid", bucketController.addPlaceToUserBucketList);
+router.delete("/:uid/bucketlist/:pid", bucketController.deletePlaceFromBucketList);
 
 module.exports = router;

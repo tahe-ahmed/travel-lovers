@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Modal from '../../shared/components/UIElements/Modal';
@@ -10,7 +10,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
 
-import {Avatar,Button} from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 
 
 import './PlaceItem.css';
@@ -21,18 +21,21 @@ const PlaceItem = (props) => {
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isInBucketList, setIsInBucketList] = useState();   // check place is in My Buckets 
+
+  useEffect(() => {                                         // to check if the place in users bucket list
+    if (props.bucketAdderList.includes(auth.userId)) {
+      setIsInBucketList(true);
+    } else {
+      setIsInBucketList(false);
+    }
+  }, [])
 
   const openMapHandler = () => setShowMap(true);
-
   const closeMapHandler = () => setShowMap(false);
+  const showDeleteWarningHandler = () => setShowConfirmModal(true);
+  const cancelDeleteHandler = () => setShowConfirmModal(false);
 
-  const showDeleteWarningHandler = () => {
-    setShowConfirmModal(true);
-  };
-
-  const cancelDeleteHandler = () => {
-    setShowConfirmModal(false);
-  };
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
@@ -48,7 +51,22 @@ const PlaceItem = (props) => {
       props.onDelete(props.id);
     } catch (err) { }
   };
-
+  const addPlaceToBucketListHandler = async () => {
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${props.id}`,
+        "PATCH",
+        JSON.stringify({
+          bucketerId: auth.userId
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`
+        }
+      );
+      setIsInBucketList(true);
+    } catch (err) { }
+  }
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -58,7 +76,7 @@ const PlaceItem = (props) => {
         header={props.address}
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
-        footer={<Button  variant="contained" color="secondary" onClick={closeMapHandler}>CLOSE</Button>}
+        footer={<Button variant="contained" color="secondary" onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className='map-container'>
           <Map center={props.coordinates} zoom={16} />
@@ -109,6 +127,8 @@ const PlaceItem = (props) => {
               <h2>{props.title}</h2>
               <h3>{props.address}</h3>
               <p>{props.description}</p>
+              <div className="bucker-count">
+                <span>Listed by</span>{props.bucketAdderList.length}</div>
             </div>
           </Link>
           <div className="place-item__actions">
@@ -124,10 +144,20 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
+            {auth.userId !== props.creatorId &&
+              (isInBucketList ?
+                <Button variant="contained" color="secondary" disabled={isInBucketList}>
+                  IN MY BUCKETS
+                </Button>
+                :
+                <Button variant="contained" color="primary" onClick={addPlaceToBucketListHandler}>
+                  ADD BUCKET LIST
+                </Button>
+              )}
           </div>
         </Card>
       </li>
-    </React.Fragment>
+    </React.Fragment >
   );
 };
 

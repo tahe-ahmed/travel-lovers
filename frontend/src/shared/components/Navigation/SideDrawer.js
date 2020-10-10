@@ -119,6 +119,19 @@ const SideDrawer = (props) => {
               </Button>
             </ListItem>
           )}
+          {auth.isLoggedIn && (
+            <ListItem>
+              <Button
+                color='inherit'
+                component={NavLink}
+                to={{
+                  pathname: `/${auth.userId}/bucketList`,
+                }}
+              >
+                MY BUCKETS
+              </Button>
+            </ListItem>
+          )}
         </List>
         <Divider />
       </Drawer>
