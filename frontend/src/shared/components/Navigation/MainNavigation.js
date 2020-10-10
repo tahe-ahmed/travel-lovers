@@ -77,8 +77,7 @@ const MainNavigation = (props) => {
     };
     try {
 
-      const response = await sendRequest(
-
+       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'PATCH',
         JSON.stringify(notifiToUpdate),

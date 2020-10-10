@@ -17,26 +17,13 @@ import './Follower.css';
 const Follower = (props) => {
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const {sendRequest } = useHttpClient();
   const [loginUserFollowing, setLoginUserFollowing] = useState([]);
   const [followStatus, setFollowStatus] = useState(false);
-
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-  };
-
   const auth = useContext(AuthContext);
-
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -159,7 +146,7 @@ const Follower = (props) => {
     };
     // send to backend ==============>
     try {
-      const response = await sendRequest(
+       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'POST',
         JSON.stringify(notificationData),

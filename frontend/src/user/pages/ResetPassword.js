@@ -5,9 +5,7 @@ import { useForm } from '../../shared/hooks/form-hook';
 import Input from '../../shared/components/FormElements/Input';
 import Modal from '../../shared/components/UIElements/Modal';
 import { AuthContext } from '../../shared/context/auth-context';
-
-import { Button, Typography } from '@material-ui/core';
-
+import { Button } from '@material-ui/core';
 import { VALIDATOR_EQUAL, VALIDATOR_MIN } from '../../shared/util/validators';
 
 import './ResetPassword.css';
@@ -16,10 +14,10 @@ const ResetPassword = () => {
   const history = useHistory();
   const token = useParams().resetToken;
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const {  error, sendRequest } = useHttpClient();
   const [loaded, setLoaded] = useState(false);
   const [show, setShow] = useState(false);
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       newPassword: {
         value: '',

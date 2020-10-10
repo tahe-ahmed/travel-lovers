@@ -9,9 +9,7 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
-
-import { Avatar, Button } from '@material-ui/core';
-
+import { Button } from '@material-ui/core';
 
 import './PlaceItem.css';
 
