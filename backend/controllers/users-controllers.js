@@ -102,7 +102,7 @@ const updateUserAccount = async (req, res, next) => {
   let isValidPassword = false;
   try {
     isValidPassword = await bcrypt.compare(password, user.password);
-    console.log('isValidPassword', isValidPassword);
+    //console.log('isValidPassword', isValidPassword);
   } catch (err) {
     const error = new HttpError(
       'Could not log you in, please check your credentials and try again.',
@@ -602,7 +602,6 @@ const facebooklogin = async (req, res, next) => {
       signType: 'facebook', //for bug
       places: [],
     });
-
     try {
       await createdUser.save(); // save db created user
     } catch (err) {
@@ -634,10 +633,9 @@ const facebooklogin = async (req, res, next) => {
     }); //send data from backend to frontend
   }
 };
-
 //Sends the reset password to the registered mail address!
 const forgotPassword = async (req, res, next) => {
-  console.log('bbb');
+  //console.log('bbb');
   if (req.body.email === '') {
     res.status(400).send({ msg: 'email required' });
   }

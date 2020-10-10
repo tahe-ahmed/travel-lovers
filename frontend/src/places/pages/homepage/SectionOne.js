@@ -104,7 +104,7 @@ function SectionOne() {
       {!auth.isLoggedIn ? (
         <div className="section-one-list">
           {frontPageUsers.map((user) => (
-            <div className="section-one-user-item">
+            <div className="section-one-user-item" key={user.name}>
               <div className="section-one-user-item__image">
                 <img src={user.image} alt={user.name} />
               </div>

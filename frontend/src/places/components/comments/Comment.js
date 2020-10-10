@@ -19,7 +19,6 @@ const Comment = (props) => {
       if (props.writer._id !== auth.userId) showRemove = false;
     }
   }
-  // console.log(showRemove);
 
   return (
     <React.Fragment>
@@ -34,7 +33,7 @@ const Comment = (props) => {
                   src={props.writer.image} // hosting image
                 />
                 <Typography color="textSecondary">
-                  {props.writer.name}
+                  {props.writer._id === auth.userId ? "You" : props.writer.name}
                 </Typography>
               </div>
               <Typography variant="body2" component="p">

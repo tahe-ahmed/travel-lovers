@@ -34,7 +34,7 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [isAutoLoad, setIsAutoLoad] = useState(false); // for facebook login
+  //const [isAutoLoad, setIsAutoLoad] = useState(false); // for facebook login
   const [resetPasswordMsg, setResetPasswordMsg] = useState('');
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -137,10 +137,10 @@ const Auth = () => {
         {
           'Content-Type': 'application/json',
         },
-        500
+        10000 // user should login in 10 sc
       );
 
-      auth.login(responseData.userId, responseData.token,responseData.image);// here image is included to context!
+      auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
     } catch (err) { }
 
   };
@@ -148,8 +148,8 @@ const Auth = () => {
   // facebook login handler
 
   const responseFacebookHandler = async (response) => {
-    console.log('facebook');
-    setIsAutoLoad(true);
+    //console.log('facebook');
+    //setIsAutoLoad(true);
 
     try {
       const responseData = await sendRequest(
@@ -164,15 +164,15 @@ const Auth = () => {
         {
           'Content-Type': 'application/json',
         },
-        500
+        10000 // user should login in 10 sc
       );
-      auth.login(responseData.userId, responseData.token,responseData.image); // here image is included to context!
+      auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
     } catch (err) { }
   }
 
   const resetPassword = async () => {
-    setIsAutoLoad(true);
-    console.log('resetemail', formState.inputs.resetEmail.value);
+    //setIsAutoLoad(true);
+    //console.log('resetemail', formState.inputs.resetEmail.value);
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/forgotPassword`,
@@ -184,10 +184,10 @@ const Auth = () => {
           'Content-Type': 'application/json',
         }
       );
-      console.log('return', responseData.msg);
+      //console.log('return', responseData.msg);
       setResetPasswordMsg(responseData.msg);
       // auth.login(responseData.userId, responseData.token);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -200,17 +200,17 @@ const Auth = () => {
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
         footer={
-            <div className="footer-button">
+          <div className="footer-button">
             <Button variant="contained" color="secondary" onClick={closeForgotPassword}>
               CANCEL
             </Button>
             {resetPasswordMsg === '' && (
-              <Button color='primary'    variant='contained' onClick={resetPassword}>
+              <Button color='primary' variant='contained' onClick={resetPassword}>
                 Reset Password
               </Button>
             )}
-            </div>
-         
+          </div>
+
         }
       >
         <div className='map-container'>
@@ -296,9 +296,10 @@ const Auth = () => {
                 color='primary'
                 disabled={!formState.isValid}
               >
-                Sign In
+                {isLoginMode ? 'Sign in' : 'Sign up'}
               </Button>
             </form>
+            <br />
             <Grid container>
               {isLoginMode && (
                 <Grid item xs>
@@ -334,19 +335,17 @@ const Auth = () => {
                 />
               )}
               <br />
-              <div className='facebook'>
-                {isLoginMode && (
-                  <FacebookLogin
-                    appId={process.env.REACT_APP_FACEBOOK_LOGIN}
-                    // autoLoad={isAutoLoad}
-                    fields='name,email,picture'
-                    callback={responseFacebookHandler}
-                    icon='fa-facebook'
-                    textButton=' Log in with Facebook'
-                    size='medium'
-                  />
-                )}
-              </div>
+              {isLoginMode && (
+                <FacebookLogin
+                  appId={process.env.REACT_APP_FACEBOOK_LOGIN}
+                  // autoLoad={isAutoLoad}
+                  fields='name,email,picture'
+                  callback={responseFacebookHandler}
+                  icon='fa-facebook'
+                  textButton=' Log in with Facebook'
+                  size='medium'
+                />
+              )}
             </div>
           </div>
         </Container>

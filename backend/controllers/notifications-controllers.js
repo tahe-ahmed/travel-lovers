@@ -86,7 +86,7 @@ const updateNotifiReceiverIds = async (req, res, next) => {
     return next(error);
   }
   const receiverNumber = notifi.receiver.length;
-  console.log(notifi);
+  //console.log(notifi);
   if (receiverNumber === 1) {
     try {
       await notifi.remove();
@@ -97,14 +97,14 @@ const updateNotifiReceiverIds = async (req, res, next) => {
       );
       return next(error);
     }
-    res.status(200).json({ notifi });
+    // res.status(200).json({ notifi });
   }
 
   const filteredNotifi = notifi.receiver.filter(
     (rece) => rece.toString() !== receiverID.toString()
   );
 
-  console.log(receiverID);
+  //console.log(receiverID);
   notifi.receiver = [filteredNotifi];
 
   try {

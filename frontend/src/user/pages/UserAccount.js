@@ -3,16 +3,17 @@ import { useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 import Input from '../../shared/components/FormElements/Input';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+
 import Modal from '../../shared/components/UIElements/Modal';
 import Button from '../../shared/components/FormElements/Button';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
-
-import './UserAccount.css';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
 } from '../../shared/util/validators';
+import './UserAccount.css';
 
 const UserAccount = () => {
   const auth = useContext(AuthContext);
@@ -61,7 +62,7 @@ const UserAccount = () => {
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
         setLoadedEmail(responseData.user.email);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlace();
   }, [sendRequest, userId, setFormData]);
@@ -84,7 +85,7 @@ const UserAccount = () => {
       setMessage('Email succesfully changed!');
       setSuccessModal(true);
       auth.login(responseData.userId, responseData.token, responseData.image);
-    } catch (err) {}
+    } catch (err) { }
   };
   const passwordSubmitHandler = async (event) => {
     event.preventDefault();
@@ -105,12 +106,13 @@ const UserAccount = () => {
       setSuccessModal(true);
 
       auth.login(responseData.userId, responseData.token, responseData.image);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
       <Modal
         show={successModal}
         onCancel={closeModal}

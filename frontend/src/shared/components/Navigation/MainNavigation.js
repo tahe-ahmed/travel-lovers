@@ -28,15 +28,33 @@ import './MainNavigation.css';
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogin, setIsLogin] = useState(true);
-  const [notifiAnchorEl, setNotifiAnchorEl] = React.useState(null);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [notifiAnchorEl, setNotifiAnchorEl] = useState(null);
+  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used 
+  const { sendRequest } = useHttpClient();
   const [notifications, setNotifications] = useState();
   const history = useHistory();
+
+  //////// when login fetch the notifications
+  useEffect(() => {
+    if (auth.isLoggedIn && auth.userId !== null) {
+      // fetch notification for auth.userIn
+      const fetchNotifications = async () => {
+        try {
+          const responseData = await sendRequest(
+            `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
+          );
+          //console.log(responseData.notifications);
+          setNotifications(responseData.notifications);
+        } catch (err) { }
+      };
+      fetchNotifications();
+    }
+  }, [auth.isLoggedIn, auth.userId]);
 
   const handleClick = (event) => {
     setNotifiAnchorEl(event.currentTarget);
@@ -59,7 +77,9 @@ const MainNavigation = (props) => {
       receiverID: auth.userId,
     };
     try {
+
       const response = await sendRequest(
+
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'PATCH',
         JSON.stringify(notifiToUpdate),
@@ -68,11 +88,8 @@ const MainNavigation = (props) => {
           Authorization: 'Bearer ' + auth.token,
         }
       );
+    } catch (err) { }
 
-      console.log('Notificationssss:', response);
-      console.log('senderID', senderId);
-      // const not = await response.json();
-    } catch (err) {}
 
     /// update the local state
     const filterednotifications = notifications.filter(
@@ -152,8 +169,7 @@ const MainNavigation = (props) => {
       </MenuItem>
       <MenuItem
         onClick={handleMenuClose}
-        onClick={handleMenuClose}
-        color='inherit'
+        color="inherit"
         component={NavLink}
         to={{
           pathname: `/account/${auth.userId}`,

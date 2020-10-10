@@ -5,8 +5,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
-// import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PlaceItem from "../components/PlaceItem";
 import CommentList from "../components/comments/CommentList.js";
 import CommentForm from "../components/comments/CommentForm";
@@ -137,15 +137,14 @@ const DetailedPlace = (props) => {
         }
       );
       newComment = await rawResponse.json();
-      updateComment(newComment.comment);
-      sendNotifiMentionsToBackend(newComment);
+      updateComment(newComment.comment[0]);
+      sendNotifiMentionsToBackend(newComment.comment[0]);
     } catch (err) {}
 
     ////////////////// create the notification data to be sent to server upon submiting the comment /////////////
   };
 
   const sendNotifiMentionsToBackend = async (newComment) => {
-    newComment && console.log(newComment.comment);
     if (mentions.length >= 1) {
       if (usersToMention) {
         const notificationReceivers = mentions.map(
@@ -157,23 +156,18 @@ const DetailedPlace = (props) => {
           sender: auth.userId,
           placeId: place.id,
           read: [{}],
-          comment: newComment.comment._id,
+          comment: newComment._id,
         };
         // send to backend ==============>
         try {
-          const response = await fetch(
-            process.env.REACT_APP_BACKEND_URL + "/notifications",
-            {
-              method: "POST",
-              body: JSON.stringify(notificationData),
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + auth.token,
-              },
-            }
-          );
-
-          const not = await response.json();
+          await fetch(process.env.REACT_APP_BACKEND_URL + "/notifications", {
+            method: "POST",
+            body: JSON.stringify(notificationData),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + auth.token,
+            },
+          });
           setMentions([]);
         } catch (err) {}
       }
@@ -187,6 +181,7 @@ const DetailedPlace = (props) => {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/${todeleteId}`, {
         method: "DELETE",
         headers: {
+          "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         },
       });
@@ -200,6 +195,7 @@ const DetailedPlace = (props) => {
 
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading ? (
         <LoadingSpinner asOverlay />
       ) : (

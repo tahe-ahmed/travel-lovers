@@ -151,7 +151,8 @@ function SectionTwo() {
             items={loadedPlaces}
             showThumbnails={false}
             autoPlay={true}
-            slideInterval={2500}
+            showFullscreenButton={false}
+            slideInterval={5000}
             onErrorImageURL="https://i.postimg.cc/Hs32TQT5/amsterda.jpg"
             onClick={imageGalleryClickHandler}
           />
@@ -163,7 +164,7 @@ function SectionTwo() {
 
 export default SectionTwo;
 
-{/*  <Card className="card-items">
+/*  <Card className="card-items">
                     <i className="fas fa-search"></i>
                     <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
                     <p className="card-description">
@@ -186,4 +187,4 @@ export default SectionTwo;
                       Travel broadens the mind. Don't waste your time to think of where to
                       go. All world is in here.{" "}
                     </p>
-                  </Card> */}
+                  </Card> */
