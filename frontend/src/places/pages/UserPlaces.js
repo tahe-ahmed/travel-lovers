@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import PlaceList from '../components/PlaceList';
+import UserPlaceList from '../components/UserPlaceList';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import Modal from '../../shared/components/UIElements/Modal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -11,6 +11,15 @@ import Pagination from '../../shared/components/UIElements/Pagination';
 import useStyles from '../../shared/styles/material-ui-syles';
 import Follower from '../../user/components/Follower';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import { useTheme } from '@material-ui/core/styles';
 
 import './UserPlaces.css';
 import {
@@ -22,7 +31,10 @@ import {
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
 // const useStyles = makeStyles({
 //   root: {
 //     maxWidth: 340,
@@ -43,7 +55,17 @@ const UserPlaces = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showInfo, setShowInfo] = useState(false);
   const [placesPerPage] = useState(3);
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -93,77 +115,74 @@ const UserPlaces = () => {
     <React.Fragment>
       {/* <ErrorModal error={error} onClear={clearError} /> */}
 
-      <Modal
+      {/* <Modal
         header={`More about ${userInfo.name}`}
         className="modal-user-info"
         show={showInfo}
         onCancel={closeInfo}
       >
-        <Typography
-          className="user-info"
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >
-          Name: {userInfo.name ? userInfo.name : 'Not added yet'}
+        <Typography>
+          {userInfo.name && `Name: ${userInfo.name}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Age: {userInfo.age ? userInfo.age : 'Not added yet'}
+        <Typography>
+           {userInfo.age  && `Age:${userInfo.age}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          interests: {userInfo.interests ? userInfo.interests : 'Not added yet'}
+        <Typography>
+          {userInfo.interests && `Interests ${userInfo.interests}` }
         </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Bio: {userInfo.biography ? userInfo.biography : 'Not added yet'}
-        </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          className="user-info"
-          // color="textSecondary"
-        >
-          Gender: {userInfo.gender ? userInfo.gender : 'Not added yet'}
-        </Typography>
-      </Modal>
+        <Typography>
 
-      <div className="user-detail">
+         {userInfo.biography && `Bio: ${userInfo.biography}` }
+        </Typography>
+        <Typography>
+          {userInfo.gender && `Gender: ${userInfo.gender}`}
+        </Typography>
+      </Modal> */}
+      <Dialog
+        open={showInfo}
+        fullWidth='xs'
+        maxWidth='xs'
+        keepMounted
+        onClose={closeInfo}
+        aria-labelledby='customized-dialog-title'
+      >
+        {/* <DialogTitle id='customized-dialog-title'>
+            Info
+          </DialogTitle> */}
+  <div className="modal-info-content">
+            <Typography variant="h6" gutterBottom >{userInfo.name && userInfo.name}</Typography>{' '}
+         
+            <Typography color="textSecondary" gutterBottom>{userInfo.age && userInfo.age} {userInfo.gender && `- ${userInfo.gender}`}</Typography>
+       
+            <Typography variant="body1" gutterBottom>
+              {userInfo.interests && userInfo.interests}
+            </Typography>
+    
+            <Typography variant="body2" gutterBottom>
+              {userInfo.biography && userInfo.biography}
+            </Typography>
+            </div>
+
+      </Dialog>
+
+      <div className='user-detail'>
         <Avatar
-          alt="profile"
-          src={`${process.env.REACT_APP_ASSET_URL}/${userInfo.image}`}
-          // aria-controls={menuId}
-          // onClick={handleProfileMenuOpen}
+          alt='profile'
+          src={`${userInfo.image}`}
           className={classes.xxLarge}
         />
-        <CardContent>
+        <CardContent className='user-info-content'>
           <Typography
-            className="user-info"
+            className='user-info'
             gutterBottom
-            variant="h5"
-            component="h2"
+            variant='h5'
+            component='h2'
           >
             {userInfo.name}
           </Typography>
-          {/* <Typography className='user-info' color='textSecondary'>
-              {userInfo.age}
-            </Typography> */}
           <Typography>
             <Button inverse onClick={() => setShowInfo(true)}>
-              more
+              <MoreHorizIcon />
             </Button>
           </Typography>
           <Follower />
@@ -172,43 +191,25 @@ const UserPlaces = () => {
 
       {loadedPlaces && userInfo && (
         <>
-          {/* <p className='user-header'>
-            {auth.userId === userInfo.id ? 'My' : `${userInfo.name}'s`} Places
-          </p> */}
-          <div className="user-places-container">
+          <div className='user-places-container'>
             {loadedPlaces.map((place) => {
               return (
-                <Card className="user-place-item">
+                <Card className='user-place-item'>
                   <CardMedia
                     className={`${classes.media} parent`}
-                    image={`${process.env.REACT_APP_ASSET_URL}/${place.image}`}
-                    title="Contemplative Reptile"
-                  >
-                    {/* <div className='hover-content'>
-                      <h2>{place.title}</h2>
-                      <h3>{place.address}</h3>
-                      <p>{place.description}</p>
-                    </div> */}
-                  </CardMedia>
+                    image={`${place.image}`}
+                    title='Contemplative Reptile'
+                  ></CardMedia>
                 </Card>
               );
             })}{' '}
-            <PlaceList
+            <UserPlaceList
               items={loadedPlaces}
               onDeletePlace={placeDeletedHandler}
             />
           </div>
         </>
       )}
-
-      {/* {loadedPlaces && (
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={placesPerPage}
-          totalItems={loadedPlaces.length}
-          paginate={paginate}
-        />
-      )} */}
     </React.Fragment>
   );
 };

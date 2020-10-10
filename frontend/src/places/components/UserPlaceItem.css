@@ -1,0 +1,109 @@
+.place-item {
+    margin: 1rem 0;
+    padding: 5px;
+  }
+  
+  /* .place-item__content {
+    padding: 0;
+  } */
+  
+  /* .place-item__info {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .place-item__image {
+    width: 100%;
+    height: 12.5rem;
+    margin-right: 1.5rem;
+  } */
+  
+  /* .place-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .place-item__info h2,
+  .place-item__info h3,
+  .place-item__info p {
+    margin: 0 0 0.5rem 0;
+  } */
+  
+  /* .place-item__actions {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ccc;
+  }
+  
+  .place-item__modal-content {
+    padding: 0;
+  }
+  
+  .place-item__modal-actions {
+    text-align: right;
+  }
+  
+  .place-item__actions button,
+  .place-item__actions a {
+    margin: 0.5rem;
+  } */
+  
+  .map-container {
+    height: 15rem;
+    width: 100%;
+  }
+  
+  .item-info-part{
+    display:none
+  }
+  
+  .place-item-container:hover .item-info-part {
+    display:block;
+    background-color: white;
+  }
+  
+  /* star rating */
+  .star-rating{
+    width: fit-content;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: .6rem;
+    border: 1px solid #ffc107;
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; */
+    /* height: 40px !important; */
+    background-color: rgba(61, 67, 87, 0.815);
+    color: yellow;
+    border-radius: 20px;
+  }
+  .rating-total{
+    text-align: center;
+    font-size: 0.4rem;
+    margin-right: 0.8rem;
+  }
+  .rating-total span{
+    font-size: 1rem;
+  }
+  
+  .item-rating{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 13px;
+  }
+   .MuiBox-root{
+    margin-left: 1px;
+  }
+   .rating-total {
+    font-size: 0.6rem;
+  }
+
+   /*
+  @media (min-width: 768px) {
+    .place-item__image {
+      height: 20rem;
+    } 
+  } */

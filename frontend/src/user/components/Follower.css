@@ -7,3 +7,16 @@
     left: calc(53% - 20rem);
     width: 31rem;
   }
+
+  .list-item-modal{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .list-item-info{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .dialog-modal-title{
+text-align: center;
+  }

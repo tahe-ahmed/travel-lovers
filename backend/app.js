@@ -55,25 +55,21 @@ app.use((error, req, res, next) => {
 });
 
 // 122- connecting to database
-const user = "bluedot";
-const password = "bluedot1234";
-const db_name = 'places';
-const url = `mongodb+srv://${user}:${password}@cluster0.dul42.mongodb.net/${db_name}?retryWrites=true&w=majority`;
 
-mongoose.connect(url, {
+mongoose
+.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@hyf.463mg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
 })
-  .then(() => {
-    `mongodb+srv://zekiye:zekiyeburak@hyf.463mg.mongodb.net/mern?retryWrites=true&w=majority`
+.then(()=>{
     console.log('Database is connected!')
     app.listen(process.env.PORT || 5000, () => {
       console.log('Server is running!')
     });
-  }
-  )
-  .catch(err => {
+}
+)
+.catch(err=>{
     console.log(err);
-  }
+}
   );

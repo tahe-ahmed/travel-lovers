@@ -20,6 +20,9 @@ const notificationSchema = mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "Comment",
     },
+    follow:{
+      type:Boolean,
+    },
     read_by: [
       {
         readerId: { type: Schema.Types.ObjectId, ref: "User" },
