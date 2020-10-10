@@ -148,9 +148,7 @@ const Auth = () => {
   // facebook login handler
 
   const responseFacebookHandler = async (response) => {
-    //console.log('facebook');
     //setIsAutoLoad(true);
-
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/facebooklogin`,
@@ -172,7 +170,6 @@ const Auth = () => {
 
   const resetPassword = async () => {
     //setIsAutoLoad(true);
-    //console.log('resetemail', formState.inputs.resetEmail.value);
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/reset/forgotPassword`,
@@ -184,9 +181,7 @@ const Auth = () => {
           'Content-Type': 'application/json',
         }
       );
-      //console.log('return', responseData.msg);
       setResetPasswordMsg(responseData.msg);
-      // auth.login(responseData.userId, responseData.token);
     } catch (err) { }
   };
 

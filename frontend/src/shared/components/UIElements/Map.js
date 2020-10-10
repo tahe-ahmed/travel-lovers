@@ -1,36 +1,75 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import icon from "./favicon.png";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.css';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-
-
-const Map = props => {
+const Map = ({ center, zoom, style, className }) => {
   const mapContainerRef = useRef(null);
-  
-  const { center, zoom } = props;
+
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      // See style options here: https://docs.mapbox.com/api/maps/#styles
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: center,
-      zoom: zoom,
+      center: [center.lng, center.lat],
+      zoom,
     });
 
-    // add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
 
-    // clean up on unmount
-    return () => map.remove();
+    map.on('load', function () {
+      map.loadImage(
+        icon,
+        function (error, image) {
+          if (error) throw error;
+          map.addImage('custom-marker', image);
+          map.addSource('places', {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: [{
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [center.lng, center.lat],
+                },
+              }]
+            },
+          });
+
+          map.addLayer({
+            id: 'places',
+            type: 'symbol',
+            source: 'places',
+            layout: {
+              'icon-image': 'custom-marker',
+              'icon-allow-overlap': true,
+              'icon-size': 0.9,
+            },
+          });
+        }
+      );
+
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+
+      map.on('mouseleave', 'places', function () {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+    });
   }, [center, zoom]);
 
   return (
     <div
+      className={`map ${className}`}
       ref={mapContainerRef}
-      className={`map ${props.className}`}
-      style={props.style}
+      style={style}
     ></div>
   );
 };

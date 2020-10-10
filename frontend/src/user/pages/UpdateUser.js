@@ -93,7 +93,6 @@ const UpdateUser = () => {
           },
           true
         );
-        //console.log(responseData.user.gender);
         setGenderOption(responseData.user.gender);
       } catch (err) { }
     };

@@ -32,7 +32,7 @@ const Auth = React.lazy(() => import("./user/pages/Auth"));
 
 const App = () => {
   const { token, login, logout, userId, userImage } = useAuth();
-  console.log(userId);
+
   let routes;
   if (token) {
     routes = (
