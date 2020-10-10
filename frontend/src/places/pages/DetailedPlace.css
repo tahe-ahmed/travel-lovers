@@ -5,7 +5,30 @@
     width: 90%;
     max-width: 40rem;
   }
-  
+  .detail-info{
+    display: flex;
+    
+  }
+  .info-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+  }
+  .info-detail-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .follow-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .name-followersCount{
+    margin:5px;
+  }
+  /* .place-item {
+    margin: 1rem 0;
+  }
   .container {
     background-color: #f1f1f1;
     box-sizing: border-box;
@@ -114,4 +137,4 @@
   }
   .mentions-input{
       width: 30rem;
-  }
+  } */

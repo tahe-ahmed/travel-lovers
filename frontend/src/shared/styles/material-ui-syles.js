@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     [theme.breakpoints.up('md')]: {
       width: '34ch',
+
     },
   },
   sectionDesktop: {
@@ -80,9 +81,28 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer"
   },
 
+  //for avatar
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  xxLarge: {
+    width: theme.spacing(17),
+    height: theme.spacing(17),
+  },
+  //media
+  root: {
+    maxWidth: 240,
+  },
+  media: {
+    height: 450,
+  },
 
   //sidebar
-
   menuButton: {
     marginRight: 36,
   },
@@ -124,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-
 }));
 
 export default useStyles;
+

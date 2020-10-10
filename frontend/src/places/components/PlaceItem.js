@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
-import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
 import UserInfo from '../../user/components/UserInfo';
@@ -11,8 +10,8 @@ import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
 
+import {Avatar,Button} from '@material-ui/core';
 
-//import Avatar from '@material-ui/core/Avatar';
 
 import './PlaceItem.css';
 
@@ -59,7 +58,7 @@ const PlaceItem = (props) => {
         header={props.address}
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        footer={<Button  variant="contained" color="secondary" onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className='map-container'>
           <Map center={props.coordinates} zoom={16} />
@@ -72,10 +71,10 @@ const PlaceItem = (props) => {
         footerClass='place-item__modal-actions'
         footer={
           <React.Fragment>
-            <Button inverse onClick={cancelDeleteHandler}>
+            <Button variant="contained" color="primary" onClick={cancelDeleteHandler}>
               CANCEL
             </Button>
-            <Button danger onClick={confirmDeleteHandler}>
+            <Button variant="contained" color="secondary" onClick={confirmDeleteHandler}>
               DELETE
             </Button>
           </React.Fragment>
@@ -113,15 +112,15 @@ const PlaceItem = (props) => {
             </div>
           </Link>
           <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>
+            <Button variant="outlined" color="primary" onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
             {auth.userId === props.creatorId && (
-              <Button to={`/places/${props.id}`}>EDIT</Button>
+              <Button variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
             )}
 
             {auth.userId === props.creatorId && (
-              <Button danger onClick={showDeleteWarningHandler}>
+              <Button variant="contained" color="secondary" onClick={showDeleteWarningHandler}>
                 DELETE
               </Button>
             )}

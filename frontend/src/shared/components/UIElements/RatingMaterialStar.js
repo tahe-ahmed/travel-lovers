@@ -45,7 +45,7 @@ export default function RatingMaterialStar(props) {
     <>
       {isLoading && <LoadingSpinner asOverlay />}
       <ErrorModal error={error} onClear={clearError} />
-      <Box ml={2} className="rating-total"><span>{ratingLength} </span>{ratingLength > 1 ? `Ratings` : `Rating`}</Box>
+
       <Rating
         name={uuid()}
         size={"small"}
@@ -56,7 +56,10 @@ export default function RatingMaterialStar(props) {
         onChange={(event, newValue) => {
           ratingChangedHandler(newValue);
         }}
+        
       />
+         <Box ml={2} className="rating-total"> {ratingLength > 1 ? `(${ratingLength} Ratings)` : `(${ratingLength} Rating)`}</Box>
+        
     </>
   );
 }

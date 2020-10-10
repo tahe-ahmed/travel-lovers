@@ -6,7 +6,11 @@ const mongoose = require("mongoose");
 
 ////////// set the notifications to the DB /////
 const setNotifications = async (req, res, next) => {
-  const { receiver, sender, comment, placeId, read } = req.body;
+  console.log('notification set');
+  const { receiver, sender, comment, placeId, read,follow } = req.body;
+
+
+  console.log('receiver,',receiver);
 
   let receiversId;
   if (receiver !== undefined) {
@@ -19,12 +23,16 @@ const setNotifications = async (req, res, next) => {
     place: placeId,
     read,
     comment,
+    follow
   });
+  console.log('noti',notification);
 
   // let doc;
   try {
     await notification.save((err, notifi) => {
       if (err) return res.json({ success: false, err });
+
+      console.log('kaydettimmm');
 
       Notifications.find({ _id: notifi._id })
         .lean()

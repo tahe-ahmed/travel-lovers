@@ -9,6 +9,7 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const commentsRoutes = require('./routes/comments-routes');
 const notificationsRoutes = require('./routes/notifications-routes')
+const followRoutes = require('./routes/follow-routes');
 
 const HttpError = require('./models/http-error');
 
@@ -32,7 +33,8 @@ app.use((req, res, next) => {
 app.use('/api/places', placesRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/comments', commentsRoutes);
-app.use('/api/notifications', notificationsRoutes)
+app.use('/api/notifications', notificationsRoutes);
+app.use('/api/follow',followRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
@@ -53,24 +55,21 @@ app.use((error, req, res, next) => {
 });
 
 // 122- connecting to database
-const user = "bluedot";
-const password = "bluedot1234";
-const db_name = 'places';
-const url = `mongodb+srv://${user}:${password}@cluster0.dul42.mongodb.net/${db_name}?retryWrites=true&w=majority`;
 
-mongoose.connect(url, {
+mongoose
+.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@hyf.463mg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
 })
-  .then(() => {
+.then(()=>{
     console.log('Database is connected!')
     app.listen(process.env.PORT || 5000, () => {
       console.log('Server is running!')
     });
-  }
-  )
-  .catch(err => {
+}
+)
+.catch(err=>{
     console.log(err);
-  }
+}
   );
