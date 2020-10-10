@@ -48,7 +48,6 @@ const MainNavigation = (props) => {
           const responseData = await sendRequest(
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
-          //console.log(responseData.notifications);
           setNotifications(responseData.notifications);
         } catch (err) { }
       };

@@ -7,20 +7,13 @@ import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import BucketItem from "../components/BucketItem";
 import BucketMap from "../components/BucketMap";
-import { usePosition } from "../../shared/hooks/position-hook";
 import "./BucketListPage.css";
 
 const BucketListPage = () => {
+
   const [places, setPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const { token, userId } = useContext(AuthContext);
-
-  const {
-    latitude,
-    longitude,
-    timestamp,
-    accuracy,
-  } = usePosition(); // for getting users location
 
   useEffect(() => {
     const fetchBucketListPlaces = async () => {
@@ -78,7 +71,9 @@ const BucketListPage = () => {
       { !isLoading &&
         places &&
         <div className='bucketmap-container'>
-          <BucketMap placesData={places} latitude={latitude} longitude={longitude} />
+          {isLoading && <LoadingSpinner asOverlay />}
+          {error && <ErrorModal error={error} onClear={clearError} />}
+          {!isLoading && <BucketMap placesData={places} />}
         </div>
       }
     </div>

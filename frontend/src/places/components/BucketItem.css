@@ -17,6 +17,7 @@
   flex-shrink: 1;
   flex-grow: 1;
   flex-basis: 55%;
+  max-width: 200px;
 }
 
 .bucketList-item__actions{
