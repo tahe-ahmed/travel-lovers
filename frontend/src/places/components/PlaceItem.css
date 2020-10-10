@@ -74,12 +74,12 @@
   border-radius: 20px;
 }
 .bucker-count span,
-.rating-total{
+.rating-total {
   text-align: center;
   font-size: 0.4rem;
   margin-right: 0.8rem;
 }
-.rating-total span{
+.rating-total span {
   font-size: 1rem;
 }
 /* bucker count */

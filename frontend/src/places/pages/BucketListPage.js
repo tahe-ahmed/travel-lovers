@@ -55,12 +55,12 @@ const BucketListPage = () => {
         <h2>My Travel Bucket List</h2>
         {(!places || places.length === 0) && !isLoading && (
           <Card>
-            <h2>
-              Your bucket list is empty.
+            <h3>
+              Your travel bucket list is empty.
               <br />
-              Would you like to add places to your bucket list?
-            </h2>
-            <Button to="/" inverse>Back to HomePage</Button>
+              Would you like to add any places to your travel bucket list?
+            </h3>
+            <Button to="/places" inverse>Back to All Places</Button>{/* Es back to places for adding list */}
           </Card>
         )}
         <ul>
@@ -75,8 +75,6 @@ const BucketListPage = () => {
             ))}
         </ul>
       </div>
-
-
       { !isLoading &&
         places &&
         <div className='bucketmap-container'>
