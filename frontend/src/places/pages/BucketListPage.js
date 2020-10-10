@@ -71,9 +71,7 @@ const BucketListPage = () => {
       { !isLoading &&
         places &&
         <div className='bucketmap-container'>
-          {isLoading && <LoadingSpinner asOverlay />}
-          {error && <ErrorModal error={error} onClear={clearError} />}
-          {!isLoading && <BucketMap placesData={places} />}
+          <BucketMap placesData={places} />
         </div>
       }
     </div>
