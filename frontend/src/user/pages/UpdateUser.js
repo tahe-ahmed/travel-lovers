@@ -123,7 +123,7 @@ const UpdateUser = () => {
       setSuccessModal(true);
 
       auth.userImage = responseData.user.image;
-      history.push('/user');
+      history.push('/');
     } catch (err) { }
   };
 
