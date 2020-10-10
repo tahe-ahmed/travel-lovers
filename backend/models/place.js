@@ -16,7 +16,8 @@ const placeSchema = new Schema({
     raterIds: { type: mongoose.Types.ObjectId, required: false, default: null },
     raterRates: { type: Number, required: false, default: 0 }
   }],
-  rateAvg: { type: Number, required: false, default: 0 }                                 // for star rating
+  rateAvg: { type: Number, required: false, default: 0 },                                 // for star rating
+  bucketListAdderId: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }], // for checking who added the place to their bucket list
 });
 
 module.exports = mongoose.model('Place', placeSchema);

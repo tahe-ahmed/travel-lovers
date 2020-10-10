@@ -1,0 +1,106 @@
+/* Bucket Item */
+.bucketList-item {
+  margin: 1rem 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  overflow: hidden;
+  background: white;
+}
+
+.bucketList-item__info {
+  padding: .4rem;
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 55%;
+}
+
+.bucketList-item__actions{
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 20%;
+  padding: .4rem;
+  display: flex;
+  flex-direction: column;
+}
+.bucketList-item__actions button,
+.bucketList-item__actions a {
+  text-align: center;
+  margin: 0.2rem;
+}
+.bucketList-item__image {
+  margin: .4rem .4rem;
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 20%;
+}
+
+.bucketList-item__image img {
+  width:80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+/* Modal */
+.modal {
+  top: 10vh;
+}
+
+
+.bucketList-detail__content {
+  text-align: center;
+  background-color: #eeeeee;
+  padding: 0;
+}
+
+.bucketList-detail__image {
+  height: 20rem;
+}
+
+.bucketList-detail__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bucketList-detail__modal-actions {
+  text-align: right;
+}
+
+/* star rating */
+.bucketList-star-rating{
+  width: fit-content;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: .6rem;
+  border: 1px solid #ffc107;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px !important;
+  background-color: rgba(61, 67, 87, 0.815);
+  color: yellow;
+  border-radius: 20px;
+}
+.rating-total{
+  text-align: center;
+  font-size: 0.4rem;
+  margin-right: 0.8rem;
+}
+.rating-total span{
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    top: 5vh;
+  }
+  .bucketList-detail__content{
+    height: 60%;
+  }
+}

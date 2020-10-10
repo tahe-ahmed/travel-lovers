@@ -1,0 +1,43 @@
+.bucket-page-container{
+  display: flex;
+  flex-direction: row;
+}
+.bucket-list{
+  margin: .4rem;
+  text-align: center;
+}
+
+.bucket-list h2{
+color: #3f51b5;
+}
+
+.bucket-list ul{
+  list-style: none;
+  padding: 0;
+  }
+
+.bucketmap-container{
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 70%;
+
+  width: 62rem;
+  height: 88vh;
+  margin: .4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  
+}
+.bucket-list{
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 25%;
+}
+@media (max-width: 768px) {
+  .bucket-page-container{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .bucketmap-container{
+    height: 40vh;
+  }
+}

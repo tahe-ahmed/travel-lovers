@@ -127,7 +127,7 @@ const MainNavigation = (props) => {
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
           setNotifications(responseData.notifications);
-        } catch (err) {}
+        } catch (err) { }
       };
       fetchNotifications();
     }
@@ -288,7 +288,17 @@ const MainNavigation = (props) => {
                 MY PLACES
               </Button>
             )}
-
+            {auth.isLoggedIn && (
+              <Button
+                color="inherit"
+                component={NavLink}
+                to={{
+                  pathname: `/${auth.userId}/bucketList`,
+                }}
+              >
+                MY BUCKETS
+              </Button>
+            )}
             {auth.isLoggedIn && (
               <Button
                 color='inherit'
@@ -345,58 +355,58 @@ const MainNavigation = (props) => {
                       </span>
                     </MenuItem>
                   ) : (
-                    notifications &&
-                    notifications.map((notifi) => (
-                      <div>
-                        {notifi.follow ? (
-                          <MenuItem
-                            onClick={() =>
-                              handleNotificationClick(
-                                notifi.place,
-                                notifi._id,
-                                true,
-                                notifi.sender._id
-                              )
-                            }
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                                alt='profile'
-                                src={notifi.sender.image}
-                                aria-controls={menuId}
-                                className='notification-image'
-                              />
-                            </ListItemAvatar>
-                            <span className='notifications-name'>
-                              {notifi.sender.name}
-                            </span>
+                      notifications &&
+                      notifications.map((notifi) => (
+                        <div>
+                          {notifi.follow ? (
+                            <MenuItem
+                              onClick={() =>
+                                handleNotificationClick(
+                                  notifi.place,
+                                  notifi._id,
+                                  true,
+                                  notifi.sender._id
+                                )
+                              }
+                            >
+                              <ListItemAvatar>
+                                <Avatar
+                                  alt='profile'
+                                  src={notifi.sender.image}
+                                  aria-controls={menuId}
+                                  className='notification-image'
+                                />
+                              </ListItemAvatar>
+                              <span className='notifications-name'>
+                                {notifi.sender.name}
+                              </span>
                             started following you
-                          </MenuItem>
-                        ) : (
-                          <MenuItem
-                            onClick={() =>
-                              handleNotificationClick(notifi.place, notifi._id)
-                            }
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                                alt='profile'
-                                src={notifi.sender.image}
-                                aria-controls={menuId}
-                                className='notification-image'
-                              />
-                            </ListItemAvatar>
-                            <span className='notifications-name'>
-                              {notifi.sender.name}
-                            </span>
+                            </MenuItem>
+                          ) : (
+                              <MenuItem
+                                onClick={() =>
+                                  handleNotificationClick(notifi.place, notifi._id)
+                                }
+                              >
+                                <ListItemAvatar>
+                                  <Avatar
+                                    alt='profile'
+                                    src={notifi.sender.image}
+                                    aria-controls={menuId}
+                                    className='notification-image'
+                                  />
+                                </ListItemAvatar>
+                                <span className='notifications-name'>
+                                  {notifi.sender.name}
+                                </span>
                             has mentioned you in a place
-                          </MenuItem>
-                        )}
+                              </MenuItem>
+                            )}
 
-                        <Divider />
-                      </div>
-                    ))
-                  )}
+                          <Divider />
+                        </div>
+                      ))
+                    )}
                 </Menu>
 
                 <div className={classes.root}>

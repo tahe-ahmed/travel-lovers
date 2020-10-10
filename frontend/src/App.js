@@ -15,7 +15,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
-import HomePage from "./places/pages/homepage/HomePage";
+//import HomePage from "./places/pages/homepage/HomePage";
 
 const Users = React.lazy(() => import("./user/pages/Users"));
 const UpdateUser = React.lazy(() => import("./user/pages/UpdateUser"));
@@ -25,6 +25,8 @@ const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
 const UpdatePlace = React.lazy(() => import("./places/pages/UpdatePlace"));
 const DetailedPlace = React.lazy(() => import("./places/pages/DetailedPlace"));
+const BucketListPage = React.lazy(() => import('./places/pages/BucketListPage'));
+const HomePage = React.lazy(() => import("./places/pages/homepage/HomePage"));
 const Auth = React.lazy(() => import("./user/pages/Auth"));
 
 const App = () => {
@@ -51,6 +53,9 @@ const App = () => {
         </Route>
         <Route path="/:userId/places" exact>
           <UserPlaces />
+        </Route>
+        <Route path="/:userId/bucketList" exact>
+          <BucketListPage />
         </Route>
         <Route path="/places/new" exact>
           <NewPlace />
