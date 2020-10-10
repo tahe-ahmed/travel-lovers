@@ -46,6 +46,5 @@ router.post('/login', usersController.login);
 router.post("/googlelogin", usersController.googleLogin);
 router.post('/facebooklogin', usersController.facebooklogin);     //facebook login
 
-router.post('/forgotPassword',usersController.forgotPassword);
 
 module.exports = router;

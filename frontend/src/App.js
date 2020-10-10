@@ -25,6 +25,7 @@ const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
 const UpdatePlace = React.lazy(() => import("./places/pages/UpdatePlace"));
 const DetailedPlace = React.lazy(() => import("./places/pages/DetailedPlace"));
+const ResetPassword = React.lazy(() => import("./user/pages/ResetPassword"));
 const Auth = React.lazy(() => import("./user/pages/Auth"));
 
 const App = () => {
@@ -72,6 +73,9 @@ const App = () => {
         </Route>
         <Route path="/users" exact>
           <Users />
+        </Route>
+        <Route path="/reset/:resetToken" exact>
+          <ResetPassword />
         </Route>
         <Route path="/places" exact>
           <AllPlaces />

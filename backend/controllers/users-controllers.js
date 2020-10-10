@@ -5,8 +5,6 @@ const fetch = require('node-fetch'); // for fetching data from facebook API
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const { OAuth2Client } = require('google-auth-library'); //for google login
-const nodemailer = require('nodemailer');
-var generator = require('generate-password');
 
 const getUserById = async (req, res, next) => {
   const userId = req.params.uid;
@@ -635,71 +633,7 @@ const facebooklogin = async (req, res, next) => {
   }
 };
 
-//Sends the reset password to the registered mail address!
-const forgotPassword = async (req, res, next) => {
-  console.log('bbb');
-  if (req.body.email === '') {
-    res.status(400).send({ msg: 'email required' });
-  }
-  const password = generator.generate({
-    length: 10,
-    numbers: true,
-  });
 
-  let hashedPassword;
-  try {
-    hashedPassword = await bcrypt.hash(password, 12);
-  } catch (err) {
-    const error = new HttpError(
-      'Could not create user, please try again.',
-      500
-    );
-    return next(error);
-  }
-
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) throw err;
-
-    if (!user) {
-      const error = new HttpError('Email address not found in database!', 403);
-      return next(error);
-    }
-
-    user.password = hashedPassword;
-    user.save();
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: `${process.env.EMAIL_ADDRESS}`,
-        pass: `${process.env.EMAIL_PASSWORD}`,
-      },
-    });
-
-    const mailOptions = {
-      from: `${process.env.EMAIL_ADDRESS}`,
-      to: `${user.email}`,
-      subject: 'Link To Reset Password',
-      text:
-        'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-        'Your new password:\n\n' +
-        password +
-        '\n\n',
-    };
-
-    transporter.sendMail(mailOptions, (err, response) => {
-      if (err) {
-        console.error('there was an error: ', err);
-      } else {
-        console.log('here is the res: ', response);
-        res.status(200).json('recovery email sent');
-      }
-    });
-    res
-      .status(200)
-      .json({ msg: 'Your password was reset. Please check your email!' });
-  });
-};
 
 exports.updateUserAccount = updateUserAccount;
 exports.updateUser = updateUser;
@@ -709,4 +643,3 @@ exports.signup = signup;
 exports.login = login;
 exports.googleLogin = googleLogin;
 exports.facebooklogin = facebooklogin;
-exports.forgotPassword = forgotPassword;

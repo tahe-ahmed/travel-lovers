@@ -73,6 +73,7 @@ const Input = (props) => {
   } else if (props.element === 'password') {
     element = (
       <TextField
+      error={!inputState.isValid && inputState.isTouched ? true : false}
       variant='outlined'
       margin='normal'
       element='password'

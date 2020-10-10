@@ -30,20 +30,6 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 340,
-//   },
-//   media: {
-//     width:240,
-//     height: 240,
-//   },
-// });
 
 const UserPlaces = () => {
   const classes = useStyles();
@@ -114,30 +100,6 @@ const UserPlaces = () => {
   return (
     <React.Fragment>
       {/* <ErrorModal error={error} onClear={clearError} /> */}
-
-      {/* <Modal
-        header={`More about ${userInfo.name}`}
-        className="modal-user-info"
-        show={showInfo}
-        onCancel={closeInfo}
-      >
-        <Typography>
-          {userInfo.name && `Name: ${userInfo.name}` }
-        </Typography>
-        <Typography>
-           {userInfo.age  && `Age:${userInfo.age}` }
-        </Typography>
-        <Typography>
-          {userInfo.interests && `Interests ${userInfo.interests}` }
-        </Typography>
-        <Typography>
-
-         {userInfo.biography && `Bio: ${userInfo.biography}` }
-        </Typography>
-        <Typography>
-          {userInfo.gender && `Gender: ${userInfo.gender}`}
-        </Typography>
-      </Modal> */}
       <Dialog
         open={showInfo}
         fullWidth='xs'
@@ -146,23 +108,21 @@ const UserPlaces = () => {
         onClose={closeInfo}
         aria-labelledby='customized-dialog-title'
       >
-        {/* <DialogTitle id='customized-dialog-title'>
-            Info
-          </DialogTitle> */}
-  <div className="modal-info-content">
-            <Typography variant="h6" gutterBottom >{userInfo.name && userInfo.name}</Typography>{' '}
-         
-            <Typography color="textSecondary" gutterBottom>{userInfo.age && userInfo.age} {userInfo.gender && `- ${userInfo.gender}`}</Typography>
-       
-            <Typography variant="body1" gutterBottom>
-              {userInfo.interests && userInfo.interests}
-            </Typography>
-    
-            <Typography variant="body2" gutterBottom>
-              {userInfo.biography && userInfo.biography}
-            </Typography>
-            </div>
-
+        <div className='modal-info-content'>
+          <Typography variant='h6' gutterBottom>
+            {userInfo.name && userInfo.name}
+          </Typography>{' '}
+          <Typography color='textSecondary' gutterBottom>
+            {userInfo.age && userInfo.age}{' '}
+            {userInfo.gender && `- ${userInfo.gender}`}
+          </Typography>
+          <Typography variant='body1' gutterBottom>
+            {userInfo.interests && userInfo.interests}
+          </Typography>
+          <Typography variant='body2' gutterBottom>
+            {userInfo.biography && userInfo.biography}
+          </Typography>
+        </div>
       </Dialog>
 
       <div className='user-detail'>

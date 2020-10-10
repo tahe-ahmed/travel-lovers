@@ -10,7 +10,7 @@ const usersRoutes = require('./routes/users-routes');
 const commentsRoutes = require('./routes/comments-routes');
 const notificationsRoutes = require('./routes/notifications-routes')
 const followRoutes = require('./routes/follow-routes');
-
+const resetRoutes = require('./routes/reset-password-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -35,6 +35,7 @@ app.use('/api/users', usersRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/follow',followRoutes);
+app.use('/api/reset',resetRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);

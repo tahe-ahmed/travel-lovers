@@ -8,6 +8,10 @@
     "GOOGLE_LOGIN_KEY": "810964369661-h664gpkl3od6s9njmv3e0qbpglnu9dhs.apps.googleusercontent.com",
     "CLOUDINARY_API_SECRET": "nxAVupCU8lBLug15ZkyDJC9Oi1E",
     "CLOUDINARY_CLOUD_NAME": "hyf",
-    "CLOUDINARY_API_KEY": "193564857226994"
+    "CLOUDINARY_API_KEY": "193564857226994",
+    "APP_URL_BASE":"localhost:3000",
+    "EMAIL_ADDRESS":"hyfgradproject@gmail.com",
+    "EMAIL_PASSWORD":"Hyfgradproject27"
+
   }
 }

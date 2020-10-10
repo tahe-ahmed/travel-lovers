@@ -7,6 +7,8 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
+  resetPasswordToken:{type: String},
+  resetPasswordExpires:{type:Date},
   gender: { type: String, required: false, default: null }, // material give error into update user
   age: { type: Number, required: false },
   interests: { type: String, required: false },
