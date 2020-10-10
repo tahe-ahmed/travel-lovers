@@ -128,7 +128,7 @@ const PlaceItem = (props) => {
               <h3>{props.address}</h3>
               <p>{props.description}</p>
               <div className="bucker-count">
-                <span>Listed by</span>{props.bucketAdderList.length}</div>
+                <span>Listed by</span>{props.bucketAdderList ? props.bucketAdderList.length : "0"}</div>{/* Es length error solved */}
             </div>
           </Link>
           <div className="place-item__actions">
