@@ -11,8 +11,12 @@ const BucketMap = (props) => {
 
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
   //Longitude: 7.0262 | Latitude: 43.8411 | Zoom: 0.50
+
   useEffect(() => {
     setMapPlaces(props.placesData);
+  }, [props]);
+
+  useEffect(() => {
     if (mapPlaces) {
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
