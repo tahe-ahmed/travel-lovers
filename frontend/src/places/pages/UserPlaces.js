@@ -4,6 +4,7 @@ import UserPlaceList from '../components/UserPlaceList';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import useStyles from '../../shared/styles/material-ui-syles';
 import Follower from '../../user/components/Follower';
+import TravelBucketList from '../components/TravelBucketList';
 import Dialog from '@material-ui/core/Dialog';
 import {
   Card,
@@ -23,7 +24,7 @@ const UserPlaces = () => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [showInfo, setShowInfo] = useState(false);
   // const [placesPerPage] = useState(3);
-  
+
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const UserPlaces = () => {
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         );
         setLoadedPlaces(responseData.places);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const fetchUserInfo = async () => {
@@ -42,7 +43,7 @@ const UserPlaces = () => {
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
         setUserInfo(responseData.user);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     fetchUserInfo();
@@ -117,6 +118,7 @@ const UserPlaces = () => {
               {/* <MoreHorizIcon /> */}
             </Button>
           </Typography>
+          <TravelBucketList />
           <Follower />
         </CardContent>
       </div>
@@ -124,7 +126,7 @@ const UserPlaces = () => {
       {loadedPlaces && userInfo && (
         <>
           <div className='user-places-container'>
-            {loadedPlaces.map((place,index) => {
+            {loadedPlaces.map((place, index) => {
               return (
                 <Card key={index} className='user-place-item'>
                   <CardMedia

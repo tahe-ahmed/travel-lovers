@@ -22,7 +22,6 @@ const Follower = (props) => {
   const [followStatus, setFollowStatus] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
-
   const auth = useContext(AuthContext);
   const userId = useParams().userId;
 
@@ -32,8 +31,10 @@ const Follower = (props) => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/follow/list/${userId}`
         );
+        // Does the login user follow the user concerned?
+        //we are checking this here
         if (
-          responseData.follow[0].followers.filter((x) => x._id === auth.userId)
+          responseData.follow[0].followers.filter((x) => x._id === auth.userId).length > 0
         ) {
           setFollowStatus(true);
         }
@@ -283,13 +284,16 @@ const Follower = (props) => {
           )}
         </div>
         <div className='follow-button'>
+          {auth.userId !== userId && 
           <Button
-            variant='contained'
-            color={followStatus ? 'primary' : 'secondary'}
-            onClick={followStatus ? unfollowHandler : followHandler}
-          >
-            {followStatus ? 'Following' : 'Follow'}
-          </Button>
+          variant='contained'
+          color={followStatus ? 'primary' : 'secondary'}
+          onClick={followStatus ? unfollowHandler : followHandler}
+        >
+          {followStatus ? 'Following' : 'Follow'}
+        </Button>
+          }
+       
         </div>
       </>
     </>
