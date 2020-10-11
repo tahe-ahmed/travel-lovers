@@ -134,7 +134,7 @@ const PlaceItem = (props) => {
               VIEW ON MAP
             </Button>
             {auth.userId === props.creatorId && (
-              <Button    component={NavLink} variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
+              <Button component={NavLink} variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
             )}
 
             {auth.userId === props.creatorId && (
