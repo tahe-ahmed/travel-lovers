@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -192,7 +192,10 @@ const UserPlaceItem = (props) => {
                   <Button
                     variant='contained'
                     color='primary'
-                    to={`/places/${props.id}`}
+                    component={NavLink}
+                    to={{
+                      pathname: `/places/${props.id}`,
+                    }}
                   >
                     EDIT
                   </Button>

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,NavLink} from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
@@ -134,7 +134,7 @@ const PlaceItem = (props) => {
               VIEW ON MAP
             </Button>
             {auth.userId === props.creatorId && (
-              <Button variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
+              <Button    component={NavLink} variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
             )}
 
             {auth.userId === props.creatorId && (
