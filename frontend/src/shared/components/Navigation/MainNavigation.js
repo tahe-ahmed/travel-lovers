@@ -41,7 +41,7 @@ const MainNavigation = (props) => {
 
   //////// when login fetch the notifications
   useEffect(() => {
-    if (auth.isLoggedIn && auth.userId !== null) {
+    if (auth.isLoggedIn && auth.userId !== false && auth.userId !== null) {
       // fetch notification for auth.userIn
       const fetchNotifications = async () => {
         try {
@@ -333,11 +333,10 @@ const MainNavigation = (props) => {
                   color='inherit'
                 >
                   <Badge
-                    onClick={handleClick}
                     badgeContent={notificationsNumber}
                     color='secondary'
                   >
-                    <NotificationsIcon />
+                    <NotificationsIcon onClick={handleClick}/>
                   </Badge>
                 </IconButton>
                 <Menu

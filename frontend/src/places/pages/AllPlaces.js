@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import PlaceList from "../components/PlaceList";
 import Search from "../../shared/components/FormElements/Search";
- import Pagination from "../../shared/components/UIElements/Pagination";
-//import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "../../shared/components/UIElements/Pagination";
+
 
 const Users = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -22,10 +21,9 @@ const Users = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places`
         );
-
         setLoadedPlaces(responseData.places);
         setFilteredPlaces(responseData.places);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlaces();
   }, [sendRequest]);
@@ -90,8 +88,6 @@ const Users = () => {
           totalItems={filteredPlaces.length}
           paginate={paginate}
         />
-
-        // <Pagination count={10} />
       )}
     </React.Fragment>
   );

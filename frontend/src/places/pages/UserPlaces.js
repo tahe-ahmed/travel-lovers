@@ -73,7 +73,7 @@ const UserPlaces = () => {
     <React.Fragment>
       <Dialog
         open={showInfo}
-        fullWidth='xs'
+        fullWidth={true}
         maxWidth='xs'
         keepMounted
         onClose={closeInfo}
@@ -112,7 +112,7 @@ const UserPlaces = () => {
             {userInfo.name}
           </Typography>
           <Typography>
-            <Button inverse onClick={() => setShowInfo(true)}>
+            <Button onClick={() => setShowInfo(true)}>
               More Info
               {/* <MoreHorizIcon /> */}
             </Button>
@@ -124,9 +124,9 @@ const UserPlaces = () => {
       {loadedPlaces && userInfo && (
         <>
           <div className='user-places-container'>
-            {loadedPlaces.map((place) => {
+            {loadedPlaces.map((place,index) => {
               return (
-                <Card className='user-place-item'>
+                <Card key={index} className='user-place-item'>
                   <CardMedia
                     className={`${classes.media} parent`}
                     image={`${place.image}`}

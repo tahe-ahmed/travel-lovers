@@ -42,10 +42,11 @@ const BucketListPage = () => {
 
   return (
     <div className="bucket-page-container">
-      {isLoading && <LoadingSpinner asOverlay />}
-      {error && <ErrorModal error={error} onClear={clearError} />}
+
       <div className="bucket-list">
         <h2>My Travel Bucket List</h2>
+        {isLoading && <LoadingSpinner asOverlay />}
+        {error && <ErrorModal error={error} onClear={clearError} />}
         {(!places || places.length === 0) && !isLoading && (
           <Card>
             <h3>
@@ -68,12 +69,10 @@ const BucketListPage = () => {
             ))}
         </ul>
       </div>
-      { !isLoading &&
+      {!isLoading &&
         places &&
         <div className='bucketmap-container'>
-          {isLoading && <LoadingSpinner asOverlay />}
-          {error && <ErrorModal error={error} onClear={clearError} />}
-          {!isLoading && <BucketMap placesData={places} />}
+          <BucketMap placesData={places} />
         </div>
       }
     </div>

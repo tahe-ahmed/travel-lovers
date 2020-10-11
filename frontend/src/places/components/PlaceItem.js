@@ -142,7 +142,7 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
-            {auth.userId !== props.creatorId &&
+            {auth.isLoggedIn && auth.userId !== props.creatorId &&
               (isInBucketList ?
                 <Button variant="contained" color="secondary" disabled={isInBucketList}>
                   IN MY BUCKETS
