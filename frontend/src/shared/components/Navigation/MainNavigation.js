@@ -77,7 +77,7 @@ const MainNavigation = (props) => {
     };
     try {
 
-       await sendRequest(
+      await sendRequest(
 
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'PATCH',
@@ -295,7 +295,7 @@ const MainNavigation = (props) => {
                   pathname: `/${auth.userId}/bucketList`,
                 }}
               >
-                MY BUCKETS
+                MY BUCKET LIST
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -336,7 +336,7 @@ const MainNavigation = (props) => {
                     badgeContent={notificationsNumber}
                     color='secondary'
                   >
-                    <NotificationsIcon onClick={handleClick}/>
+                    <NotificationsIcon onClick={handleClick} />
                   </Badge>
                 </IconButton>
                 <Menu

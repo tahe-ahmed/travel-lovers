@@ -128,7 +128,7 @@ const SideDrawer = (props) => {
                   pathname: `/${auth.userId}/bucketList`,
                 }}
               >
-                MY BUCKETS
+                MY BUCKET LIST
               </Button>
             </ListItem>
           )}
