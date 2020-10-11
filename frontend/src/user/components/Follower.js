@@ -169,7 +169,7 @@ const Follower = (props) => {
     <>
       <Dialog
         open={showFollowers}
-        fullWidth='xs'
+        fullWidth={true}
         maxWidth='xs'
         keepMounted
         onClose={closeFollowers}
@@ -178,9 +178,9 @@ const Follower = (props) => {
         <DialogTitle id='customized-dialog-title' className="dialog-modal-title">{followers && followers.length} Followers</DialogTitle>
         <List>
           {followers &&
-            followers.map((item) => {
+            followers.map((item,index) => {
               return (
-                <ListItem autoFocus button className='list-item-modal'>
+                <ListItem key={index} autoFocus button className='list-item-modal'>
                   <div className='list-item-info'>
                     <Avatar alt='profile' src={`${item.image}`} />
                     <Typography className='follow-name'>{item.name}</Typography>
@@ -218,7 +218,7 @@ const Follower = (props) => {
       </Dialog>
       <Dialog
         open={showFollowing}
-        fullWidth='xs'
+        fullWidth={true}
         maxWidth='xs'
         keepMounted
         onClose={closeFollowings}
@@ -227,9 +227,9 @@ const Follower = (props) => {
         <DialogTitle id='customized-dialog-title' className="dialog-modal-title" >{following && following.length} Following</DialogTitle>
         <List>
           {following &&
-            following.map((item) => {
+            following.map((item,index) => {
               return (
-                <ListItem autoFocus button className='list-item-modal'>
+                <ListItem key={index} autoFocus button className='list-item-modal'>
                   <div className='list-item-info'>
                     <Avatar alt='profile' src={`${item.image}`} />
                     <Typography className='follow-name'>{item.name}</Typography>
@@ -254,7 +254,7 @@ const Follower = (props) => {
       </Dialog>
 
       <>
-        <Typography className='follow-section'>
+        <div className='follow-section'>
           {followers && followers.length > 0 && (
             <Typography>
               <Button
@@ -281,7 +281,7 @@ const Follower = (props) => {
               </Button>
             </Typography>
           )}
-        </Typography>
+        </div>
         <div className='follow-button'>
           <Button
             variant='contained'

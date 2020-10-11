@@ -3,6 +3,7 @@
   font-size: 1.4rem;
 }
 .user-detail{
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

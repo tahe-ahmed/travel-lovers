@@ -12,7 +12,7 @@ const CommentForm = (props) => {
         placeholder={"Mention people using '@'"}
         value={props.text}
         onChange={props.handleTextChange}
-        appendSpaceOnAdd={true}
+        appendspaceonadd={'true'}
       >
         <Mention
           trigger='@'

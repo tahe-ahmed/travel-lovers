@@ -36,7 +36,7 @@ const Comment = (props) => {
                   {props.writer._id === auth.userId ? "You" : props.writer.name}
                 </Typography>
               </div>
-              <Typography variant="body2" component="p">
+              <Typography variant="body2" component="div">
                 <ReactMarkdown source={props.content} />
               </Typography>
             </div>
