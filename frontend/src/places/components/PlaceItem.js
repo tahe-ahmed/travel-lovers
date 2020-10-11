@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link ,NavLink} from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Modal from '../../shared/components/UIElements/Modal';
 import Map from '../../shared/components/UIElements/Map';
@@ -19,7 +19,7 @@ const PlaceItem = (props) => {
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [isInBucketList, setIsInBucketList] = useState();   // check place is in My Buckets 
+  const [isInBucketList, setIsInBucketList] = useState();   // check place is in My Bucket List
 
   useEffect(() => {                                         // to check if the place in users bucket list
     if (props.bucketAdderList && props.bucketAdderList.includes(auth.userId)) {
@@ -134,7 +134,7 @@ const PlaceItem = (props) => {
               VIEW ON MAP
             </Button>
             {auth.userId === props.creatorId && (
-              <Button    component={NavLink} variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
+              <Button component={NavLink} variant="contained" color="primary" to={`/places/${props.id}`}>EDIT</Button>
             )}
 
             {auth.userId === props.creatorId && (
@@ -145,7 +145,7 @@ const PlaceItem = (props) => {
             {auth.isLoggedIn && auth.userId !== props.creatorId &&
               (isInBucketList ?
                 <Button variant="contained" color="secondary" disabled={isInBucketList}>
-                  IN MY BUCKETS
+                  IN MY BUCKET LIST
                 </Button>
                 :
                 <Button variant="contained" color="primary" onClick={addPlaceToBucketListHandler}>
