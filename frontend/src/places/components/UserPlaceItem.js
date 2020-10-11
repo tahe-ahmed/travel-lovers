@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const UserPlaceItem = (props) => {
   const classes = useStyles();
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [loadedUser, setLoadedUser] = useState({});
   const [showMap, setShowMap] = useState(false);
@@ -163,7 +163,7 @@ const UserPlaceItem = (props) => {
                   </IconButton>
                 }
                 title={props.title}
-                subheader={props.address}
+                // subheader={props.address}
               />
               </Link>
               <div className='item-rating'>

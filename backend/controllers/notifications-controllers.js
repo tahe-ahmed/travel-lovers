@@ -6,12 +6,7 @@ const mongoose = require("mongoose");
 
 ////////// set the notifications to the DB /////
 const setNotifications = async (req, res, next) => {
-  console.log('notification set');
   const { receiver, sender, comment, placeId, read,follow } = req.body;
-
-
-  console.log('receiver,',receiver);
-
   let receiversId;
   if (receiver !== undefined) {
     receiversId = receiver.map((Areceiver) => Areceiver._id);
@@ -25,14 +20,10 @@ const setNotifications = async (req, res, next) => {
     comment,
     follow
   });
-  console.log('noti',notification);
 
-  // let doc;
   try {
     await notification.save((err, notifi) => {
       if (err) return res.json({ success: false, err });
-
-      console.log('kaydettimmm');
 
       Notifications.find({ _id: notifi._id })
         .lean()
@@ -86,7 +77,6 @@ const updateNotifiReceiverIds = async (req, res, next) => {
     return next(error);
   }
   const receiverNumber = notifi.receiver.length;
-  //console.log(notifi);
   if (receiverNumber === 1) {
     try {
       await notifi.remove();
@@ -97,14 +87,12 @@ const updateNotifiReceiverIds = async (req, res, next) => {
       );
       return next(error);
     }
-    // res.status(200).json({ notifi });
   }
 
   const filteredNotifi = notifi.receiver.filter(
     (rece) => rece.toString() !== receiverID.toString()
   );
 
-  //console.log(receiverID);
   notifi.receiver = [filteredNotifi];
 
   try {

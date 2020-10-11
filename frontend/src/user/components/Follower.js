@@ -17,26 +17,13 @@ import './Follower.css';
 const Follower = (props) => {
   const [followers, setFollowers] = useState();
   const [following, setFollowing] = useState();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const {sendRequest } = useHttpClient();
   const [loginUserFollowing, setLoginUserFollowing] = useState([]);
   const [followStatus, setFollowStatus] = useState(false);
-
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-  };
-
   const auth = useContext(AuthContext);
-
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -52,7 +39,7 @@ const Follower = (props) => {
         }
         setFollowing(responseData.follow[0].following);
         setFollowers(responseData.follow[0].followers);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     /* We get users that the logged-in user follows, in this part. */
@@ -62,7 +49,7 @@ const Follower = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/follow/list/${auth.userId}`
         );
         setLoginUserFollowing(loginUserData.follow[0].following);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchLogginUserFollowingList();
     fetchFollowList();
@@ -86,7 +73,7 @@ const Follower = (props) => {
       setFollowStatus(true);
       setFollowers(responseData.followers);
       sendNotifiMentionsToBackend(userId);
-    } catch (err) {}
+    } catch (err) { }
   };
   const unfollowHandler = async (event) => {
     event.preventDefault();
@@ -104,7 +91,7 @@ const Follower = (props) => {
       );
       setFollowers(responseData.followers);
       setFollowStatus(false);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   // this part related to loggin user followers
@@ -127,8 +114,7 @@ const Follower = (props) => {
       );
 
       setLoginUserFollowing(responseData.following);
-      console.log('takip edilen sayi user;', loginUserFollowing.length);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const unfollowHandlerByLogginUser = async (event, unfollowId) => {
@@ -147,12 +133,11 @@ const Follower = (props) => {
         500
       );
       setLoginUserFollowing(responseData.following);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   /* create the notification data to be sent to server upon submiting the comment */
   const sendNotifiMentionsToBackend = async (followedID) => {
-    console.log('notif create edeceksin');
     const notificationData = {
       receiver: [{ _id: followedID }],
       sender: auth.userId,
@@ -161,7 +146,7 @@ const Follower = (props) => {
     };
     // send to backend ==============>
     try {
-      const response = await sendRequest(
+       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'POST',
         JSON.stringify(notificationData),
@@ -170,7 +155,7 @@ const Follower = (props) => {
           Authorization: 'Bearer ' + auth.token,
         }
       );
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const closeFollowers = () => {
@@ -184,7 +169,7 @@ const Follower = (props) => {
     <>
       <Dialog
         open={showFollowers}
-        fullWidth='xs'
+        fullWidth={true}
         maxWidth='xs'
         keepMounted
         onClose={closeFollowers}
@@ -193,9 +178,9 @@ const Follower = (props) => {
         <DialogTitle id='customized-dialog-title' className="dialog-modal-title">{followers && followers.length} Followers</DialogTitle>
         <List>
           {followers &&
-            followers.map((item) => {
+            followers.map((item,index) => {
               return (
-                <ListItem autoFocus button className='list-item-modal'>
+                <ListItem key={index} autoFocus button className='list-item-modal'>
                   <div className='list-item-info'>
                     <Avatar alt='profile' src={`${item.image}`} />
                     <Typography className='follow-name'>{item.name}</Typography>
@@ -203,28 +188,28 @@ const Follower = (props) => {
                   <div>
                     {item._id !== auth.userId &&
                       (loginUserFollowing &&
-                      loginUserFollowing.filter((x) => x._id === item._id)
-                        .length > 0 ? (
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          onClick={(e) =>
-                            unfollowHandlerByLogginUser(e, item._id)
-                          }
-                        >
-                          Following
-                        </Button>
-                      ) : (
-                        <Button
-                          variant='contained'
-                          color='secondary'
-                          onClick={(e) =>
-                            followHandlerByLogginUser(e, item._id)
-                          }
-                        >
-                          Follow
-                        </Button>
-                      ))}
+                        loginUserFollowing.filter((x) => x._id === item._id)
+                          .length > 0 ? (
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            onClick={(e) =>
+                              unfollowHandlerByLogginUser(e, item._id)
+                            }
+                          >
+                            Following
+                          </Button>
+                        ) : (
+                          <Button
+                            variant='contained'
+                            color='secondary'
+                            onClick={(e) =>
+                              followHandlerByLogginUser(e, item._id)
+                            }
+                          >
+                            Follow
+                          </Button>
+                        ))}
                   </div>
                 </ListItem>
               );
@@ -233,18 +218,18 @@ const Follower = (props) => {
       </Dialog>
       <Dialog
         open={showFollowing}
-        fullWidth='xs'
+        fullWidth={true}
         maxWidth='xs'
         keepMounted
         onClose={closeFollowings}
         aria-labelledby='customized-dialog-title'
       >
-        <DialogTitle id='customized-dialog-title'  className="dialog-modal-title" >{following && following.length} Following</DialogTitle>
+        <DialogTitle id='customized-dialog-title' className="dialog-modal-title" >{following && following.length} Following</DialogTitle>
         <List>
           {following &&
-            following.map((item) => {
+            following.map((item,index) => {
               return (
-                <ListItem autoFocus button className='list-item-modal'>
+                <ListItem key={index} autoFocus button className='list-item-modal'>
                   <div className='list-item-info'>
                     <Avatar alt='profile' src={`${item.image}`} />
                     <Typography className='follow-name'>{item.name}</Typography>
@@ -252,15 +237,15 @@ const Follower = (props) => {
                   <div>
                     {item._id !== auth.userId &&
                       (loginUserFollowing &&
-                      loginUserFollowing.filter((x) => x._id === item._id) ? (
-                        <Button variant='contained' color='primary'>
-                          Following
-                        </Button>
-                      ) : (
-                        <Button variant='contained' color='secondary'>
-                          Follow
-                        </Button>
-                      ))}
+                        loginUserFollowing.filter((x) => x._id === item._id) ? (
+                          <Button variant='contained' color='primary'>
+                            Following
+                          </Button>
+                        ) : (
+                          <Button variant='contained' color='secondary'>
+                            Follow
+                          </Button>
+                        ))}
                   </div>
                 </ListItem>
               );
@@ -269,7 +254,7 @@ const Follower = (props) => {
       </Dialog>
 
       <>
-        <Typography className='follow-section'>
+        <div className='follow-section'>
           {followers && followers.length > 0 && (
             <Typography>
               <Button
@@ -296,7 +281,7 @@ const Follower = (props) => {
               </Button>
             </Typography>
           )}
-        </Typography>
+        </div>
         <div className='follow-button'>
           <Button
             variant='contained'

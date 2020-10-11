@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
+    maxWidth: 240,
     display: 'flex',
     '& > *': {
       margin: theme.spacing(1),
@@ -80,32 +81,16 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
     cursor: "pointer"
   },
-
-  //for avatar
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
   xxLarge: {
     width: theme.spacing(17),
     height: theme.spacing(17),
   },
   //media
-  root: {
-    maxWidth: 240,
-  },
   media: {
     height: 450,
   },
 
   //sidebar
-  menuButton: {
-    marginRight: 36,
-  },
   hide: {
     display: 'none',
   },

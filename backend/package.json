@@ -26,6 +26,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.11",
+    "sequelize": "^6.3.5",
     "uuid": "^8.3.0"
   },
   "devDependencies": {

@@ -14,7 +14,9 @@ const userSchema = new Schema({
   signType: { type: String, required: true },// for bug login
   image: { type: String, required: true },
   places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }],
-  buckets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }]  // check and display lister count
+  buckets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }],  // check and display lister count
+  resetPasswordToken:{type: String},
+  resetPasswordExpires:{type:Date},
 });
 
 

@@ -9,9 +9,7 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import RatingMaterialStar from '../../shared/components/UIElements/RatingMaterialStar'; // star-rating material 
-
-import { Avatar, Button } from '@material-ui/core';
-
+import { Button } from '@material-ui/core';
 
 import './PlaceItem.css';
 
@@ -24,7 +22,7 @@ const PlaceItem = (props) => {
   const [isInBucketList, setIsInBucketList] = useState();   // check place is in My Buckets 
 
   useEffect(() => {                                         // to check if the place in users bucket list
-    if (props.bucketAdderList.includes(auth.userId)) {
+    if (props.bucketAdderList && props.bucketAdderList.includes(auth.userId)) {
       setIsInBucketList(true);
     } else {
       setIsInBucketList(false);
@@ -128,7 +126,7 @@ const PlaceItem = (props) => {
               <h3>{props.address}</h3>
               <p>{props.description}</p>
               <div className="bucker-count">
-                <span>Listed by</span>{props.bucketAdderList.length}</div>
+                <span>Listed by</span>{props.bucketAdderList ? props.bucketAdderList.length : "0"}</div>{/* Es length error solved */}
             </div>
           </Link>
           <div className="place-item__actions">
@@ -144,7 +142,7 @@ const PlaceItem = (props) => {
                 DELETE
               </Button>
             )}
-            {auth.userId !== props.creatorId &&
+            {auth.isLoggedIn && auth.userId !== props.creatorId &&
               (isInBucketList ?
                 <Button variant="contained" color="secondary" disabled={isInBucketList}>
                   IN MY BUCKETS

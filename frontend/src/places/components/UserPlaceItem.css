@@ -61,6 +61,8 @@
   .place-item-container:hover .item-info-part {
     display:block;
     background-color: white;
+    width: 34vw;
+    height: 20vw;
   }
   
   /* star rating */
@@ -68,7 +70,7 @@
     width: fit-content;
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 100px;
     padding: .6rem;
     border: 1px solid #ffc107;
     /* display: flex;

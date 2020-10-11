@@ -41,14 +41,13 @@ const MainNavigation = (props) => {
 
   //////// when login fetch the notifications
   useEffect(() => {
-    if (auth.isLoggedIn && auth.userId !== null) {
+    if (auth.isLoggedIn && auth.userId !== false && auth.userId !== null) {
       // fetch notification for auth.userIn
       const fetchNotifications = async () => {
         try {
           const responseData = await sendRequest(
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
-          //console.log(responseData.notifications);
           setNotifications(responseData.notifications);
         } catch (err) { }
       };
@@ -78,8 +77,7 @@ const MainNavigation = (props) => {
     };
     try {
 
-      const response = await sendRequest(
-
+       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'PATCH',
         JSON.stringify(notifiToUpdate),
@@ -334,11 +332,10 @@ const MainNavigation = (props) => {
                   color='inherit'
                 >
                   <Badge
-                    onClick={handleClick}
                     badgeContent={notificationsNumber}
                     color='secondary'
                   >
-                    <NotificationsIcon />
+                    <NotificationsIcon onClick={handleClick}/>
                   </Badge>
                 </IconButton>
                 <Menu
