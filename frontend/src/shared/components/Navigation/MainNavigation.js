@@ -39,6 +39,8 @@ const MainNavigation = (props) => {
   const [notifications, setNotifications] = useState();
   const history = useHistory();
 
+console.log('deneme');
+
   //////// when login fetch the notifications
   useEffect(() => {
     if (auth.isLoggedIn && auth.userId !== false && auth.userId !== null) {

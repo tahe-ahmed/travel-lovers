@@ -27,12 +27,11 @@ const UpdatePlace = React.lazy(() => import("./places/pages/UpdatePlace"));
 const DetailedPlace = React.lazy(() => import("./places/pages/DetailedPlace"));
 const BucketListPage = React.lazy(() => import('./places/pages/BucketListPage'));
 const HomePage = React.lazy(() => import("./places/pages/homepage/HomePage"));
-const ResetPassword = React.lazy(() => import("./user/pages/ResetPassword"));
 const Auth = React.lazy(() => import("./user/pages/Auth"));
 
 const App = () => {
   const { token, login, logout, userId, userImage } = useAuth();
-
+  console.log(userId);
   let routes;
   if (token) {
     routes = (
@@ -78,9 +77,6 @@ const App = () => {
         </Route>
         <Route path="/users" exact>
           <Users />
-        </Route>
-        <Route path="/reset/:resetToken" exact>
-          <ResetPassword />
         </Route>
         <Route path="/places" exact>
           <AllPlaces />
