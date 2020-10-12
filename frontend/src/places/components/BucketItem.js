@@ -81,7 +81,7 @@ const BucketItem = (props) => {
         </div>
 
         <div className='bucketList-item__info'>
-          <h2>{props.placeData.title}</h2>
+          <h4>{props.placeData.title}</h4>
         </div>
 
         <div className='bucketList-item__actions'>

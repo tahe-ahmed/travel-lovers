@@ -142,8 +142,8 @@ const UpdateUser = () => {
         </div>
       </Modal>
       {!isLoading && loadedUser && (
-        <div className='container'>
-          <div className='user-container'>
+        <div className='container-edit-profile'>
+          <div className='user-container-profile'>
             <form
               noValidate
               autoComplete='off'

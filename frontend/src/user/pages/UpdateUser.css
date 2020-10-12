@@ -1,4 +1,4 @@
-.container{
+.container-edit-profile{
     display: flex;
   justify-content: center;
   flex-direction: column; 
@@ -10,7 +10,7 @@
   padding: 10px;
 }
 
-.user-container{
+.user-container-profile{
     margin: 10px;
 }
 .user-button{

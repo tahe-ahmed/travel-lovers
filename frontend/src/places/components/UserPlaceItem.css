@@ -54,11 +54,11 @@
     width: 100%;
   }
   
-  .item-info-part{
+  .item-info-part-place{
     display:none
   }
   
-  .place-item-container:hover .item-info-part {
+  .place-item-container-place:hover .item-info-part-place {
     display:block;
     background-color: white;
     width: 34vw;
@@ -103,9 +103,59 @@
     font-size: 0.6rem;
   }
 
-   /*
-  @media (min-width: 768px) {
-    .place-item__image {
-      height: 20rem;
-    } 
-  } */
+
+  /* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .item-info-part-place{
+    display:none;
+  }
+  
+  .place-item-container-place:hover .item-info-part-place {
+    display: block;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .item-info-part-place{
+    display:none;
+  }
+  
+  .place-item-container-place:hover .item-info-part-place {
+    display: block;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .item-info-part-place{
+    display:none;
+  }
+  
+  .place-item-container-place:hover .item-info-part-place {
+    display: block;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .item-info-part-place{
+    display:none;
+  }
+  
+  .place-item-container-place:hover .item-info-part-place {
+    display: block;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+  }
+}

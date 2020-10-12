@@ -16,13 +16,21 @@ color: #3f51b5;
 .bucket-list ul{
   list-style: none;
   padding: 0;
+  overflow: scroll; /* Add the ability to scroll */
+  height: 78vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
   }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+.bucket-list ul::-webkit-scrollbar {
+  display: none;
+}
 
 .bucketmap-container{
   flex-shrink: 1;
   flex-grow: 1;
   flex-basis: 70%;
-
   width: 62rem;
   height: 88vh;
   margin: .4rem;
@@ -39,7 +47,13 @@ color: #3f51b5;
     display: flex;
     flex-direction: column-reverse;
   }
+  
   .bucketmap-container{
-    height: 40vh;
+    height: 38vh;
+    width: 98%; 
   }
+  .bucket-list ul{
+    height: 38vh;
+  }
+
 }

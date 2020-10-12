@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import UserPlaceList from '../components/UserPlaceList';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -15,16 +16,19 @@ import {
   Button,
 } from '@material-ui/core';
 import './UserPlaces.css';
+import { AuthContext } from '../../shared/context/auth-context';
 
 const UserPlaces = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [loadedPlaces, setLoadedPlaces] = useState();
   const [userInfo, setUserInfo] = useState({});
   const { sendRequest } = useHttpClient();
   // const [currentPage, setCurrentPage] = useState(1);
   const [showInfo, setShowInfo] = useState(false);
   // const [placesPerPage] = useState(3);
-
+  const auth = useContext(AuthContext);
+  
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -56,6 +60,10 @@ const UserPlaces = () => {
       prevPlaces.filter((place) => place.id !== deletedPlaceId)
     );
   };
+
+if(!auth.isLoggedIn){
+  history.push(`/auth`);
+} 
 
   // Get current places
   // const indexOfLastPlace = currentPage * placesPerPage;
@@ -115,7 +123,6 @@ const UserPlaces = () => {
           <Typography>
             <Button onClick={() => setShowInfo(true)}>
               More Info
-              {/* <MoreHorizIcon /> */}
             </Button>
           </Typography>
           <TravelBucketList />
