@@ -54,7 +54,10 @@ const Auth = () => {
     false
   );
 
-  const closeForgotPassword = () => setForgotPassword(false);
+  const closeForgotPassword = () => {
+    setForgotPassword(false);
+    setResetPasswordMsg('');
+  };
 
   const switchModeHandler = () => {
     if (!isLoginMode) {
@@ -102,8 +105,8 @@ const Auth = () => {
             'Content-Type': 'application/json',
           }
         );
-        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
-      } catch (err) { }
+        auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
+      } catch (err) {}
     } else {
       try {
         const formData = new FormData();
@@ -117,8 +120,8 @@ const Auth = () => {
           formData
         );
 
-        auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
-      } catch (err) { }
+        auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
+      } catch (err) {}
     }
   };
   // google handler
@@ -140,9 +143,8 @@ const Auth = () => {
         10000 // user should login in 10 sc
       );
 
-      auth.login(responseData.userId, responseData.token, responseData.image);// here image is included to context!
-    } catch (err) { }
-
+      auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
+    } catch (err) {}
   };
 
   // facebook login handler
@@ -165,11 +167,10 @@ const Auth = () => {
         10000 // user should login in 10 sc
       );
       auth.login(responseData.userId, responseData.token, responseData.image); // here image is included to context!
-    } catch (err) { }
-  }
+    } catch (err) {}
+  };
 
   const resetPassword = async () => {
-    //setIsAutoLoad(true);
     try {
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/reset/forgotPassword`,
@@ -182,7 +183,7 @@ const Auth = () => {
         }
       );
       setResetPasswordMsg(responseData.msg);
-    } catch (err) { }
+    } catch (err) {}
   };
 
   return (
@@ -195,17 +196,24 @@ const Auth = () => {
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
         footer={
-          <div className="footer-button">
-            <Button variant="contained" color="secondary" onClick={closeForgotPassword}>
+          <div className='footer-button'>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={closeForgotPassword}
+            >
               CANCEL
             </Button>
             {resetPasswordMsg === '' && (
-              <Button color='primary' variant='contained' onClick={resetPassword}>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={resetPassword}
+              >
                 Reset Password
               </Button>
             )}
           </div>
-
         }
       >
         <div className='map-container'>
