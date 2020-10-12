@@ -139,13 +139,13 @@ const UserPlaceItem = (props) => {
       </Modal>
 
       <li className='place-item'>
-        <Card className={`${classes.root} place-item-container`}>
+        <Card className={`${classes.root} place-item-container-place`}>
           <CardMedia
             className={classes.media}
             image={`${props.image}`}
             title='Paella dish'
           >
-            <div className='item-info-part'>
+            <div className='item-info-part-place'>
             <Link to={`/info/${props.id}`}>
               <CardHeader
                 className={classes.root}

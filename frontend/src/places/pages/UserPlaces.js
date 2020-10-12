@@ -123,7 +123,6 @@ if(!auth.isLoggedIn){
           <Typography>
             <Button onClick={() => setShowInfo(true)}>
               More Info
-              {/* <MoreHorizIcon /> */}
             </Button>
           </Typography>
           <TravelBucketList />
