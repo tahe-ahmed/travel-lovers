@@ -56,7 +56,7 @@ const UpdatePlace = () => {
           },
           true
         );
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlace();
   }, [sendRequest, placeId, setFormData]);
@@ -76,8 +76,9 @@ const UpdatePlace = () => {
           Authorization: 'Bearer ' + auth.token
         }
       );
-      history.push('/user/' + auth.userId + '');
-    } catch (err) {}
+      //history.push('/user/' + auth.userId + '');
+      history.push('/' + auth.userId + '/places');
+    } catch (err) { }
   };
 
   if (isLoading) {
