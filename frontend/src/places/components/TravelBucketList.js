@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -67,10 +67,15 @@ const TravelBucketList = () => {
                     <Typography className='follow-name'>{item.title}</Typography>
                   </div>
                   <div>
-                    <Button variant='contained' color='secondary'>
-                      <Link to={`/info/${item._id}`}>
-                        Detail
-                      </Link>
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      component={NavLink}
+                      to={{
+                        pathname: `/info/${item._id}`,
+                      }}
+                    >
+                      Detail
                     </Button>
                   </div>
                 </ListItem>
