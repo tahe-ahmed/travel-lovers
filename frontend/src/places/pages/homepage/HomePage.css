@@ -250,13 +250,19 @@ div.image-gallery-slide.center > div{
   
   .banner-header {
     font-size: 1.8em;
-    margin: -10% -50px;
+    margin: -15% -50px;
   }
 
   .banner-text {
     font-size: 16px !important;
-    margin-top: 60px;
+    margin: 80px auto 30px;
+    width: 300px;
   }
+
+.banner-container {
+  width: 400px;
+}
+
   .banner-header2 {
     font-size: 1.8em;
     margin: -10% -50px;
@@ -281,10 +287,11 @@ div.image-gallery-slide.center > div{
     margin: 15px auto;
   }
   .image-gallery {
-    width: 450px;
+    width: 100%;
+    margin: 0 autoo;
   }
   .animated-text {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     margin: 20px auto -10px;
   }
 
@@ -297,7 +304,7 @@ div.image-gallery-slide.center > div{
       width: 0;
     }
     to {
-      width: 440px;
+      width: 350px;
     }
   }
 }

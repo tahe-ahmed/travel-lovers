@@ -1,16 +1,21 @@
-import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Button,
-  IconButton, Drawer, List, ListItem, Divider, useTheme
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { AuthContext } from '../../context/auth-context';
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  Divider,
+  useTheme,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { AuthContext } from "../../context/auth-context";
 
-
-import useStyles from '../../styles/material-ui-syles';
+import useStyles from "../../styles/material-ui-syles";
+import Backdrop from "../UIElements/Backdrop";
 
 const SideDrawer = (props) => {
   const auth = useContext(AuthContext);
@@ -28,11 +33,12 @@ const SideDrawer = (props) => {
   return (
     <React.Fragment>
       <div className={classes.sectionMobile}>
+        {open && <Backdrop onClick={handleDrawerClose} />}
         <IconButton
-          edge='start'
+          edge="start"
           className={classes.menuButton}
-          color='inherit'
-          aria-label='open drawer'
+          color="inherit"
+          aria-label="open drawer"
           onClick={handleDrawerOpen}
         >
           <MenuIcon />
@@ -40,8 +46,8 @@ const SideDrawer = (props) => {
       </div>
       <Drawer
         className={classes.drawer}
-        variant='persistent'
-        anchor='left'
+        variant="persistent"
+        anchor="left"
         open={open}
         classes={{
           paper: classes.drawerPaper,
@@ -49,86 +55,113 @@ const SideDrawer = (props) => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
-                <ChevronRightIcon />
-              )}
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
 
         <List>
-          <ListItem key='Homepage'>
+          <ListItem key="Homepage">
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/`,
               }}
+              onClick={handleDrawerClose}
+              title="HOMEPAGE"
             >
-              Homepage
+              <span class="material-icons">home</span>
             </Button>
           </ListItem>
-          <ListItem key='All Users'>
+          <ListItem key="All Users">
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/users`,
               }}
+              onClick={handleDrawerClose}
+              title="ALL USERS"
             >
-              All Users
+              <span class="material-icons">group</span>
             </Button>
           </ListItem>
-          <ListItem key='All Places'>
+          <ListItem key="All Places">
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/places`,
               }}
+              onClick={handleDrawerClose}
+              title="ALL PLACES"
             >
-              All Places
+              <span class="material-icons">collections</span>
             </Button>
           </ListItem>
 
           {auth.isLoggedIn && (
-            <ListItem key='My Places'>
+            <ListItem key="My Places">
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/${auth.userId}/places`,
                 }}
+                onClick={handleDrawerClose}
+                title="MY PLACES"
               >
-                MY PLACES
+                <span class="material-icons">person_pin</span>
               </Button>
             </ListItem>
           )}
           {auth.isLoggedIn && (
             <ListItem>
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/places/new`,
                 }}
+                onClick={handleDrawerClose}
+                title="ADD NEW PLACE"
               >
-                ADD PLACE
+                <span class="material-icons">add_location_alt</span>
               </Button>
             </ListItem>
           )}
           {auth.isLoggedIn && (
             <ListItem>
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/${auth.userId}/bucketList`,
                 }}
+                onClick={handleDrawerClose}
+                title="BUCKET LIST"
               >
-                MY BUCKET LIST
+                <span class="material-icons">map</span>
+              </Button>
+            </ListItem>
+          )}
+          {!auth.isLoggedIn && (
+            <ListItem>
+              <Button
+                color="inherit"
+                component={NavLink}
+                to={{
+                  pathname: `/auth`,
+                }}
+                title="LOGIN"
+                onClick={handleDrawerClose}
+              >
+                <span class="material-icons">login</span>
               </Button>
             </ListItem>
           )}

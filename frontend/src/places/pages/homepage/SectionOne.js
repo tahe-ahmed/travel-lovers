@@ -42,9 +42,9 @@ function SectionOne() {
         <div className={classes.Content}>
           <div className={classes.SubContent}>
             {!auth.isLoggedIn ? (
-              <div>
+              <div className="banner-container">
                 <h1 className="banner-header2">JOIN OUR JOURNEY</h1>
-                <p className='banner-text2'>
+                <p className="banner-text2">
                   {" "}
                   <span role="img" aria-label="star">
                     🌟{" "}
@@ -64,40 +64,40 @@ function SectionOne() {
                 </Button>
               </div>
             ) : (
-                <div>
-                  <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
-                  <p className='banner-text'>
-                    <span role="img" aria-label="star">
-                      🌟{" "}
-                    </span>{" "}
+              <div className="banner-container">
+                <h1 className="banner-header">WELCOME TRAVEL LOVER!</h1>
+                <p className="banner-text">
+                  <span role="img" aria-label="star">
+                    🌟{" "}
+                  </span>{" "}
                   Let's explore new places or share your experience.
                   <span role="img" aria-label="star">
-                      🌟{" "}
-                    </span>
-                  </p>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    href="/places"
-                    size="large"
-                    className="button-section-one"
-                  >
-                    EXPLORE NEW PLACES
+                    🌟{" "}
+                  </span>
+                </p>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  href="/places"
+                  size="large"
+                  className="button-section-one"
+                >
+                  EXPLORE NEW PLACES
                 </Button>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                    component={NavLink}
-                    to={{
-                      pathname: `/places/new`,
-                    }}
-                    className="button-section-one"
-                  >
-                    ADD PLACE
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="secondary"
+                  component={NavLink}
+                  to={{
+                    pathname: `/places/new`,
+                  }}
+                  className="button-section-one"
+                >
+                  ADD PLACE
                 </Button>
-                </div>
-              )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -116,15 +116,15 @@ function SectionOne() {
           ))}
         </div>
       ) : (
-          <div className="section-one-content">
-            <div className="section-one-rainbow">
-              <h3 className="section-one-rainbow-text">
-                ❝ The world is a book and those who do not travel read only one
-                page. ❞
+        <div className="section-one-content">
+          <div className="section-one-rainbow">
+            <h3 className="section-one-rainbow-text">
+              ❝ The world is a book and those who do not travel read only one
+              page. ❞
             </h3>
-            </div>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }

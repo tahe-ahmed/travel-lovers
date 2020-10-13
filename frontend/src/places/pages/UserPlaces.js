@@ -136,17 +136,7 @@ if(!auth.isLoggedIn){
       {loadedPlaces && userInfo && (
         <>
           <div className='user-places-container'>
-            {loadedPlaces.map((place, index) => {
-              return (
-                <Card key={index} className='user-place-item'>
-                  <CardMedia
-                    className={`${classes.media} parent`}
-                    image={`${place.image}`}
-                    title='Contemplative Reptile'
-                  ></CardMedia>
-                </Card>
-              );
-            })}{' '}
+
             <UserPlaceList
               items={loadedPlaces}
               onDeletePlace={placeDeletedHandler}

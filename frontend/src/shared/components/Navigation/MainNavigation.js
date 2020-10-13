@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Button,
   AppBar,
@@ -10,20 +10,20 @@ import {
   Badge,
   MenuItem,
   Menu,
-} from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { AccountCircle } from '@material-ui/icons';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import { AuthContext } from '../../context/auth-context';
-import { useHttpClient } from '../../hooks/http-hook';
-import useStyles from '../../styles/material-ui-syles';
+} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import { AccountCircle } from "@material-ui/icons";
+import MailIcon from "@material-ui/icons/Mail";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import { AuthContext } from "../../context/auth-context";
+import { useHttpClient } from "../../hooks/http-hook";
+import useStyles from "../../styles/material-ui-syles";
 
-import SideDrawer from './SideDrawer';
+import SideDrawer from "./SideDrawer";
 
-import './MainNavigation.css';
+import "./MainNavigation.css";
 
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
@@ -39,7 +39,7 @@ const MainNavigation = (props) => {
   const [notifications, setNotifications] = useState();
   const history = useHistory();
 
-console.log('deneme');
+  console.log("deneme");
 
   //////// when login fetch the notifications
   useEffect(() => {
@@ -65,10 +65,7 @@ console.log('deneme');
     setNotifiAnchorEl(null);
   };
   /////// when notification clicked close the list and delete the notification
-  const handleNotificationClick = async (
-    pid,
-    notifiID,
-  ) => {
+  const handleNotificationClick = async (pid, notifiID) => {
     setNotifiAnchorEl(null);
     ////// delete the notification from database and from the local state
     const notifiToUpdate = {
@@ -78,11 +75,11 @@ console.log('deneme');
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
-        'PATCH',
+        "PATCH",
         JSON.stringify(notifiToUpdate),
         {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
     } catch (err) {}
@@ -136,17 +133,17 @@ console.log('deneme');
   const logout = () => {
     setIsLogin(false);
     auth.logout();
-    history.push('/');
+    history.push("/");
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -157,8 +154,9 @@ console.log('deneme');
         to={{
           pathname: `/user/${auth.userId}`,
         }}
+        title="PROFILE"
       >
-        Profile
+        <span class="material-icons">assignment_ind</span> &ensp; Profile
       </MenuItem>
       <MenuItem
         onClick={handleMenuClose}
@@ -167,34 +165,37 @@ console.log('deneme');
         to={{
           pathname: `/account/${auth.userId}`,
         }}
+        title="MY ACCOUNT"
       >
-        My Account
+        <span class="material-icons">vpn_key</span> &ensp; My Account
       </MenuItem>
-      <MenuItem onClick={logout}>Sign out</MenuItem>
+      <MenuItem title="LOG OUT" onClick={logout}>
+        <span class="material-icons">exit_to_app</span> &ensp; Log Out
+      </MenuItem>
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       {auth.isLoggedIn && (
         <div>
-          <MenuItem>
+          {/* <MenuItem>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
             <p>Messages</p>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem>
             <IconButton aria-label="show 11 new notifications" color="inherit">
               <Badge badgeContent={11} color="secondary">
@@ -247,8 +248,9 @@ console.log('deneme');
               to={{
                 pathname: `/`,
               }}
+              title="HOMEPAGE"
             >
-              HOMEPAGE
+              <span class="material-icons">home</span>
             </Button>
             <Button
               color="inherit"
@@ -256,8 +258,9 @@ console.log('deneme');
               to={{
                 pathname: `/users`,
               }}
+              title="ALL USERS"
             >
-              ALL USERS
+              <span class="material-icons">group</span>
             </Button>
 
             <Button
@@ -266,8 +269,9 @@ console.log('deneme');
               to={{
                 pathname: `/places`,
               }}
+              title="ALL PLACES"
             >
-              ALL PLACES
+              <span class="material-icons">collections</span>
             </Button>
 
             {auth.isLoggedIn && (
@@ -277,8 +281,9 @@ console.log('deneme');
                 to={{
                   pathname: `/${auth.userId}/places`,
                 }}
+                title="MY PLACES"
               >
-                MY PLACES
+                <span class="material-icons">person_pin</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -288,8 +293,9 @@ console.log('deneme');
                 to={{
                   pathname: `/${auth.userId}/bucketList`,
                 }}
+                title="BUCKET LIST"
               >
-                MY BUCKET LIST
+                <span class="material-icons">map</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -299,8 +305,9 @@ console.log('deneme');
                 to={{
                   pathname: `/places/new`,
                 }}
+                title="ADD NEW PLACE"
               >
-                ADD PLACE
+                <span class="material-icons">add_location_alt</span>
               </Button>
             )}
 
@@ -311,17 +318,18 @@ console.log('deneme');
                 to={{
                   pathname: `/auth`,
                 }}
+                title="LOGIN"
               >
-                LOGIN
+                <span class="material-icons">login</span>
               </Button>
             )}
             {auth.isLoggedIn && (
               <React.Fragment>
-                <IconButton aria-label="show 4 new mails" color="inherit">
+                {/*  <IconButton aria-label="show 4 new mails" color="inherit">
                   <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                   aria-label="show 17 new notifications"
                   color="inherit"
@@ -369,7 +377,7 @@ console.log('deneme');
                             <span className="notifications-name">
                               {notifi.sender.name}
                             </span>
-                            started following you
+                            started following you.
                           </MenuItem>
                         ) : (
                           <MenuItem
@@ -431,7 +439,7 @@ console.log('deneme');
                   pathname: `/auth`,
                 }}
               >
-                LOGIN
+                <span class="material-icons">login</span>
               </Button>
             )}
           </div>
