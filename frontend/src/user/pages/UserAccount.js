@@ -23,6 +23,7 @@ const UserAccount = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [message, setMessage] = useState('');
   const [loadedEmail, setLoadedEmail] = useState('');
+  const [signType, setSignType] = useState(); // Es - for checking users sign up type
 
   const closeModal = () => {
     setSuccessModal(false);
@@ -61,6 +62,12 @@ const UserAccount = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
+        console.log(responseData.user.signType);
+        //Es- We dont let google and facebook user to change their email address or password
+        if (responseData.user.signType !== "normal") {
+          setSignType(responseData.user.signType);
+          setMessage(`If you want to change your password or e-mail address, you should do this from your ${responseData.user.signType} account.`);
+        }
         setLoadedEmail(responseData.user.email);
       } catch (err) { }
     };
@@ -113,6 +120,20 @@ const UserAccount = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
+      {/*Es Allert google facebook user to make chancing on their account */}
+      {signType !== "normal" && <Modal
+        show={true}
+        onCancel={closeModal}
+        header='Alert !!!'
+        contentClass='place-item__modal-content'
+        footerClass='place-item__modal-actions'
+        footer={<Button onClick={closeModal}>CLOSE</Button>}
+      >
+        <div className='map-container'>
+          <p>{message}</p>
+        </div>
+      </Modal>}
+
       <Modal
         show={successModal}
         onCancel={closeModal}
