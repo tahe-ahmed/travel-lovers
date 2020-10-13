@@ -1,22 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../shared/context/auth-context';
-import Input from '../../shared/components/FormElements/Input';
-import ImageUpload from '../../shared/components/FormElements/ImageUpload';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import Modal from '../../shared/components/UIElements/Modal';
-import Button from '@material-ui/core/Button';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { AuthContext } from "../../shared/context/auth-context";
+import Input from "../../shared/components/FormElements/Input";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Modal from "../../shared/components/UIElements/Modal";
+import Button from "@material-ui/core/Button";
 // import Button from '../../shared/components/FormElements/Button';
-import { useForm } from '../../shared/hooks/form-hook';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
-import './UpdateUser.css';
+import "./UpdateUser.css";
 
 const UpdateUser = () => {
   const auth = useContext(AuthContext);
@@ -25,7 +25,7 @@ const UpdateUser = () => {
   const [loadedUser, setLoadedUser] = useState();
   const userId = useParams().userId;
   const [successModal, setSuccessModal] = useState(false);
-  const [genderOption, setGenderOption] = useState('');
+  const [genderOption, setGenderOption] = useState("");
 
   const closeModal = () => {
     setSuccessModal(false);
@@ -38,23 +38,23 @@ const UpdateUser = () => {
   const [formState, inputHandler, setFormData] = useForm(
     {
       name: {
-        value: '',
+        value: "",
         isValid: false,
       },
       age: {
-        value: '',
+        value: "",
         isValid: false,
       },
       image: {
-        value: '',
+        value: "",
         isValid: false,
       },
       biography: {
-        value: '',
+        value: "",
         isValid: true,
       },
       interests: {
-        value: '',
+        value: "",
         isValid: true,
       },
     },
@@ -103,25 +103,25 @@ const UpdateUser = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('name', formState.inputs.name.value);
-      formData.append('gender', genderOption);
-      formData.append('age', formState.inputs.age.value);
-      formData.append('image', formState.inputs.image.value);
+      formData.append("name", formState.inputs.name.value);
+      formData.append("gender", genderOption);
+      formData.append("age", formState.inputs.age.value);
+      formData.append("image", formState.inputs.image.value);
       formData.append(
-        'biography',
-        formState.inputs.biography.value ? formState.inputs.biography.value : ''
+        "biography",
+        formState.inputs.biography.value ? formState.inputs.biography.value : ""
       );
       formData.append(
-        'interests',
-        formState.inputs.interests.value ? formState.inputs.interests.value : ''
+        "interests",
+        formState.inputs.interests.value ? formState.inputs.interests.value : ""
       );
 
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
-        'PATCH',
+        "PATCH",
         formData,
         {
-          Authorization: 'Bearer ' + auth.token,
+          Authorization: "Bearer " + auth.token,
         }
       );
 
@@ -141,7 +141,11 @@ const UpdateUser = () => {
         header="Success"
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
-        footer={<Button onClick={closeModal}>CLOSE</Button>}
+        footer={
+          <Button variant="contained" color="secondary" onClick={closeModal}>
+            CLOSE
+          </Button>
+        }
       >
         <div>
           <p>Your profile is updated</p>
