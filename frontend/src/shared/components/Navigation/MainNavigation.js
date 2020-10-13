@@ -39,10 +39,6 @@ const MainNavigation = (props) => {
   const [notifications, setNotifications] = useState();
   const history = useHistory();
 
-<<<<<<< HEAD
-  console.log("deneme");
-=======
->>>>>>> 25784631462cb2b12d26ef65d117db94640be3b7
 
   //////// when login fetch the notifications
   useEffect(() => {
@@ -355,52 +351,6 @@ const MainNavigation = (props) => {
                       </span>
                     </MenuItem>
                   ) : (
-<<<<<<< HEAD
-                    notifications &&
-                    notifications.map((notifi) => (
-                      <div>
-                        {notifi.follow ? (
-                          <MenuItem
-                            onClick={() =>
-                              handleNotificationClick(
-                                notifi.place,
-                                notifi._id,
-                                true,
-                                notifi.sender._id
-                              )
-                            }
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                                alt="profile"
-                                src={notifi.sender.image}
-                                aria-controls={menuId}
-                                className="notification-image"
-                              />
-                            </ListItemAvatar>
-                            <span className="notifications-name">
-                              {notifi.sender.name}
-                            </span>
-                            started following you.
-                          </MenuItem>
-                        ) : (
-                          <MenuItem
-                            onClick={() =>
-                              handleNotificationClick(notifi.place, notifi._id)
-                            }
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                                alt="profile"
-                                src={notifi.sender.image}
-                                aria-controls={menuId}
-                                className="notification-image"
-                              />
-                            </ListItemAvatar>
-                            <span className="notifications-name">
-                              {notifi.sender.name}
-                            </span>
-=======
                       notifications &&
                       notifications.map((notifi) => (
                         <div>
@@ -445,7 +395,6 @@ const MainNavigation = (props) => {
                                 <span className="notifications-name">
                                   {notifi.sender.name}
                                 </span>
->>>>>>> 25784631462cb2b12d26ef65d117db94640be3b7
                             has mentioned you in a place
                               </MenuItem>
                             )}
