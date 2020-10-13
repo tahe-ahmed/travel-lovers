@@ -68,8 +68,6 @@ console.log('deneme');
   const handleNotificationClick = async (
     pid,
     notifiID,
-    follow = 'false',
-    senderId
   ) => {
     setNotifiAnchorEl(null);
     ////// delete the notification from database and from the local state
