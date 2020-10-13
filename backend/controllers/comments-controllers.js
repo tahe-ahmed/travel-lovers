@@ -14,10 +14,8 @@ const getCommentsByPlaceId = async (req, res, next) => {
       .populate("writerId", "name image")
       .exec((err, comment) => {
         if (err) return res.status(400).send(err);
-        console.log('comments',comment);
         res.status(200).json({ comment });
       });
-   
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find comments.",
@@ -51,7 +49,7 @@ const createComment = async (req, res, next) => {
   try {
     await createdComment.save((err, comment) => {
       if (err) return res.json({ success: false, err });
-
+      // 5f85f4f86b43f37fb78d6af4
       Comment.find({ _id: comment._id })
         .lean()
         .populate("writerId", "name image")
@@ -114,28 +112,21 @@ const deleteComment = async (req, res, next) => {
   try {
     notifi = await Notifications.findOne({ comment: commentId });
   } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not delete notification in comment, maybe comment not exist.",
-      500
-    );
-    return next(error);
+    next();
   }
   if (!notifi) {
-    const error = new HttpError(
-      "Could not find notification with this comment id.",
-      404
-    );
-    return next(error);
-  }
-  // delete from database
-  try {
-    await notifi.remove();
-  } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not delete notification.",
-      500
-    );
-    return next(error);
+    return  res.status(200).json({ message: "Deleted place.", comment: comment, notifi });
+  } else {
+    // delete from database
+    try {
+      await notifi.remove();
+    } catch (err) {
+      const error = new HttpError(
+        "Something went wrong, could not delete notification.",
+        500
+      );
+      return next(error);
+    }
   }
 
   res.status(200).json({ message: "Deleted place.", comment: comment, notifi });

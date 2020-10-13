@@ -17,7 +17,6 @@ const CommentForm = (props) => {
         <Mention
           trigger='@'
           data={props.users}
-          href='#'
           onAdd={props.onAdd}
           style={{
             backgroundColor: '#daf4fa',

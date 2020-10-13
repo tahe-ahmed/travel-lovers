@@ -95,11 +95,7 @@ console.log('deneme');
     );
     setNotifications(filterednotifications);
 
-    if (follow) {
-      history.push(`/${senderId}/places`);
-    } else {
-      history.push(`/info/${pid}`);
-    }
+    history.push(`/info/${pid}`);
   };
 
   const handleProfileMenuOpen = (event) => {
