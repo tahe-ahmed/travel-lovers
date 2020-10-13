@@ -62,7 +62,7 @@ const UserAccount = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
-        console.log(responseData.user.signType);
+
         //Es- We dont let google and facebook user to change their email address or password
         if (responseData.user.signType !== "normal") {
           setSignType(responseData.user.signType);
@@ -121,7 +121,7 @@ const UserAccount = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       {/*Es Allert google facebook user to make chancing on their account */}
-      {signType !== "normal" && <Modal
+      {signType && signType !== "normal" && <Modal
         show={true}
         onCancel={closeModal}
         header='Alert !!!'

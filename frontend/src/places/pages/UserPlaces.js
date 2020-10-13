@@ -28,11 +28,8 @@ const UserPlaces = () => {
   const [showInfo, setShowInfo] = useState(false);
   // const [placesPerPage] = useState(3);
   const auth = useContext(AuthContext);
-  
+
   const userId = useParams().userId;
-
-
-console.log('heyyyy neler oluyor');
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -64,9 +61,9 @@ console.log('heyyyy neler oluyor');
     );
   };
 
-if(!auth.isLoggedIn){
-  history.push(`/auth`);
-} 
+  if (!auth.isLoggedIn) {
+    history.push(`/auth`);
+  }
 
   // Get current places
   // const indexOfLastPlace = currentPage * placesPerPage;
