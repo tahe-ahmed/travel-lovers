@@ -34,7 +34,7 @@ const MainNavigation = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogin, setIsLogin] = useState(true);
   const [notifiAnchorEl, setNotifiAnchorEl] = useState(null);
-  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used 
+  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used
   const { sendRequest } = useHttpClient();
   const [notifications, setNotifications] = useState();
   const history = useHistory();
@@ -49,7 +49,7 @@ const MainNavigation = (props) => {
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
           setNotifications(responseData.notifications);
-        } catch (err) { }
+        } catch (err) {}
       };
       fetchNotifications();
     }
@@ -76,9 +76,7 @@ const MainNavigation = (props) => {
       receiverID: auth.userId,
     };
     try {
-
       await sendRequest(
-
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
         'PATCH',
         JSON.stringify(notifiToUpdate),
@@ -87,8 +85,7 @@ const MainNavigation = (props) => {
           Authorization: 'Bearer ' + auth.token,
         }
       );
-    } catch (err) { }
-
+    } catch (err) {}
 
     /// update the local state
     const filterednotifications = notifications.filter(
@@ -126,7 +123,7 @@ const MainNavigation = (props) => {
             `${process.env.REACT_APP_BACKEND_URL}/notifications/${auth.userId}`
           );
           setNotifications(responseData.notifications);
-        } catch (err) { }
+        } catch (err) {}
       };
       fetchNotifications();
     }
@@ -143,6 +140,7 @@ const MainNavigation = (props) => {
   const logout = () => {
     setIsLogin(false);
     auth.logout();
+    history.push('/');
   };
 
   const menuId = 'primary-search-account-menu';
@@ -158,7 +156,7 @@ const MainNavigation = (props) => {
     >
       <MenuItem
         onClick={handleMenuClose}
-        color='inherit'
+        color="inherit"
         component={NavLink}
         to={{
           pathname: `/user/${auth.userId}`,
@@ -194,16 +192,16 @@ const MainNavigation = (props) => {
       {auth.isLoggedIn && (
         <div>
           <MenuItem>
-            <IconButton aria-label='show 4 new mails' color='inherit'>
-              <Badge badgeContent={4} color='secondary'>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
             <p>Messages</p>
           </MenuItem>
           <MenuItem>
-            <IconButton aria-label='show 11 new notifications' color='inherit'>
-              <Badge badgeContent={11} color='secondary'>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={11} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -211,10 +209,10 @@ const MainNavigation = (props) => {
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
-              aria-label='account of current user'
-              aria-controls='primary-search-account-menu'
-              aria-haspopup='true'
-              color='inherit'
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
             >
               <AccountCircle />
             </IconButton>
@@ -227,20 +225,20 @@ const MainNavigation = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar>
           <SideDrawer />
           <Button
-            color='inherit'
+            color="inherit"
             component={NavLink}
             to={{
               pathname: `/`,
             }}
           >
-            <Typography className={classes.title} variant='h6' noWrap>
+            <Typography className={classes.title} variant="h6" noWrap>
               <img
-                src='https://i.postimg.cc/SQM3CGxw/croped-image-wh.png'
-                alt='logo'
+                src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png"
+                alt="logo"
               />
             </Typography>
           </Button>
@@ -248,7 +246,7 @@ const MainNavigation = (props) => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/`,
@@ -257,7 +255,7 @@ const MainNavigation = (props) => {
               HOMEPAGE
             </Button>
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/users`,
@@ -267,7 +265,7 @@ const MainNavigation = (props) => {
             </Button>
 
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/places`,
@@ -278,7 +276,7 @@ const MainNavigation = (props) => {
 
             {auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/${auth.userId}/places`,
@@ -300,7 +298,7 @@ const MainNavigation = (props) => {
             )}
             {auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/places/new`,
@@ -312,7 +310,7 @@ const MainNavigation = (props) => {
 
             {!auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/auth`,
@@ -323,24 +321,21 @@ const MainNavigation = (props) => {
             )}
             {auth.isLoggedIn && (
               <React.Fragment>
-                <IconButton aria-label='show 4 new mails' color='inherit'>
-                  <Badge badgeContent={4} color='secondary'>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                  <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
                 </IconButton>
                 <IconButton
-                  aria-label='show 17 new notifications'
-                  color='inherit'
+                  aria-label="show 17 new notifications"
+                  color="inherit"
                 >
-                  <Badge
-                    badgeContent={notificationsNumber}
-                    color='secondary'
-                  >
+                  <Badge badgeContent={notificationsNumber} color="secondary">
                     <NotificationsIcon onClick={handleClick} />
                   </Badge>
                 </IconButton>
                 <Menu
-                  id='simple-menu'
+                  id="simple-menu"
                   anchorEl={notifiAnchorEl}
                   keepMounted
                   open={Boolean(notifiAnchorEl)}
@@ -348,68 +343,68 @@ const MainNavigation = (props) => {
                 >
                   {notificationsNumber === 0 ? (
                     <MenuItem>
-                      <span className='notifications-name'>
+                      <span className="notifications-name">
                         no notifications
                       </span>
                     </MenuItem>
                   ) : (
-                      notifications &&
-                      notifications.map((notifi) => (
-                        <div>
-                          {notifi.follow ? (
-                            <MenuItem
-                              onClick={() =>
-                                handleNotificationClick(
-                                  notifi.place,
-                                  notifi._id,
-                                  true,
-                                  notifi.sender._id
-                                )
-                              }
-                            >
-                              <ListItemAvatar>
-                                <Avatar
-                                  alt='profile'
-                                  src={notifi.sender.image}
-                                  aria-controls={menuId}
-                                  className='notification-image'
-                                />
-                              </ListItemAvatar>
-                              <span className='notifications-name'>
-                                {notifi.sender.name}
-                              </span>
+                    notifications &&
+                    notifications.map((notifi) => (
+                      <div>
+                        {notifi.follow ? (
+                          <MenuItem
+                            onClick={() =>
+                              handleNotificationClick(
+                                notifi.place,
+                                notifi._id,
+                                true,
+                                notifi.sender._id
+                              )
+                            }
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="profile"
+                                src={notifi.sender.image}
+                                aria-controls={menuId}
+                                className="notification-image"
+                              />
+                            </ListItemAvatar>
+                            <span className="notifications-name">
+                              {notifi.sender.name}
+                            </span>
                             started following you
-                            </MenuItem>
-                          ) : (
-                              <MenuItem
-                                onClick={() =>
-                                  handleNotificationClick(notifi.place, notifi._id)
-                                }
-                              >
-                                <ListItemAvatar>
-                                  <Avatar
-                                    alt='profile'
-                                    src={notifi.sender.image}
-                                    aria-controls={menuId}
-                                    className='notification-image'
-                                  />
-                                </ListItemAvatar>
-                                <span className='notifications-name'>
-                                  {notifi.sender.name}
-                                </span>
+                          </MenuItem>
+                        ) : (
+                          <MenuItem
+                            onClick={() =>
+                              handleNotificationClick(notifi.place, notifi._id)
+                            }
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="profile"
+                                src={notifi.sender.image}
+                                aria-controls={menuId}
+                                className="notification-image"
+                              />
+                            </ListItemAvatar>
+                            <span className="notifications-name">
+                              {notifi.sender.name}
+                            </span>
                             has mentioned you in a place
-                              </MenuItem>
-                            )}
+                          </MenuItem>
+                        )}
 
-                          <Divider />
-                        </div>
-                      ))
-                    )}
+                        <Divider />
+                      </div>
+                    ))
+                  )}
                 </Menu>
 
                 <div className={classes.root}>
                   <Avatar
-                    alt='profile'
+                    alt="profile"
                     src={auth.userImage} // hosting images
                     aria-controls={menuId}
                     onClick={handleProfileMenuOpen}
@@ -422,11 +417,11 @@ const MainNavigation = (props) => {
           <div className={classes.sectionMobile}>
             {auth.isLoggedIn && (
               <IconButton
-                aria-label='show more'
+                aria-label="show more"
                 aria-controls={mobileMenuId}
-                aria-haspopup='true'
+                aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
-                color='inherit'
+                color="inherit"
               >
                 <MoreIcon />
               </IconButton>
@@ -434,7 +429,7 @@ const MainNavigation = (props) => {
 
             {!auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/auth`,

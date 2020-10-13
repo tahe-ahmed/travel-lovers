@@ -94,7 +94,7 @@ const UpdateUser = () => {
           true
         );
         setGenderOption(responseData.user.gender);
-      } catch (err) { }
+      } catch (err) {}
     };
     fetchUser();
   }, [sendRequest, userId, setLoadedUser, setFormData]);
@@ -107,8 +107,14 @@ const UpdateUser = () => {
       formData.append('gender', genderOption);
       formData.append('age', formState.inputs.age.value);
       formData.append('image', formState.inputs.image.value);
-      formData.append('biography', formState.inputs.biography.value ? formState.inputs.biography.value : '');
-      formData.append('interests', formState.inputs.interests.value ? formState.inputs.interests.value : '');
+      formData.append(
+        'biography',
+        formState.inputs.biography.value ? formState.inputs.biography.value : ''
+      );
+      formData.append(
+        'interests',
+        formState.inputs.interests.value ? formState.inputs.interests.value : ''
+      );
 
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
@@ -122,8 +128,8 @@ const UpdateUser = () => {
       setSuccessModal(true);
 
       auth.userImage = responseData.user.image;
-      history.push('/');
-    } catch (err) { }
+      history.push(`/user/${auth.userId}`);
+    } catch (err) {}
   };
 
   return (
@@ -132,9 +138,9 @@ const UpdateUser = () => {
       <Modal
         show={successModal}
         onCancel={closeModal}
-        header='Success'
-        contentClass='place-item__modal-content'
-        footerClass='place-item__modal-actions'
+        header="Success"
+        contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
         footer={<Button onClick={closeModal}>CLOSE</Button>}
       >
         <div>
@@ -142,102 +148,101 @@ const UpdateUser = () => {
         </div>
       </Modal>
       {!isLoading && loadedUser && (
-        <div className='container-edit-profile'>
-          <div className='user-container-profile'>
+        <div className="container-edit-profile">
+          <div className="user-container-profile">
             <form
               noValidate
-              autoComplete='off'
-              className='place-form'
+              autoComplete="off"
+              className="place-form"
               onSubmit={userUpdateSubmitHandler}
             >
               <ImageUpload
                 center
-                id='image'
+                id="image"
                 onInput={inputHandler}
-                errorText='Please provide an image.'
+                errorText="Please provide an image."
                 initialValue={loadedUser.image}
-                text='Upload an Image'
+                text="Upload an Image"
               />
 
               <Input
-                id='name'
-                element='input'
-                type='text'
-                label='Name'
+                id="name"
+                element="input"
+                type="text"
+                label="Name"
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a valid title.'
+                errorText="Please enter a valid title."
                 fullWidth
                 onInput={inputHandler}
                 initialValue={loadedUser.name}
                 initialValid={true}
               />
 
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>Gender</FormLabel>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Gender</FormLabel>
                 <RadioGroup
-                  aria-label='gender'
-                  name='gender'
+                  aria-label="gender"
+                  name="gender"
                   value={genderOption}
                   onChange={radioChange}
                 >
                   <FormControlLabel
-                    value='Female'
+                    value="Female"
                     control={<Radio />}
-                    label='Female'
-
+                    label="Female"
                   />
                   <FormControlLabel
-                    value='Male'
+                    value="Male"
                     control={<Radio />}
-                    label='Male'
+                    label="Male"
                   />
                   <FormControlLabel
-                    value='Other'
+                    value="Other"
                     control={<Radio />}
-                    label='Other'
+                    label="Other"
                   />
                 </RadioGroup>
               </FormControl>
 
               <Input
-                id='age'
-                element='input'
-                type='text'
-                label='Age'
+                id="age"
+                element="input"
+                type="text"
+                label="Age"
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a valid age.'
+                errorText="Please enter a valid age."
                 onInput={inputHandler}
                 initialValue={loadedUser.age}
                 initialValid={true}
                 fullWidth
               />
               <Input
-                id='interests'
-                element='textarea'
-                label='My interests'
+                id="interests"
+                element="textarea"
+                label="My interests"
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a valid age.'
+                errorText="Please enter a valid age."
                 onInput={inputHandler}
                 initialValue={loadedUser.interests}
                 initialValid={true}
                 fullWidth
               />
               <Input
-                id='biography'
-                element='textarea'
-                label='My biography'
+                id="biography"
+                element="textarea"
+                label="My biography"
                 fullWidth
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText='Please enter a valid age.'
+                errorText="Please enter a valid age."
                 onInput={inputHandler}
                 initialValue={loadedUser.biography}
                 initialValid={true}
               />
-              <div className='user-button'>
+              <div className="user-button">
                 <Button
-                  type='submit'
-                  variant='contained'
-                  color='secondary'
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
                   disabled={!formState.isValid}
                 >
                   SAVE CHANGES

@@ -1,20 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import Input from "../../shared/components/FormElements/Input";
-import Button from "../../shared/components/FormElements/Button";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload";
-import AddressSearchBox from "../../shared/components/FormElements/AddressSearchBox";
+import Input from '../../shared/components/FormElements/Input';
+import Button from '../../shared/components/FormElements/Button';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
+import AddressSearchBox from '../../shared/components/FormElements/AddressSearchBox';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../shared/util/validators";
-import { useForm } from "../../shared/hooks/form-hook";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import "./PlaceForm.css";
+} from '../../shared/util/validators';
+import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import './PlaceForm.css';
 
 const NewPlace = () => {
   const auth = useContext(AuthContext);
@@ -22,15 +22,15 @@ const NewPlace = () => {
   const [formState, inputHandler] = useForm(
     {
       title: {
-        value: "",
+        value: '',
         isValid: false,
       },
       description: {
-        value: "",
+        value: '',
         isValid: false,
       },
       address: {
-        value: "",
+        value: '',
         isValid: false,
       },
       image: {
@@ -47,44 +47,44 @@ const NewPlace = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append("title", formState.inputs.title.value);
-      formData.append("description", formState.inputs.description.value);
-      formData.append("address", formState.inputs.address.value);
-      formData.append("image", formState.inputs.image.value);
+      formData.append('title', formState.inputs.title.value);
+      formData.append('description', formState.inputs.description.value);
+      formData.append('address', formState.inputs.address.value);
+      formData.append('image', formState.inputs.image.value);
       await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + "/places",
-        "POST",
+        process.env.REACT_APP_BACKEND_URL + '/places',
+        'POST',
         formData,
         {
-          Authorization: "Bearer " + auth.token,
+          Authorization: 'Bearer ' + auth.token,
         }
       );
-      history.push("/");
+      history.push(`/${auth.userId}/places`);
     } catch (err) {}
   };
 
   // Blur effect and input value control of searchbox
   useEffect(() => {
-    const searchbox = document.querySelector(".mapboxgl-ctrl-geocoder--input");
-    searchbox.addEventListener("change", (e) => {
+    const searchbox = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+    searchbox.addEventListener('change', (e) => {
       if (e.target.value.length > 2) {
-        inputHandler("address", e.target.value, true);
+        inputHandler('address', e.target.value, true);
       } else {
-        inputHandler("address", e.target.value, false);
+        inputHandler('address', e.target.value, false);
       }
     });
-    searchbox.addEventListener("blur", (e) => {
+    searchbox.addEventListener('blur', (e) => {
       if (e.target.value.length < 2) {
-        e.target.classList.add("touch");
-        e.target.placeholder = "Please enter a valid address.";
+        e.target.classList.add('touch');
+        e.target.placeholder = 'Please enter a valid address.';
       } else {
-        e.target.classList.remove("touch");
+        e.target.classList.remove('touch');
       }
     });
     document
-      .querySelector(".mapboxgl-ctrl-geocoder--button")
-      .addEventListener("click", (e) => {
-        inputHandler("address", e.target.value, false);
+      .querySelector('.mapboxgl-ctrl-geocoder--button')
+      .addEventListener('click', (e) => {
+        inputHandler('address', e.target.value, false);
       });
   }, [inputHandler]);
 
