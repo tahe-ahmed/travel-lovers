@@ -148,7 +148,7 @@ const UpdateUser = () => {
         }
       >
         <div>
-          <p>Your profile is updated</p>
+          <p className="success">Your profile is updated</p>
         </div>
       </Modal>
       {!isLoading && loadedUser && (
