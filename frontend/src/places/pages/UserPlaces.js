@@ -31,6 +31,9 @@ const UserPlaces = () => {
   
   const userId = useParams().userId;
 
+
+console.log('heyyyy neler oluyor');
+
   useEffect(() => {
     const fetchPlaces = async () => {
       try {

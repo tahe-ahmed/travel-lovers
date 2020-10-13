@@ -19,8 +19,23 @@
 } */
 
 
-.search-bar{
+.search-bar-container{
   display: flex;
   justify-content: center;
   margin:5px
+}
+.search-cnt{
+  min-width: 400px;
+
+
+}
+.input-searchbar-cnt{
+  width: 300px;
+  float: left;
+}
+
+.searchicon{
+  padding: 0px 16px;
+  float: left;
+  position: relative;
 }
