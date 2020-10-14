@@ -42,7 +42,7 @@ a {
 
 /*Cards*/
 .card-hp {
-  margin: 3%;
+  margin: 6% 30px 10%;
   display: flex;
   justify-content: space-between;
   height: 30vh;
@@ -81,7 +81,6 @@ i {
 .SectionContainer {
   margin-top: -20px;
 }
-
 
 /* SECTION TREE */
 .section-tree {
@@ -214,12 +213,12 @@ i {
 .banner-header {
   margin: 20px auto;
   font-size: 3em;
-  color: crimson
+  color: crimson;
 }
 .banner-header2 {
   margin: 20px auto;
   font-size: 3em;
-  color: white
+  color: white;
 }
 
 .image-gallery-image,
@@ -233,21 +232,103 @@ i {
   height: 400px;
 }
 /* image galary slide make full */
-div.image-gallery-slide.center > div{
+div.image-gallery-slide.center > div {
   width: 100%;
 }
-.banner-text{
+.banner-text {
   color: rgb(92, 15, 15) !important;
-    font-weight: bold;  
+  font-weight: bold;
 }
-.banner-text2{
+.banner-text2 {
   color: white !important;
-    font-weight: bold;  
+  font-weight: bold;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 400px) {
+  .banner-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .banner-header {
+    font-size: 1.4em;
+    margin: -25% -80px;
+  }
+  .banner-header2 {
+    font-size: 1.4em;
+    margin: -25% -80px;
+  }
 
-  
+  .banner-text {
+    font-size: 12px !important;
+    margin: 80px auto 20px;
+    width: 300px;
+  }
+  .banner-text2 {
+    font-size: 12px !important;
+    margin: 80px auto 20px;
+    width: 300px;
+  }
+
+  .button-section-one {
+    font-size: 12px;
+    margin-right: 10px;
+    padding: 6px 12px;
+  }
+
+  .button-section-one:last-child {
+    margin-top: 10px;
+  }
+
+  .image-gallery {
+    width: 100%;
+    margin: 0 auto;
+    height: 300px;
+  }
+
+  .card-hp {
+    display: block;
+    margin-bottom: 900px;
+    margin-top: 60px;
+  }
+
+  .card-items {
+    width: 90%;
+    margin: 15px auto;
+  }
+  .section-one-rainbow-text {
+    font-size: 20px;
+  }
+
+  .section-tree {
+    height: 250px;
+    margin-top: 150px;
+  }
+
+  .section-tree .MuiButton-containedSizeLarge {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .animated-text {
+    font-size: 18px;
+    margin: 20px auto -40px;
+  }
+
+  .title-card {
+    font-size: 12px !important;
+  }
+
+  @keyframes animated-text {
+    from {
+      width: 0;
+    }
+    to {
+      width: 300px;
+    }
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 600px) {
   .banner-header {
     font-size: 1.8em;
     margin: -15% -50px;
@@ -259,9 +340,9 @@ div.image-gallery-slide.center > div{
     width: 300px;
   }
 
-.banner-container {
-  width: 400px;
-}
+  .banner-container {
+    width: 400px;
+  }
 
   .banner-header2 {
     font-size: 1.8em;
@@ -279,7 +360,7 @@ div.image-gallery-slide.center > div{
 
   .card-hp {
     display: block;
-    margin-bottom: 500px;
+    margin-bottom: 835px;
   }
 
   .card-items {
@@ -288,7 +369,7 @@ div.image-gallery-slide.center > div{
   }
   .image-gallery {
     width: 100%;
-    margin: 0 autoo;
+    margin: 0 auto;
   }
   .animated-text {
     font-size: 1.4rem;
@@ -307,10 +388,13 @@ div.image-gallery-slide.center > div{
       width: 350px;
     }
   }
+
+  .title-card {
+    font-size: 12px !important;
+  }
 }
 
 @media screen and (min-width: 601px) and (max-width: 750px) {
-
   .banner-header {
     font-size: 1.9em;
     margin: 0;
@@ -357,7 +441,6 @@ div.image-gallery-slide.center > div{
 }
 
 @media screen and (min-width: 751px) and (max-width: 1100px) {
-
   .image-gallery {
     width: 500px;
   }
@@ -367,13 +450,15 @@ div.image-gallery-slide.center > div{
   }
 
   .card-hp {
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 8%;
+    margin-bottom: 710px;
+    flex-direction: column;
   }
 
   .card-items {
-   min-height: 280px;
-   
+    min-height: 300px;
+    width: 100%;
+    margin-bottom: 40px;
   }
 
   .animated-text {
@@ -391,6 +476,7 @@ div.image-gallery-slide.center > div{
   }
 
   .section-tree {
+    margin-top: 40px;
     height: 50vw;
   }
 }

@@ -75,6 +75,8 @@ function SectionOne() {
                     🌟{" "}
                   </span>
                 </p>
+                <div className="header-btn-container">
+
                 <Button
                   variant="contained"
                   color="secondary"
@@ -96,6 +98,7 @@ function SectionOne() {
                 >
                   ADD PLACE
                 </Button>
+                </div>
               </div>
             )}
           </div>

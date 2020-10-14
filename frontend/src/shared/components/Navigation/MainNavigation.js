@@ -155,7 +155,7 @@ const MainNavigation = (props) => {
         }}
         title="PROFILE"
       >
-        <span class="material-icons">assignment_ind</span> &ensp; Profile
+        <span className="material-icons">assignment_ind</span> &ensp; Profile
       </MenuItem>
       <MenuItem
         onClick={handleMenuClose}
@@ -166,10 +166,10 @@ const MainNavigation = (props) => {
         }}
         title="MY ACCOUNT"
       >
-        <span class="material-icons">vpn_key</span> &ensp; My Account
+        <span className="material-icons">vpn_key</span> &ensp; My Account
       </MenuItem>
       <MenuItem title="LOG OUT" onClick={logout}>
-        <span class="material-icons">exit_to_app</span> &ensp; Log Out
+        <span className="material-icons">exit_to_app</span> &ensp; Log Out
       </MenuItem>
     </Menu>
   );
@@ -249,7 +249,7 @@ const MainNavigation = (props) => {
               }}
               title="HOMEPAGE"
             >
-              <span class="material-icons">home</span>
+              <span className="material-icons">home</span>
             </Button>
             <Button
               color="inherit"
@@ -259,7 +259,7 @@ const MainNavigation = (props) => {
               }}
               title="ALL USERS"
             >
-              <span class="material-icons">group</span>
+              <span className="material-icons">group</span>
             </Button>
 
             <Button
@@ -270,7 +270,7 @@ const MainNavigation = (props) => {
               }}
               title="ALL PLACES"
             >
-              <span class="material-icons">collections</span>
+              <span className="material-icons">collections</span>
             </Button>
 
             {auth.isLoggedIn && (
@@ -282,7 +282,7 @@ const MainNavigation = (props) => {
                 }}
                 title="MY PLACES"
               >
-                <span class="material-icons">person_pin</span>
+                <span className="material-icons">person_pin</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -294,7 +294,7 @@ const MainNavigation = (props) => {
                 }}
                 title="BUCKET LIST"
               >
-                <span class="material-icons">map</span>
+                <span className="material-icons">map</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -306,7 +306,7 @@ const MainNavigation = (props) => {
                 }}
                 title="ADD NEW PLACE"
               >
-                <span class="material-icons">add_location_alt</span>
+                <span className="material-icons">add_location_alt</span>
               </Button>
             )}
 
@@ -319,7 +319,7 @@ const MainNavigation = (props) => {
                 }}
                 title="LOGIN"
               >
-                <span class="material-icons">login</span>
+                <span className="material-icons">login</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -438,7 +438,7 @@ const MainNavigation = (props) => {
                   pathname: `/auth`,
                 }}
               >
-                <span class="material-icons">login</span>
+                <span className="material-icons">login</span>
               </Button>
             )}
           </div>
