@@ -185,6 +185,10 @@ const Auth = () => {
       setResetPasswordMsg(responseData.msg);
     } catch (err) {}
   };
+  if(error && forgotPassword){
+    closeForgotPassword();
+
+  }
 
   return (
     <React.Fragment>
