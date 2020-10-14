@@ -197,7 +197,7 @@ const MainNavigation = (props) => {
           </MenuItem> */}
           <MenuItem>
             <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={11} color="secondary">
+              <Badge color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
