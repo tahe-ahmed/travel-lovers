@@ -413,7 +413,7 @@ div.image-gallery-slide.center > div {
 
   .card-hp {
     display: block;
-    margin-bottom: 450px;
+    margin-bottom: 800px;
   }
 
   .card-items {
@@ -450,15 +450,16 @@ div.image-gallery-slide.center > div {
   }
 
   .card-hp {
-    margin-top: 8%;
-    margin-bottom: 710px;
-    flex-direction: column;
+    margin-top: 15%;
+    margin-bottom: 140px;
   }
 
   .card-items {
-    min-height: 300px;
-    width: 100%;
-    margin-bottom: 40px;
+    min-height: 380px;
+  }
+
+  .title-card {
+    font-size: 12px !important;
   }
 
   .animated-text {

@@ -105,14 +105,14 @@ function SectionTwo() {
               alt="FIND PASSIONATE TRAVELLERS"
               height="250"
               image="https://i.postimg.cc/x8cV1RPg/111.jpg"
-              title="FIND PASSIONATE TRAVELLERS"
+              title="FIND OTHER TRAVELLERS"
             />
             <CardContent>
               <Typography className={`${classes.label_for_card_icon} title-card`}>
                 <i className="fas fa-search"></i>
               </Typography>
               <Typography className={`${classes.label_for_card_header} title-card`}>
-                FIND PASSIONATE TRAVELLERS
+                FIND OTHER TRAVELLERS
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 You can find millions of travel lovers all over the world. They
