@@ -55,7 +55,7 @@ const Follower = (props) => {
     };
     fetchLogginUserFollowingList();
     fetchFollowList();
-  }, [sendRequest, userId, loginUserFollowing.length]);
+  }, [sendRequest, userId,loginUserFollowing.length]);
 
   const followHandler = async (event) => {
     event.preventDefault();
@@ -74,6 +74,7 @@ const Follower = (props) => {
       );
       setFollowStatus(true);
       setFollowers(responseData.followers);
+      setLoginUserFollowing(responseData.following);
       sendNotifiMentionsToBackend(userId);
     } catch (err) {}
   };
@@ -92,6 +93,8 @@ const Follower = (props) => {
         500
       );
       setFollowers(responseData.followers);
+      setLoginUserFollowing(responseData.following);
+
       setFollowStatus(false);
     } catch (err) {}
   };

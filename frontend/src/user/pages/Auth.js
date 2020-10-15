@@ -220,7 +220,7 @@ const Auth = () => {
           </div>
         }
       >
-        <div className='map-container'>
+        <div>
           {resetPasswordMsg === '' && (
             <Input
               id='resetEmail'
