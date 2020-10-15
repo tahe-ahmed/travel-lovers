@@ -64,8 +64,9 @@ const MainNavigation = (props) => {
     setNotifiAnchorEl(null);
   };
   /////// when notification clicked close the list and delete the notification
-  const handleNotificationClick = async (pid, notifiID) => {
+  const handleNotificationClick = async (pid, notifiID, sender, follow) => {
     setNotifiAnchorEl(null);
+    console.log(sender._id, pid, notifiID, follow)
     ////// delete the notification from database and from the local state
     const notifiToUpdate = {
       notifiID: notifiID,
@@ -88,8 +89,10 @@ const MainNavigation = (props) => {
       (notifi) => notifi._id !== notifiID
     );
     setNotifications(filterednotifications);
-
-    history.push(`/info/${pid}`);
+      
+    
+    if(follow) history.push(`${sender._id}/places`)
+    else history.push(`/info/${pid}`);
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -124,6 +127,7 @@ const MainNavigation = (props) => {
   ////// count the notifications
   const notificationsNumber =
     auth.isLoggedIn && notifications && notifications.length;
+    console.log(notifications)
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -360,8 +364,8 @@ const MainNavigation = (props) => {
                                 handleNotificationClick(
                                   notifi.place,
                                   notifi._id,
-                                  true,
-                                  notifi.sender._id
+                                  notifi.sender,
+                                  notifi.follow
                                 )
                               }
                             >
@@ -381,7 +385,7 @@ const MainNavigation = (props) => {
                           ) : (
                               <MenuItem
                                 onClick={() =>
-                                  handleNotificationClick(notifi.place, notifi._id)
+                                  handleNotificationClick(notifi.place, notifi._id, notifi.sender, notifi.follow)
                                 }
                               >
                                 <ListItemAvatar>
