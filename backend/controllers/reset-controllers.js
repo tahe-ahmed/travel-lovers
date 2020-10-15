@@ -17,6 +17,11 @@ const forgotPassword = async (req, res, next) => {
       const error = new HttpError('Email address not found in database!', 403);
       return next(error);
     }
+    if (user && user.signType !=="normal") {
+      const error = new HttpError(`If you want to change your password or e-mail address, you should do this from your ${user.signType} account.`, 403);
+      return next(error);
+    }
+
     const token = crypto.randomBytes(20).toString('hex');
 
     user.resetPasswordToken = token;

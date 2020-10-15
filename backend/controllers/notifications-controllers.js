@@ -80,6 +80,8 @@ const updateNotifiReceiverIds = async (req, res, next) => {
   if (receiverNumber === 1) {
     try {
       await notifi.remove();
+      return res.status(200).json({ notifi });
+
     } catch (err) {
       const error = new HttpError(
         "Something went wrong, could not delete comment.",
@@ -87,24 +89,24 @@ const updateNotifiReceiverIds = async (req, res, next) => {
       );
       return next(error);
     }
-  }
-
-  const filteredNotifi = notifi.receiver.filter(
-    (rece) => rece.toString() !== receiverID.toString()
-  );
-
-  notifi.receiver = [filteredNotifi];
-
-  try {
-    await notifi.save();
-  } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not update place.",
-      500
+  }else{
+    const filteredNotifi = notifi.receiver.filter(
+      (rece) => rece.toString() !== receiverID.toString()
     );
-    return next(error);
+  
+    notifi.receiver = [filteredNotifi];
+  
+    try {
+      await notifi.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Something went wrong, could not update place.",
+        500
+      );
+      return next(error);
+    }
+    res.status(200).json({ notifi });
   }
-  res.status(200).json({ notifi });
 };
 ////////// delete notifications from backend by comment Id
 const deleteNotificationByCommentId = async (req, res, next) => {

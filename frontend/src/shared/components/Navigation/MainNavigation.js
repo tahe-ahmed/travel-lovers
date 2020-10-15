@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Button,
   AppBar,
@@ -10,20 +10,20 @@ import {
   Badge,
   MenuItem,
   Menu,
-} from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { AccountCircle } from '@material-ui/icons';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import { AuthContext } from '../../context/auth-context';
-import { useHttpClient } from '../../hooks/http-hook';
-import useStyles from '../../styles/material-ui-syles';
+} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import { AccountCircle } from "@material-ui/icons";
+//import MailIcon from "@material-ui/icons/Mail";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import { AuthContext } from "../../context/auth-context";
+import { useHttpClient } from "../../hooks/http-hook";
+import useStyles from "../../styles/material-ui-syles";
 
-import SideDrawer from './SideDrawer';
+import SideDrawer from "./SideDrawer";
 
-import './MainNavigation.css';
+import "./MainNavigation.css";
 
 const MainNavigation = (props) => {
   const auth = useContext(AuthContext);
@@ -34,10 +34,11 @@ const MainNavigation = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLogin, setIsLogin] = useState(true);
   const [notifiAnchorEl, setNotifiAnchorEl] = useState(null);
-  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used 
+  //const { isLoading, error, sendRequest, clearError } = useHttpClient(); //  Line 37:11:  'isLoading' is assigned a value but never used
   const { sendRequest } = useHttpClient();
   const [notifications, setNotifications] = useState();
   const history = useHistory();
+
 
   //////// when login fetch the notifications
   useEffect(() => {
@@ -63,12 +64,7 @@ const MainNavigation = (props) => {
     setNotifiAnchorEl(null);
   };
   /////// when notification clicked close the list and delete the notification
-  const handleNotificationClick = async (
-    pid,
-    notifiID,
-    follow = 'false',
-    senderId
-  ) => {
+  const handleNotificationClick = async (pid, notifiID) => {
     setNotifiAnchorEl(null);
     ////// delete the notification from database and from the local state
     const notifiToUpdate = {
@@ -76,19 +72,16 @@ const MainNavigation = (props) => {
       receiverID: auth.userId,
     };
     try {
-
       await sendRequest(
-
         `${process.env.REACT_APP_BACKEND_URL}/notifications`,
-        'PATCH',
+        "PATCH",
         JSON.stringify(notifiToUpdate),
         {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + auth.token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
     } catch (err) { }
-
 
     /// update the local state
     const filterednotifications = notifications.filter(
@@ -96,11 +89,7 @@ const MainNavigation = (props) => {
     );
     setNotifications(filterednotifications);
 
-    if (follow) {
-      history.push(`/${senderId}/places`);
-    } else {
-      history.push(`/info/${pid}`);
-    }
+    history.push(`/info/${pid}`);
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -143,28 +132,30 @@ const MainNavigation = (props) => {
   const logout = () => {
     setIsLogin(false);
     auth.logout();
+    history.push("/");
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem
         onClick={handleMenuClose}
-        color='inherit'
+        color="inherit"
         component={NavLink}
         to={{
           pathname: `/user/${auth.userId}`,
         }}
+        title="PROFILE"
       >
-        Profile
+        <span className="material-icons">assignment_ind</span> &ensp; Profile
       </MenuItem>
       <MenuItem
         onClick={handleMenuClose}
@@ -173,37 +164,40 @@ const MainNavigation = (props) => {
         to={{
           pathname: `/account/${auth.userId}`,
         }}
+        title="MY ACCOUNT"
       >
-        My Account
+        <span className="material-icons">vpn_key</span> &ensp; My Account
       </MenuItem>
-      <MenuItem onClick={logout}>Sign out</MenuItem>
+      <MenuItem title="LOG OUT" onClick={logout}>
+        <span className="material-icons">exit_to_app</span> &ensp; Log Out
+      </MenuItem>
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       {auth.isLoggedIn && (
         <div>
-          <MenuItem>
-            <IconButton aria-label='show 4 new mails' color='inherit'>
-              <Badge badgeContent={4} color='secondary'>
+          {/* <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
             <p>Messages</p>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem>
-            <IconButton aria-label='show 11 new notifications' color='inherit'>
-              <Badge badgeContent={11} color='secondary'>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={notificationsNumber} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -211,10 +205,10 @@ const MainNavigation = (props) => {
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
-              aria-label='account of current user'
-              aria-controls='primary-search-account-menu'
-              aria-haspopup='true'
-              color='inherit'
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
             >
               <AccountCircle />
             </IconButton>
@@ -227,20 +221,20 @@ const MainNavigation = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar>
           <SideDrawer />
           <Button
-            color='inherit'
+            color="inherit"
             component={NavLink}
             to={{
               pathname: `/`,
             }}
           >
-            <Typography className={classes.title} variant='h6' noWrap>
+            <Typography className={classes.title} variant="h6" noWrap>
               <img
-                src='https://i.postimg.cc/SQM3CGxw/croped-image-wh.png'
-                alt='logo'
+                src="https://i.postimg.cc/SQM3CGxw/croped-image-wh.png"
+                alt="logo"
               />
             </Typography>
           </Button>
@@ -248,43 +242,47 @@ const MainNavigation = (props) => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/`,
               }}
+              title="HOMEPAGE"
             >
-              HOMEPAGE
+              <span className="material-icons">home</span>
             </Button>
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/users`,
               }}
+              title="ALL USERS"
             >
-              ALL USERS
+              <span className="material-icons">group</span>
             </Button>
 
             <Button
-              color='inherit'
+              color="inherit"
               component={NavLink}
               to={{
                 pathname: `/places`,
               }}
+              title="ALL PLACES"
             >
-              ALL PLACES
+              <span className="material-icons">collections</span>
             </Button>
 
             {auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/${auth.userId}/places`,
                 }}
+                title="MY PLACES"
               >
-                MY PLACES
+                <span className="material-icons">person_pin</span>
               </Button>
             )}
             {auth.isLoggedIn && (
@@ -294,53 +292,53 @@ const MainNavigation = (props) => {
                 to={{
                   pathname: `/${auth.userId}/bucketList`,
                 }}
+                title="BUCKET LIST"
               >
-                MY BUCKET LIST
+                <span className="material-icons">map</span>
               </Button>
             )}
             {auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/places/new`,
                 }}
+                title="ADD NEW PLACE"
               >
-                ADD PLACE
+                <span className="material-icons">add_location_alt</span>
               </Button>
             )}
 
             {!auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/auth`,
                 }}
+                title="LOGIN"
               >
-                LOGIN
+                <span className="material-icons">login</span>
               </Button>
             )}
             {auth.isLoggedIn && (
               <React.Fragment>
-                <IconButton aria-label='show 4 new mails' color='inherit'>
-                  <Badge badgeContent={4} color='secondary'>
+                {/*  <IconButton aria-label="show 4 new mails" color="inherit">
+                  <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
-                  aria-label='show 17 new notifications'
-                  color='inherit'
+                  aria-label="show 17 new notifications"
+                  color="inherit"
                 >
-                  <Badge
-                    badgeContent={notificationsNumber}
-                    color='secondary'
-                  >
+                  <Badge badgeContent={notificationsNumber} color="secondary">
                     <NotificationsIcon onClick={handleClick} />
                   </Badge>
                 </IconButton>
                 <Menu
-                  id='simple-menu'
+                  id="simple-menu"
                   anchorEl={notifiAnchorEl}
                   keepMounted
                   open={Boolean(notifiAnchorEl)}
@@ -348,7 +346,7 @@ const MainNavigation = (props) => {
                 >
                   {notificationsNumber === 0 ? (
                     <MenuItem>
-                      <span className='notifications-name'>
+                      <span className="notifications-name">
                         no notifications
                       </span>
                     </MenuItem>
@@ -369,13 +367,13 @@ const MainNavigation = (props) => {
                             >
                               <ListItemAvatar>
                                 <Avatar
-                                  alt='profile'
+                                  alt="profile"
                                   src={notifi.sender.image}
                                   aria-controls={menuId}
-                                  className='notification-image'
+                                  className="notification-image"
                                 />
                               </ListItemAvatar>
-                              <span className='notifications-name'>
+                              <span className="notifications-name">
                                 {notifi.sender.name}
                               </span>
                             started following you
@@ -388,13 +386,13 @@ const MainNavigation = (props) => {
                               >
                                 <ListItemAvatar>
                                   <Avatar
-                                    alt='profile'
+                                    alt="profile"
                                     src={notifi.sender.image}
                                     aria-controls={menuId}
-                                    className='notification-image'
+                                    className="notification-image"
                                   />
                                 </ListItemAvatar>
-                                <span className='notifications-name'>
+                                <span className="notifications-name">
                                   {notifi.sender.name}
                                 </span>
                             has mentioned you in a place
@@ -409,7 +407,7 @@ const MainNavigation = (props) => {
 
                 <div className={classes.root}>
                   <Avatar
-                    alt='profile'
+                    alt="profile"
                     src={auth.userImage} // hosting images
                     aria-controls={menuId}
                     onClick={handleProfileMenuOpen}
@@ -422,11 +420,11 @@ const MainNavigation = (props) => {
           <div className={classes.sectionMobile}>
             {auth.isLoggedIn && (
               <IconButton
-                aria-label='show more'
+                aria-label="show more"
                 aria-controls={mobileMenuId}
-                aria-haspopup='true'
+                aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
-                color='inherit'
+                color="inherit"
               >
                 <MoreIcon />
               </IconButton>
@@ -434,13 +432,13 @@ const MainNavigation = (props) => {
 
             {!auth.isLoggedIn && (
               <Button
-                color='inherit'
+                color="inherit"
                 component={NavLink}
                 to={{
                   pathname: `/auth`,
                 }}
               >
-                LOGIN
+                <span className="material-icons">login</span>
               </Button>
             )}
           </div>

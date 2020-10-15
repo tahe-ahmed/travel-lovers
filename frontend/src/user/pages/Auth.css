@@ -76,7 +76,7 @@ padding: 20px;
   display: flex;
   flex-direction: column;
   flex-wrap:wrap;
-  width: 357px
+/*   width: 357px */
 }
 /* make facebook button same as google login button */
 div.signin-alternative > span > button {  

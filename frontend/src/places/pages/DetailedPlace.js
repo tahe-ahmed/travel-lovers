@@ -26,7 +26,7 @@ const DetailedPlace = (props) => {
   /////////// set up the mentions and notification data ////////////
   const usersToMention =
     loadedUsers &&
-    loadedUsers.map((user) => ({ id: "#", display: user.name, _id: user.id }));
+    loadedUsers.map((user) => ({ id: `/${user.id}/places`, display: user.name, _id: user.id }));
   ///////// get the users' id and display name when mentioned in the commnets
   const onAdd = (id, display) => {
     setMentions([...mentions, { id: id, display: display }]);

@@ -8,8 +8,6 @@ import Follower from '../../user/components/Follower';
 import TravelBucketList from '../components/TravelBucketList';
 import Dialog from '@material-ui/core/Dialog';
 import {
-  Card,
-  CardMedia,
   CardContent,
   Avatar,
   Typography,
@@ -28,7 +26,7 @@ const UserPlaces = () => {
   const [showInfo, setShowInfo] = useState(false);
   // const [placesPerPage] = useState(3);
   const auth = useContext(AuthContext);
-  
+
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -61,9 +59,9 @@ const UserPlaces = () => {
     );
   };
 
-if(!auth.isLoggedIn){
-  history.push(`/auth`);
-} 
+  if (!auth.isLoggedIn) {
+    history.push(`/auth`);
+  }
 
   // Get current places
   // const indexOfLastPlace = currentPage * placesPerPage;
@@ -133,17 +131,7 @@ if(!auth.isLoggedIn){
       {loadedPlaces && userInfo && (
         <>
           <div className='user-places-container'>
-            {loadedPlaces.map((place, index) => {
-              return (
-                <Card key={index} className='user-place-item'>
-                  <CardMedia
-                    className={`${classes.media} parent`}
-                    image={`${place.image}`}
-                    title='Contemplative Reptile'
-                  ></CardMedia>
-                </Card>
-              );
-            })}{' '}
+
             <UserPlaceList
               items={loadedPlaces}
               onDeletePlace={placeDeletedHandler}
