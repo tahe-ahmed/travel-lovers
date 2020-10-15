@@ -14,7 +14,7 @@ import {
 import Divider from "@material-ui/core/Divider";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import { AccountCircle } from "@material-ui/icons";
-import MailIcon from "@material-ui/icons/Mail";
+//import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { AuthContext } from "../../context/auth-context";

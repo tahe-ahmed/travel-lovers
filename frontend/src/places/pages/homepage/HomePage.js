@@ -9,13 +9,9 @@ import './HomePage.css';
 function HomePage() {
 
   return (<div>
-
     <SectionOne />
-
     <SectionTwo />
-
     <SectionTree />
-
   </div>
   );
 }

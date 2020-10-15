@@ -54,7 +54,7 @@ a {
   text-align: center;
   color: rgb(7, 4, 31);
   line-height: 1.7;
-  background-color: rgba(36, 41, 57, 0.2);
+  background-color: rgba(242, 243, 247, 0.774);
   box-shadow: 0 0 5px grey;
 }
 
@@ -67,10 +67,10 @@ a {
   margin-top: 10px !important;
   line-height: 1.5 !important;
 }
-
+/* #3F51B5 */
 i {
   font-size: 2em;
-  color: #931a25;
+  color: #931a25; 
   margin-bottom: 10px;
 }
 

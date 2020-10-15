@@ -58,8 +58,8 @@ const SideDrawer = (props) => {
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
-              <ChevronRightIcon />
-            )}
+                <ChevronRightIcon />
+              )}
           </IconButton>
         </div>
         <Divider />
@@ -75,7 +75,7 @@ const SideDrawer = (props) => {
               onClick={handleDrawerClose}
               title="HOMEPAGE"
             >
-              <span class="material-icons">home</span>
+              <span className="material-icons">home</span>
             </Button>
           </ListItem>
           <ListItem key="All Users">
@@ -88,7 +88,7 @@ const SideDrawer = (props) => {
               onClick={handleDrawerClose}
               title="ALL USERS"
             >
-              <span class="material-icons">group</span>
+              <span className="material-icons">group</span>
             </Button>
           </ListItem>
           <ListItem key="All Places">
@@ -101,7 +101,7 @@ const SideDrawer = (props) => {
               onClick={handleDrawerClose}
               title="ALL PLACES"
             >
-              <span class="material-icons">collections</span>
+              <span className="material-icons">collections</span>
             </Button>
           </ListItem>
 
@@ -116,7 +116,7 @@ const SideDrawer = (props) => {
                 onClick={handleDrawerClose}
                 title="MY PLACES"
               >
-                <span class="material-icons">person_pin</span>
+                <span className="material-icons">person_pin</span>
               </Button>
             </ListItem>
           )}
@@ -131,7 +131,7 @@ const SideDrawer = (props) => {
                 onClick={handleDrawerClose}
                 title="ADD NEW PLACE"
               >
-                <span class="material-icons">add_location_alt</span>
+                <span className="material-icons">add_location_alt</span>
               </Button>
             </ListItem>
           )}
@@ -146,7 +146,7 @@ const SideDrawer = (props) => {
                 onClick={handleDrawerClose}
                 title="BUCKET LIST"
               >
-                <span class="material-icons">map</span>
+                <span className="material-icons">map</span>
               </Button>
             </ListItem>
           )}
@@ -161,7 +161,7 @@ const SideDrawer = (props) => {
                 title="LOGIN"
                 onClick={handleDrawerClose}
               >
-                <span class="material-icons">login</span>
+                <span className="material-icons">login</span>
               </Button>
             </ListItem>
           )}

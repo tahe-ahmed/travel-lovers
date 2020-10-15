@@ -3,24 +3,16 @@ import { NavLink, useHistory } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
-/* import Card from "../../../shared/components/UIElements/Card"; */
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { AuthContext } from "../../../shared/context/auth-context";
 
 const useStyles = makeStyles({
-  // root_for_secttionTwo_card: {
-  //   // maxWidth: 440,
-  //   position: "relative",
-  //   borderRadius: "10px"
-  // },
   label_for_card_icon: {
     position: "absolute",
     top: "10px",
@@ -32,7 +24,6 @@ const useStyles = makeStyles({
     right: "10px",
     color: "white",
     size: ".4rem",
-    color: "white",
     fontWeight: "500",
     padding: "6px 10px",
     backgroundColor: "#3F51B5",
@@ -74,7 +65,7 @@ function SectionTwo() {
         if (responseData.places && responseData.places.length > 0) {
           setLoadedPlaces(mapPlaces);
         }
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchPlaces();
   }, [sendRequest]);
@@ -188,91 +179,6 @@ function SectionTwo() {
           </CardActionArea>
         </Card>
       </div>
-
-      {/* 
-
-
-      <div className="card-hp">
-        <Card className='card-items' variant="outlined">
-          <CardContent>
-            <Typography
-              gutterBottom
-            >
-              <i className="fas fa-search"></i>
-            </Typography>
-            <Typography variant="h6" component="h2">
-              FIND PASSIONATE TRAVELLERS
-            </Typography>
-
-            <Typography variant="body2" component="p" className='card-description'>
-              You can find millions of travel lovers all over the world. They
-              are here, they want to get connected.
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" href="/users" color="secondary">
-              See travel lovers
-              </Button>
-          </CardActions>
-        </Card>
-        <Card className='card-items' variant="outlined">
-          <CardContent>
-            <Typography
-              gutterBottom
-            >
-              <i className="fas fa-share"></i>
-            </Typography>
-            <Typography variant="h5" component="h2">
-              SHARE YOUR EXPERIENCE
-            </Typography>
-
-            <Typography variant="body2" component="p" className='card-description'>
-              Let others light their candles. Spread your travel love all over
-              the world. Comment and rate others' experience.
-            </Typography>
-          </CardContent>
-          <CardActions>
-            {auth.isLoggedIn ? (
-              <Button
-                size="small"
-                to={{
-                  pathname: `/places/new`,
-                }}
-                color="secondary"
-                component={NavLink}
-              >
-                Share a place
-              </Button>
-            ) : (
-                <Button size="small" href="/auth" color="secondary">
-                  Start to share
-                </Button>
-              )}
-          </CardActions>
-        </Card>
-        <Card className='card-items' variant="outlined">
-          <CardContent>
-            <Typography
-              gutterBottom
-            >
-              <i className="fas fa-map-marked-alt"></i>
-            </Typography>
-            <Typography variant="h5" component="h2">
-              PLAN YOUR FUTURE TRIPS
-            </Typography>
-
-            <Typography variant="body2" component="p" className='card-description'>
-              Travel broadens the mind. Don't waste your time to think of where
-              to go. All world is in here.
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" href="/places" color="secondary">
-              See others' places
-              </Button>
-          </CardActions>
-        </Card> 
-      </div>*/}
       <div className="image-gallery-container">
         <ErrorModal error={error} onClear={clearError} />
         {isLoading && <LoadingSpinner asOverlay />}
@@ -294,28 +200,3 @@ function SectionTwo() {
 }
 
 export default SectionTwo;
-
-/*  <Card className="card-items">
-                    <i className="fas fa-search"></i>
-                    <h3 className="card-text">FIND PASSIONATE TRAVELLERS</h3>
-                    <p className="card-description">
-                      You can find millions of travel lovers all over the world. They are
-                      here, they want to get connected.
-                    </p>
-                  </Card>
-                  <Card className="card-items">
-                    <i className="fas fa-share"></i>
-                    <h3 className="card-text">SHARE YOUR EXPERIENCE</h3>
-                    <p className="card-description">
-                      Let others light their candles. Spread your travel love all over the
-                      world. Comment and rate others' experience.
-                    </p>
-                  </Card>
-                  <Card className="card-items">
-                    <i className="fas fa-map-marked-alt"></i>
-                    <h3 className="card-text">PLAN YOUR FUTURE TRIPS</h3>
-                    <p className="card-description">
-                      Travel broadens the mind. Don't waste your time to think of where to
-                      go. All world is in here.{" "}
-                    </p>
-                  </Card> */

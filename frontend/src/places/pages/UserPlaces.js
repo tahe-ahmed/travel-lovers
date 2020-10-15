@@ -8,8 +8,6 @@ import Follower from '../../user/components/Follower';
 import TravelBucketList from '../components/TravelBucketList';
 import Dialog from '@material-ui/core/Dialog';
 import {
-  Card,
-  CardMedia,
   CardContent,
   Avatar,
   Typography,
