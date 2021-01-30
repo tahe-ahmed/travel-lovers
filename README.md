@@ -9,8 +9,6 @@
   - [Technologies](#technologies)
   - [How to use](#how-to-use)
   - [Features](#features)
-  - [Screenshots](#screenshots)
-  - [Inspiration](#inspiration)
   - [Contact](#contact)
 
 ## General info
