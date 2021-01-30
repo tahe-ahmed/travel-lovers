@@ -58,8 +58,6 @@ $ npm start
 * Create your own bucket list and see them in a nice map
 * Follow other travellers
 * Reset your password and change your user email
-* And pack your bag, ready, GO ! :running_woman: :running_man:
-
 
 
 
